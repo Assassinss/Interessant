@@ -36,5 +36,8 @@ compile 'com.zhy:flowlayout-lib:1.0.3'
 compile project(':vitamio')
 ```
 
+###声明
+Api 数据都是来自开眼视频，数据接口均属于非正常渠道获取，请勿用于商业用途，原作公司拥有所有权利。
+
 ###License
 [Apache License 2](https://github.com/Assassinss/Interessant/blob/master/LICENSE)
