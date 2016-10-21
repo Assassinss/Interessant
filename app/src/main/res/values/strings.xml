@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Interessant</string>
+    
+    <string name="cute_pet">#萌宠</string>
+    <string name="funny">#搞笑</string>
+    <string name="game">#游戏</string>
+    <string name="science">#科普</string>
+    <string name="highlights">#集锦</string>
+    <string name="life">#生活</string>
+    <string name="variety">#综艺</string>
+    <string name="eating">#开胃</string>
+    <string name="foreshow">#预告</string>
+    <string name="advertisement">#广告</string>
+    <string name="record">#记录</string>
+    <string name="fashion">#时尚</string>
+    <string name="creative">#创意</string>
+    <string name="sports">#运动</string>
+    <string name="journey">#旅行</string>
+    <string name="story">#剧情</string>
+    <string name="cartoon">#动画</string>
+    <string name="music">#音乐</string>
+
+    <string name="time_category">按时间排序</string>
+    <string name="share_category">按分享排序</string>
+    <string name="search_hint">搜索你所感兴趣的视频&#8230;&#8230;&#8230;</string>
+
+    <string name="result_title">Result</string>
+    <string name="interesting_title">Interesting</string>
+
+    <string name="transition_shot">backdrop</string>
+    <string name="transition_shot_background">transition_shot_background</string>
+    <string name="menu_search_title">Search</string>
+
+    <string name="heart_full_path_24dp">M12,21 L10.695,19.853406 C6.06,15.7771117 3,13.0871935 3,9.79564033 C3,7.10572207 5.1735,5 7.95,5 C9.516,5 11.019,5.70626703 12,6.81798365 C12.981,5.70626703 14.484,5 16.05,5 C18.8265,5 21,7.10572207 21,9.79564033 C21,13.0871935 17.94,15.7771117 13.305,19.853406 L12,21 L12,21 Z</string>
+</resources>

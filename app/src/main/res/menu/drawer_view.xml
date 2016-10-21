@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_cute_pet"
+            android:title="@string/cute_pet" />
+        <item
+            android:id="@+id/nav_funny"
+            android:title="@string/funny" />
+        <item
+            android:id="@+id/nav_game"
+            android:title="@string/game" />
+
+        <item
+            android:id="@+id/nav_science"
+            android:title="@string/science" />
+
+        <item
+            android:id="@+id/nav_highlights"
+            android:title="@string/highlights" />
+
+        <item
+            android:id="@+id/nav_life"
+            android:title="@string/life" />
+
+        <item
+            android:id="@+id/nav_variety"
+            android:title="@string/variety" />
+
+        <item
+            android:id="@+id/nav_eating"
+            android:title="@string/eating" />
+
+        <item
+            android:id="@+id/nav_foreshow"
+            android:title="@string/foreshow" />
+
+        <item
+            android:id="@+id/nav_ad"
+            android:title="@string/advertisement" />
+
+        <item
+            android:id="@+id/nav_record"
+            android:title="@string/record" />
+
+        <item
+            android:id="@+id/nav_fashion"
+            android:title="@string/fashion" />
+
+        <item
+            android:id="@+id/nav_creative"
+            android:title="@string/creative" />
+
+        <item
+            android:id="@+id/nav_sports"
+            android:title="@string/sports" />
+
+        <item
+            android:id="@+id/nav_journey"
+            android:title="@string/journey" />
+
+        <item
+            android:id="@+id/nav_story"
+            android:title="@string/story" />
+
+        <item
+            android:id="@+id/nav_cartoon"
+            android:title="@string/cartoon" />
+
+        <item
+            android:id="@+id/nav_music"
+            android:title="@string/music" />
+    </group>
+
+    <item android:title="App ">
+        <menu>
+            <item
+                android:title="@string/app_name" />
+        </menu>
+    </item>
+
+</menu>

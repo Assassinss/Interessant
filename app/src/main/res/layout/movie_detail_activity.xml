@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <me.zsj.interessant.widget.FabToggle
+        android:id="@+id/fab_play"
+        android:layout_height="56dp"
+        android:layout_width="56dp"
+        android:src="@drawable/ic_play_arrow_black_24px"
+        android:background="@drawable/fab_play"
+        android:tint="@android:color/white"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="16dp"
+        android:elevation="8dp"
+        android:layout_gravity="end"
+        android:clickable="true"/>
+
+    <View
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_light"
+        android:transitionName="@string/transition_shot_background" />
+
+    <me.zsj.interessant.widget.ParallaxScrimageView
+        android:id="@+id/backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:scaleType="centerCrop"
+        android:minHeight="220dp"
+        android:elevation="4dp"
+        android:transitionName="@string/transition_shot"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_replies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="LinearLayoutManager"
+        android:layout_marginTop="32dp"
+        />
+
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/ic_arrow_back_white_24px"
+        android:background="?selectableItemBackgroundBorderless"
+        android:elevation="6dp"/>
+
+</FrameLayout>

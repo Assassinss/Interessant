@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/movie_avatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/reply_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/movie_avatar"
+        android:layout_toStartOf="@+id/reply_time"
+        android:textStyle="bold"
+        tools:text="doubi 123456789" />
+
+    <TextView
+        android:id="@+id/replay_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reply_avatar"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_toEndOf="@+id/movie_avatar"
+        android:layout_toStartOf="@+id/likeCount"
+        tools:text="awesome ......." />
+
+    <TextView
+        android:id="@+id/reply_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        tools:text="12:90" />
+
+    <TextView
+        android:id="@+id/likeCount"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/reply_time"
+        android:drawableStart="@drawable/ic_heart_full_24dp_pink"
+        android:gravity="center_vertical"
+        android:layout_marginTop="4dp"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        tools:text="100" />
+
+</RelativeLayout>
