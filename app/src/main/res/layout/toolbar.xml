@@ -7,5 +7,4 @@
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     app:layout_scrollFlags="scroll|enterAlways|snap"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    style="@style/LightToolbar"/>

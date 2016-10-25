@@ -10,4 +10,14 @@
 
     <style name="AppTheme.LightStatusBar" parent="AppTheme"/>
 
+    <style name="ToolbarTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="LightToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
+    </style>
+
 </resources>
