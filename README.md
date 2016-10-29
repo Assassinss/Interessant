@@ -2,13 +2,14 @@
 A simple, unofficial android client of Eyepetizer(开眼视频).
 
 ###Screenshot
-<img src="screenshot/Screenshot_20161021-200253.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161021-200307.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161021-200405.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161021-200423.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161021-200435.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161021-200500.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161021-200547.png" width="384" height="216">
+<img src="screenshot/Screenshot_20161029-150348.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161029-150408.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161029-150414.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161029-150441.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161029-150446.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161029-150454.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161029-150830.png" width="384" height="216">
+<img src="screenshot/Screenshot_20161029-150941.png" width="384" height="216">
 
 ###Libraries
 ```
@@ -35,6 +36,9 @@ compile 'me.drakeet.multitype:multitype:2.0.0'
 compile 'com.zhy:flowlayout-lib:1.0.3'
 compile project(':vitamio')
 ```
+###Thanks
+[Plaid](https://github.com/nickbutcher/plaid)
+[VitamioBundle](https://github.com/yixia/VitamioBundle)
 
 ###声明
 Api 数据都是来自开眼视频，数据接口均属于非正常渠道获取，请勿用于商业用途，原作公司拥有所有权利。
