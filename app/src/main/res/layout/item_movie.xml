@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/movie_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:foreground="?selectableItemBackgroundBorderless"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/movie_album"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        android:visibility="visible"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/item_background">
-
-        <TextView
-            android:id="@+id/movie_desc"
+        <ImageView
+            android:id="@+id/movie_album"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_margin="16dp"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
             android:visibility="visible"
-            tools:text="Interessant"/>
+            tools:background="@color/item_background"/>
 
-    </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</FrameLayout>
+            <TextView
+                android:id="@+id/movie_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="16dp"
+                android:textColor="@android:color/black"
+                android:visibility="visible"
+                tools:text="Interessant"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

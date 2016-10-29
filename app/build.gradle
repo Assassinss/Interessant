@@ -38,8 +38,6 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
-    //compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
-    //compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
 
     compile 'com.trello:rxlifecycle:0.7.0'
     compile 'com.trello:rxlifecycle-components:0.7.0'

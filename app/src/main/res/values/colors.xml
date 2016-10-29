@@ -9,5 +9,6 @@
     <color name="item_background">#44000000</color>
     <color name="ripple_light">#99ffffff</color>
     <color name="mid_grey">#40808080</color>
+    <color name="media_controller_bg">#33000000</color>
 
 </resources>

@@ -95,8 +95,9 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MovieDetailActivity.this, PlayerActivity.class);
-                intent.putExtra(PLAY_URL, item.data.playUrl);
+                Intent intent = new Intent(MovieDetailActivity.this, PlayActivity.class);
+                //intent.putExtra(PLAY_URL, item.data.playUrl);
+                intent.putExtra("item", item);
                 startActivity(intent);
             }
         });

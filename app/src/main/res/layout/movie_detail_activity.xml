@@ -12,7 +12,7 @@
         android:id="@+id/fab_play"
         android:layout_height="56dp"
         android:layout_width="56dp"
-        android:src="@drawable/ic_play_arrow_black_24px"
+        android:src="@drawable/ic_play_arrow_white_48px"
         android:background="@drawable/fab_play"
         android:tint="@android:color/white"
         android:layout_marginEnd="16dp"
@@ -52,6 +52,7 @@
         android:layout_height="56dp"
         android:src="@drawable/ic_arrow_back_white_24px"
         android:background="?selectableItemBackgroundBorderless"
-        android:elevation="6dp"/>
+        android:elevation="6dp"
+        tools:ignore="ContentDescription" />
 
 </FrameLayout>

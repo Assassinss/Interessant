@@ -8,6 +8,10 @@ public class TimeUtils {
 
     private TimeUtils() {}
 
+    public static int millsToSec(int mills) {
+        return mills / 1000;
+    }
+
     public static String secToTime(int time) {
         String timeStr;
         int hour = time / 3600;
