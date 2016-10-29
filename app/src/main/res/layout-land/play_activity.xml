@@ -54,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
+                android:layout_gravity="center_vertical"
                 tools:text="00:00"/>
 
             <SeekBar
@@ -61,13 +62,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"
-                android:layout_marginEnd="48dp"/>
+                android:layout_marginEnd="48dp"
+                android:background="@null"
+                android:maxHeight="3dp"
+                android:minHeight="3dp"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:layout_gravity="center_vertical"
+                android:progressDrawable="@drawable/seekbar_progress"
+                android:thumb="@drawable/seekbar_thumb"/>
 
             <TextView
                 android:id="@+id/end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="end|center_vertical"
                 android:textColor="@android:color/white"
                 tools:text="6:00"/>
 

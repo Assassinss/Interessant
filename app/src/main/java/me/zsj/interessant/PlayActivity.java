@@ -109,13 +109,13 @@ public class PlayActivity extends ToolbarActivity
     private Runnable progressCallback = new Runnable() {
         @Override
         public void run() {
-            if (!mediaPlayer.isPlaying()) return;
+            if (isVideoReadyToBePlayed && isVideoSizeKnown) {
+                int progress = TimeUtils.millsToSec((int) mediaPlayer.getCurrentPosition());
+                currentTime.setText(TimeUtils.secToTime(progress));
+                seekBar.setProgress(progress);
 
-            int progress = TimeUtils.millsToSec((int) mediaPlayer.getCurrentPosition());
-            currentTime.setText(TimeUtils.secToTime(progress));
-            seekBar.setProgress(progress);
-
-            handler.postDelayed(this, 1000);
+                handler.postDelayed(this, 1000);
+            }
         }
     };
 
@@ -136,16 +136,14 @@ public class PlayActivity extends ToolbarActivity
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     seekTo(seekBar.getProgress() * 1000);
-                    pause.setSelected(false);
-                    if (mediaPlayer.isPlaying()) {
-                        handler.removeCallbacks(progressCallback);
-                        handler.post(progressCallback);
-                    }
                 }
             };
 
     private void seekTo(long mesc) {
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
         mediaPlayer.seekTo(mesc);
+        pause.setSelected(false);
+        handler.post(progressCallback);
     }
 
     @Override
@@ -168,6 +166,7 @@ public class PlayActivity extends ToolbarActivity
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
+
     }
 
     @Override
@@ -190,6 +189,7 @@ public class PlayActivity extends ToolbarActivity
     @Override
     public void onCompletion(MediaPlayer mp) {
         handler.removeCallbacks(progressCallback);
+        pause.setSelected(true);
     }
 
     @Override
@@ -207,6 +207,7 @@ public class PlayActivity extends ToolbarActivity
             pause.setSelected(true);
         } else {
             mediaPlayer.start();
+            handler.post(progressCallback);
             pause.setSelected(false);
         }
     }
@@ -245,12 +246,6 @@ public class PlayActivity extends ToolbarActivity
         toolbar.setAlpha(1f);
         AnimUtils.animIn(mediaController);
         getWindow().getDecorView().setSystemUiVisibility(FLAG_SHOW_SYSTEM_UI);
-        mediaController.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hideSystemUI();
-            }
-        }, 3000);
     }
 
     @Override
