@@ -136,6 +136,7 @@ public class PlayActivity extends ToolbarActivity
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     seekTo(seekBar.getProgress() * 1000);
+                    pause.setSelected(false);
                     if (mediaPlayer.isPlaying()) {
                         handler.removeCallbacks(progressCallback);
                         handler.post(progressCallback);
