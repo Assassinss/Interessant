@@ -10,5 +10,6 @@
     <color name="ripple_light">#99ffffff</color>
     <color name="mid_grey">#40808080</color>
     <color name="media_controller_bg">#33000000</color>
+    <color name="divider">#1f000000</color> <!-- 12% black -->
 
 </resources>

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,7 @@ import me.zsj.interessant.model.Replies;
 import me.zsj.interessant.model.ReplyList;
 import me.zsj.interessant.utils.TimeUtils;
 import me.zsj.interessant.widget.FabToggle;
+import me.zsj.interessant.widget.InsetDividerDecoration;
 import me.zsj.interessant.widget.ParallaxScrimageView;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -104,6 +106,12 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
         replayApi = InteressantFactory.getRetrofit().createApi(ReplayApi.class);
 
         adapter = new ReplyAdapter(datas, movieDescription);
+        replies.addItemDecoration(new InsetDividerDecoration(
+                ReplyAdapter.Holder.class,
+                getResources().getDimensionPixelSize(R.dimen.divider_height),
+                getResources().getDimensionPixelSize(R.dimen.keyline_1),
+                ContextCompat.getColor(this, R.color.divider)
+        ));
         replies.setAdapter(adapter);
 
         final LinearLayoutManager layoutManager = (LinearLayoutManager) replies.getLayoutManager();
