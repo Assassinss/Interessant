@@ -96,7 +96,6 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MovieDetailActivity.this, PlayActivity.class);
-                //intent.putExtra(PLAY_URL, item.data.playUrl);
                 intent.putExtra("item", item);
                 startActivity(intent);
             }
@@ -123,7 +122,7 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
 
                 if (layoutManager.findFirstVisibleItemPosition() != 0
                         && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    loadReplies();
+                    if (lastId != 0) loadReplies();
                 }
             }
         });
@@ -145,12 +144,6 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
          else result = replayApi.fetchReplies(item.data.id, lastId);
 
         result.compose(this.<Replies>bindToLifecycle())
-                .filter(new Func1<Replies, Boolean>() {
-                    @Override
-                    public Boolean call(Replies replies) {
-                        return replies != null;
-                    }
-                })
                 .map(new Func1<Replies, List<ReplyList>>() {
                     @Override
                     public List<ReplyList> call(Replies replies) {
@@ -173,14 +166,12 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
                     }
                 }, new Action1<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
-                        //Try not to handle exception
-                    }
+                    public void call(Throwable throwable) {}
                 });
     }
 
     private void getLastId(List<ReplyList> replies) {
-        //Will throw exception
+        if (replies.size() == 0) return;
         lastId = replies.get(replies.size() - 1).sequence;
     }
 

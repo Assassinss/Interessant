@@ -37,17 +37,19 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         switch (viewType) {
             case R.layout.item_movie_detail_header:
                 return new SimpleViewHolder(description);
-            default:
+            case R.layout.item_reply:
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.item_reply, parent, false);
                 return new Holder(view);
+            default:
+                return null;
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (getItemViewType(position) != R.layout.item_movie_detail_header) {
-            ReplyList reply = datas.get(position);
+        if (getItemViewType(position) == R.layout.item_reply) {
+            ReplyList reply = datas.get(position - 1);
             Holder viewHolder = (Holder) holder;
             Glide.with(viewHolder.avatar.getContext())
                     .load(reply.user.avatar)
@@ -67,12 +69,14 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (position == DETAIL_DESCRIPTION_TYPE) {
             return R.layout.item_movie_detail_header;
         }
-        return super.getItemViewType(position);
+        return R.layout.item_reply;
     }
 
     @Override
     public int getItemCount() {
-        return datas.size();
+        int count = 1;
+        if (datas.size() > 0) count += datas.size();
+        return count;
     }
 
     static class Holder extends RecyclerView.ViewHolder {
