@@ -49,6 +49,7 @@ public class InterestingAdapter extends RecyclerView.Adapter<Holder> {
     public void onBindViewHolder(final Holder holder, int position) {
         final ItemList item = itemList.get(position);
 
+        holder.movieAlbum.setOriginalSize(16, 9);
         Glide.with(holder.movieAlbum.getContext())
                 .load(item.data.cover.detail)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)

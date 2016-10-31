@@ -49,6 +49,7 @@ public class DailyItemViewProvider extends
         if (item.type.contains(VIDEO_TAG)) {
             holder.movieAlbum.setVisibility(View.VISIBLE);
             holder.movieDesc.setVisibility(View.VISIBLE);
+            holder.movieAlbum.setOriginalSize(16, 9);
             Glide.with(holder.movieAlbum.getContext())
                     .load(item.data.cover.detail)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)

@@ -6,10 +6,11 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="background_light">#fafafa</color>
-    <color name="item_background">#44000000</color>
+    <color name="item_background">#55000000</color>
     <color name="ripple_light">#99ffffff</color>
     <color name="mid_grey">#40808080</color>
-    <color name="media_controller_bg">#33000000</color>
+    <color name="media_controller_bg">#55000000</color>
     <color name="divider">#1f000000</color> <!-- 12% black -->
+    <color name="color_control">#77000000</color>
 
 </resources>
