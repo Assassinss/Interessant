@@ -46,7 +46,7 @@ public class MainActivity extends ToolbarActivity {
     public static final String CATEGORY_ID = "categoryId";
     public static final String TITLE = "title";
 
-    private MultiTypeAdapter multiTypeAdapter;
+    private MultiTypeAdapter adapter;
 
     private RecyclerView list;
     private SwipeRefreshLayout refreshLayout;
@@ -96,9 +96,12 @@ public class MainActivity extends ToolbarActivity {
 
     private void setupRecyclerView() {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        multiTypeAdapter = new MultiTypeAdapter(items);
+        adapter = new MultiTypeAdapter(items);
+
+        Register.registerItem(adapter);
+
         list.setLayoutManager(layoutManager);
-        list.setAdapter(multiTypeAdapter);
+        list.setAdapter(adapter);
 
         RxRecyclerView.scrollStateChanges(list)
                 .filter(new Func1<Integer, Boolean>() {
@@ -109,7 +112,7 @@ public class MainActivity extends ToolbarActivity {
                 })
                 .compose(this.<Integer>bindToLifecycle())
                 .compose(RxScroller.scrollTransformer(layoutManager,
-                        multiTypeAdapter, items))
+                        adapter, items))
                 .subscribe(new Action1<Integer>() {
                     @Override
                     public void call(Integer newState) {
@@ -119,7 +122,7 @@ public class MainActivity extends ToolbarActivity {
                     }
                 });
 
-        DailyItemViewProvider dailyItemViewProvider = (DailyItemViewProvider) App.getProvider(PROVIDER_ITEM);
+        DailyItemViewProvider dailyItemViewProvider = adapter.getProviderByClass(ItemList.class);
         dailyItemViewProvider.setOnMovieClickListener(new OnMovieClickListener() {
             @Override
             public void onMovieClick(final ItemList item, final View movieAlbum) {
@@ -185,7 +188,7 @@ public class MainActivity extends ToolbarActivity {
         String nextPageUrl = daily.nextPageUrl;
         dateTime = nextPageUrl.substring(nextPageUrl.indexOf("=") + 1,
                 nextPageUrl.indexOf("&"));
-        multiTypeAdapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

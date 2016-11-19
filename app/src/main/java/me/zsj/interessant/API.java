@@ -24,4 +24,6 @@ public class API {
 
     public static final String TABS = "http://baobab.kaiyanapp.com/api/v3/tabs/pgcs?udid=dc47bc64bc04470cb3537addda22998825c217d5";
 
+    public static final String TABS_ITEM = "http://baobab.kaiyanapp.com/api/v3/pgc/videos?pgcId=56&strategy=date&udid=dc47bc64bc04470cb3537addda22998825c217d5";
+
 }

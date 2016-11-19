@@ -7,7 +7,7 @@ package me.zsj.interessant;
 public class InteressantFactory {
 
     private static final Object object = new Object();
-    private static InteressantRetrofit retrofit;
+    private volatile static InteressantRetrofit retrofit;
 
     public static InteressantRetrofit getRetrofit() {
         synchronized (object) {

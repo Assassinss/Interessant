@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InteressantRetrofit {
 
-    private static final String BASE_URL = "http://baobab.wandoujia.com/api/";
+    private static final String BASE_URL = "http://baobab.kaiyanapp.com/api/";
 
     private Map<Class, Object> apis = new HashMap<>();
 
