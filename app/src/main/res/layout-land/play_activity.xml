@@ -40,12 +40,11 @@
             android:tint="@android:color/white"
             tools:ignore="ContentDescription" />
 
-        <FrameLayout
+        <me.zsj.interessant.widget.InsetsFrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:padding="16dp"
-            android:layout_marginEnd="48dp"
+            android:padding="12dp"
             android:background="@color/media_controller_bg"
             android:orientation="horizontal">
 
@@ -80,7 +79,7 @@
                 android:textColor="@android:color/white"
                 tools:text="6:00"/>
 
-        </FrameLayout>
+        </me.zsj.interessant.widget.InsetsFrameLayout>
 
     </FrameLayout>
 
