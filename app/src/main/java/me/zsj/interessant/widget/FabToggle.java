@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
 
-import me.zsj.interessant.utils.PixelConverter;
+import me.zsj.interessant.R;
 
 /**
  * Created by zsj on 2016/10/15.
@@ -25,8 +25,8 @@ public class FabToggle extends ImageButton {
     public FabToggle(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        minOffset = PixelConverter.dptopx(context, 360) -
-                PixelConverter.dptopx(context, 140);
+        minOffset = context.getResources().getDimensionPixelSize(R.dimen.fab_min_offset);
+
     }
 
     @Override

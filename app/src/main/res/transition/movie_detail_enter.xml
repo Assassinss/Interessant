@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <transitionSet>
+        <targets>
+            <target android:excludeId="@android:id/statusBarBackground" />
+            <target android:excludeId="@android:id/navigationBarBackground" />
+            <target android:excludeId="@id/backdrop" />
+            <target android:excludeId="@id/back" />
+            <target android:excludeId="@id/fab_play" />
+        </targets>
+        <transition
+            class="me.zsj.interessant.transition.DistanceSlide"
+            android:duration="350"
+            android:interpolator="@android:interpolator/linear_out_slow_in"
+            app:spread="5" />
+        <fade
+            android:duration="100"
+            android:interpolator="@android:interpolator/linear"
+            android:startDelay="250" />
+    </transitionSet>
+
+    <transitionSet android:transitionOrdering="together">
+        <targets>
+            <target android:targetId="@id/fab_play" />
+        </targets>
+        <transition
+            class="me.zsj.interessant.transition.Pop"
+            android:duration="350"
+            android:interpolator="@android:interpolator/linear_out_slow_in"
+            android:startDelay="350" />
+        <slide
+            android:duration="360"
+            android:interpolator="@android:interpolator/linear_out_slow_in"
+            android:slideEdge="bottom"
+            android:startDelay="100" />
+    </transitionSet>
+
+    <fade
+        android:duration="100"
+        android:interpolator="@android:interpolator/linear"
+        android:startDelay="300">
+        <targets>
+            <target android:targetId="@id/back" />
+        </targets>
+    </fade>
+
+</transitionSet>

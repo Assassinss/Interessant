@@ -29,8 +29,7 @@ public class IntentManager {
                         intent.putExtra(PROVIDER_ITEM, item);
                         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                                 context,
-                                Pair.create(view, context.getString(R.string.transition_shot)),
-                                Pair.create(view, context.getString(R.string.transition_shot_background)));
+                                Pair.create(view, context.getString(R.string.transition_shot)));
                         context.startActivity(intent, options.toBundle());
                     }
 

@@ -21,4 +21,10 @@
         <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
     </style>
 
+    <style name="AppTheme.Movie">
+        <item name="android:windowEnterTransition">@transition/movie_detail_enter</item>
+        <item name="android:windowReturnTransition">@transition/movie_detail_return</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/movie_detail_share_enter</item>
+    </style>
+
 </resources>

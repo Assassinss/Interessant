@@ -21,4 +21,7 @@ public class API {
     public static final String QUERIES = "http://baobab.wandoujia.com/api/v3/queries/hot";
 
     public static final String QUERY = "http://baobab.wandoujia.com/api/v1/search?query=Android";
+
+    public static final String TABS = "http://baobab.kaiyanapp.com/api/v3/tabs/pgcs?udid=dc47bc64bc04470cb3537addda22998825c217d5";
+
 }

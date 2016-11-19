@@ -70,7 +70,7 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
 
         movieDescription = LayoutInflater.from(this)
                 .inflate(R.layout.item_movie_detail_header, replies, false);
-        TextView title = (TextView) movieDescription.findViewById(R.id.movie_title);
+        final TextView title = (TextView) movieDescription.findViewById(R.id.movie_title);
         TextView type = (TextView) movieDescription.findViewById(R.id.movie_type);
         TextView description = (TextView) movieDescription.findViewById(R.id.movie_desc);
 
@@ -84,7 +84,7 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
             @Override
             public boolean onPreDraw() {
                 backdrop.getViewTreeObserver().removeOnPreDrawListener(this);
-                fabOffset = backdrop.getHeight() - play.getHeight() / 2;
+                fabOffset = backdrop.getHeight() - play.getHeight() / 2 + title.getMeasuredHeight();
                 play.setOffset(fabOffset);
                 return true;
             }
