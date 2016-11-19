@@ -23,8 +23,6 @@ import me.zsj.interessant.api.SearchApi;
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.rx.ErrorAction;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -66,26 +64,13 @@ public class SearchActivity extends ToolbarActivity implements View.OnClickListe
                 .createApi(SearchApi.class);
 
         trendingApi.getTrendingTag()
-                .compose(this.<List<String>>bindToLifecycle())
-                .filter(new Func1<List<String>, Boolean>() {
-                    @Override
-                    public Boolean call(List<String> data) {
-                        return data != null;
-                    }
-                })
-                .doOnNext(new Action1<List<String>>() {
-                    @Override
-                    public void call(List<String> data) {
-                        tags.addAll(data);
-                    }
-                })
+                .compose(bindToLifecycle())
+                .filter(data -> data != null)
+                .doOnNext(data -> tags.addAll(data))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<String>>() {
-                    @Override
-                    public void call(List<String> data) {
-                        bindData();
-                    }
+                .subscribe(data -> {
+                    bindData();
                 }, ErrorAction.errorAction(this));
     }
 
@@ -100,34 +85,28 @@ public class SearchActivity extends ToolbarActivity implements View.OnClickListe
             }
         });
 
-        tagLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-                startResultActivity(tags.get(position));
-                return true;
-            }
+        tagLayout.setOnTagClickListener((view, position, parent) -> {
+            startResultActivity(tags.get(position));
+            return true;
         });
     }
 
     private void keyListener() {
-        searchEdit.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                //onKey will call twice, First: ACTION_DOWN, Second:ACTION_UP
-                if (event.getAction() != KeyEvent.ACTION_DOWN) return true;
+        searchEdit.setOnKeyListener((v, keyCode, event) -> {
+            //onKey will call twice, First: ACTION_DOWN, Second:ACTION_UP
+            if (event.getAction() != KeyEvent.ACTION_DOWN) return true;
 
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    if (searchEdit.getText().toString().isEmpty()) {
-                        Toast.makeText(SearchActivity.this,
-                                "Keyword must not empty!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        search(searchEdit.getText().toString());
-                    }
-                } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    finish();
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                if (searchEdit.getText().toString().isEmpty()) {
+                    Toast.makeText(SearchActivity.this,
+                            "Keyword must not empty!", Toast.LENGTH_SHORT).show();
+                } else {
+                    search(searchEdit.getText().toString());
                 }
-                return false;
+            } else if (keyCode == KeyEvent.KEYCODE_BACK) {
+                finish();
             }
+            return false;
         });
     }
 

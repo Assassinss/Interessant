@@ -19,12 +19,9 @@ import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.common.OnMovieClickListener;
 import me.zsj.interessant.interesting.InterestingAdapter;
 import me.zsj.interessant.model.ItemList;
-import me.zsj.interessant.model.SearchResult;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -38,7 +35,6 @@ public class ResultActivity extends ToolbarActivity implements OnMovieClickListe
     private SearchApi searchApi;
 
     private InterestingAdapter adapter;
-    private RecyclerView recyclerView;
     private TextView resultText;
 
 
@@ -51,7 +47,7 @@ public class ResultActivity extends ToolbarActivity implements OnMovieClickListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         resultText = (TextView) findViewById(R.id.result_text);
 
         final String keyword = getIntent().getStringExtra(SearchActivity.KEYWORD);
@@ -66,16 +62,13 @@ public class ResultActivity extends ToolbarActivity implements OnMovieClickListe
         fetchResult(keyword);
 
         RxRecyclerView.scrollStateChanges(recyclerView)
-                .compose(this.<Integer>bindToLifecycle())
+                .compose(bindToLifecycle())
                 .compose(RxScroller.scrollTransformer(layoutManager,
                         adapter, itemLists))
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer newState) {
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            start += 10;
-                            fetchResult(keyword);
-                        }
+                .subscribe(newState -> {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        start += 10;
+                        fetchResult(keyword);
                     }
                 });
 
@@ -84,34 +77,18 @@ public class ResultActivity extends ToolbarActivity implements OnMovieClickListe
 
     private void fetchResult(final String keyword) {
         searchApi.query(keyword, start)
-                .compose(this.<SearchResult>bindToLifecycle())
-                .filter(new Func1<SearchResult, Boolean>() {
-                    @Override
-                    public Boolean call(SearchResult searchResult) {
-                        return searchResult != null;
-                    }
-                })
+                .compose(bindToLifecycle())
+                .filter(searchResult -> searchResult != null)
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<SearchResult, List<ItemList>>() {
-                    @Override
-                    public List<ItemList> call(SearchResult searchResult) {
-                        resultText.setText(keyword + "的结果有" + searchResult.total + "个");
-                        return searchResult.itemList;
-                    }
+                .map(searchResult -> {
+                    resultText.setText(keyword + "的结果有" + searchResult.total + "个");
+                    return searchResult.itemList;
                 })
-                .doOnNext(new Action1<List<ItemList>>() {
-                    @Override
-                    public void call(List<ItemList> itemList) {
-                        itemLists.addAll(itemList);
-                    }
-                })
+                .doOnNext(itemList -> itemLists.addAll(itemList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<ItemList>>() {
-                    @Override
-                    public void call(List<ItemList> itemLists) {
-                        adapter.notifyDataSetChanged();
-                    }
+                .subscribe(itemLists1 -> {
+                    adapter.notifyDataSetChanged();
                 }, ErrorAction.errorAction(this));
     }
 

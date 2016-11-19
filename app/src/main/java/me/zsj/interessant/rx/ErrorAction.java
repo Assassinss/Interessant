@@ -16,11 +16,7 @@ public class ErrorAction {
     }
 
     public static Action1<Throwable> errorAction(final Context context) {
-        return new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
+        return throwable ->
                 Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
     }
 }

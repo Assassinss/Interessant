@@ -21,31 +21,15 @@ public class RxScroller {
     public static <T>Observable.Transformer<Integer, Integer> scrollTransformer(
             final LinearLayoutManager layoutManager, final RecyclerView.Adapter adapter,
             final List<T> data) {
-        return new Observable.Transformer<Integer, Integer>() {
-            @Override
-            public Observable<Integer> call(Observable<Integer> integerObservable) {
-                return integerObservable
-                        .filter(new Func1<Integer, Boolean>() {
-                            @Override
-                            public Boolean call(Integer integer) {
-                                boolean isBottom = layoutManager.findFirstCompletelyVisibleItemPosition() >=
-                                        adapter.getItemCount() - 4;
-                                return isBottom;
-                            }
-                        })
-                        .filter(new Func1<Integer, Boolean>() {
-                            @Override
-                            public Boolean call(Integer integer) {
-                                return data.size() != 0;
-                            }
-                        })
-                        .filter(new Func1<Integer, Boolean>() {
-                            @Override
-                            public Boolean call(Integer integer) {
-                                return layoutManager.findFirstVisibleItemPosition() != 0;
-                            }
-                        });
-            }
-        };
+        return integerObservable -> integerObservable
+                .filter(integer -> layoutManager.findFirstCompletelyVisibleItemPosition() >=
+                            adapter.getItemCount() - 4)
+                .filter(integer -> data.size() != 0)
+                .filter(new Func1<Integer, Boolean>() {
+                    @Override
+                    public Boolean call(Integer integer) {
+                        return layoutManager.findFirstVisibleItemPosition() != 0;
+                    }
+                });
     }
 }

@@ -16,7 +16,6 @@ import me.zsj.interessant.R;
 import me.zsj.interessant.common.Holder;
 import me.zsj.interessant.common.OnMovieClickListener;
 import me.zsj.interessant.model.ItemList;
-import rx.functions.Action1;
 
 /**
  * Created by zsj on 2016/10/11.
@@ -58,11 +57,8 @@ public class InterestingAdapter extends RecyclerView.Adapter<Holder> {
 
         if (onMovieClickListener != null) {
             RxView.clicks(holder.movieContent).throttleFirst(TOUCH_TIME, TimeUnit.MILLISECONDS)
-                    .subscribe(new Action1<Void>() {
-                        @Override
-                        public void call(Void aVoid) {
-                            onMovieClickListener.onMovieClick(item, holder.movieAlbum);
-                        }
+                    .subscribe(aVoid -> {
+                        onMovieClickListener.onMovieClick(item, holder.movieAlbum);
                     });
         }
     }

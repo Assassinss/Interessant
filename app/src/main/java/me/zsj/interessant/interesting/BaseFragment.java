@@ -21,7 +21,6 @@ import me.zsj.interessant.model.Interesting;
 import me.zsj.interessant.model.ItemList;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -59,25 +58,10 @@ public class BaseFragment extends RxFragment {
     }
 
     Observable.Transformer<Interesting, List<ItemList>>
-            interestingTransformer = new Observable.Transformer<Interesting, List<ItemList>>() {
-        @Override
-        public Observable<List<ItemList>> call(Observable<Interesting> interestingObservable) {
-            return interestingObservable
-                    .filter(new Func1<Interesting, Boolean>() {
-                        @Override
-                        public Boolean call(Interesting interesting) {
-                            return interesting != null;
-                        }
-                    })
-                    .map(new Func1<Interesting, List<ItemList>>() {
-                        @Override
-                        public List<ItemList> call(Interesting interesting) {
-                            return interesting.itemList;
-                        }
-                    })
+            interestingTransformer = interestingObservable -> interestingObservable
+                    .filter(interesting -> interesting != null)
+                    .map(interesting -> interesting.itemList)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
-        }
-    };
 
 }

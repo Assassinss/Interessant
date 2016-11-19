@@ -32,8 +32,6 @@ import me.zsj.interessant.widget.InsetDividerDecoration;
 import me.zsj.interessant.widget.ParallaxScrimageView;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
@@ -94,13 +92,10 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
                 .load(item.data.cover.detail)
                 .into(backdrop);
 
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MovieDetailActivity.this, PlayActivity.class);
-                intent.putExtra("item", item);
-                startActivity(intent);
-            }
+        play.setOnClickListener(v -> {
+            Intent intent = new Intent(MovieDetailActivity.this, PlayActivity.class);
+            intent.putExtra("item", item);
+            startActivity(intent);
         });
 
         replayApi = InteressantFactory.getRetrofit().createApi(ReplayApi.class);
@@ -152,30 +147,16 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
          else result = replayApi.fetchReplies(item.data.id, lastId);
 
         result.compose(this.<Replies>bindToLifecycle())
-                .map(new Func1<Replies, List<ReplyList>>() {
-                    @Override
-                    public List<ReplyList> call(Replies replies) {
-                        getLastId(replies.replyList);
-                        return replies.replyList;
-                    }
+                .map(replies -> {
+                    getLastId(replies.replyList);
+                    return replies.replyList;
                 })
-                .doOnNext(new Action1<List<ReplyList>>() {
-                    @Override
-                    public void call(List<ReplyList> replyLists) {
-                        datas.addAll(replyLists);
-                    }
-                })
+                .doOnNext(replyLists -> datas.addAll(replyLists))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<ReplyList>>() {
-                    @Override
-                    public void call(List<ReplyList> replyLists) {
-                        adapter.notifyDataSetChanged();
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {}
-                });
+                .subscribe(replyLists -> {
+                    adapter.notifyDataSetChanged();
+                }, throwable -> {});
     }
 
     private void getLastId(List<ReplyList> replies) {

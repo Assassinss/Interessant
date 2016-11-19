@@ -2,7 +2,6 @@ package me.zsj.interessant;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout;
@@ -26,7 +24,6 @@ import me.drakeet.multitype.Item;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.api.DailyApi;
 import me.zsj.interessant.base.ToolbarActivity;
-import me.zsj.interessant.common.OnMovieClickListener;
 import me.zsj.interessant.interesting.InterestingActivity;
 import me.zsj.interessant.model.Category;
 import me.zsj.interessant.model.Daily;
@@ -35,9 +32,6 @@ import me.zsj.interessant.provider.DailyItemViewProvider;
 import me.zsj.interessant.rx.RxScroller;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends ToolbarActivity {
@@ -78,13 +72,8 @@ public class MainActivity extends ToolbarActivity {
         setupRecyclerView();
 
         RxSwipeRefreshLayout.refreshes(refreshLayout)
-                .compose(this.<Void>bindToLifecycle())
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        loadData(true);
-                    }
-                });
+                .compose(bindToLifecycle())
+                .subscribe(aVoid ->loadData(true));
 
     }
 
@@ -104,32 +93,19 @@ public class MainActivity extends ToolbarActivity {
         list.setAdapter(adapter);
 
         RxRecyclerView.scrollStateChanges(list)
-                .filter(new Func1<Integer, Boolean>() {
-                    @Override
-                    public Boolean call(Integer integer) {
-                        return !refreshLayout.isRefreshing();
-                    }
-                })
-                .compose(this.<Integer>bindToLifecycle())
+                .filter(integer -> !refreshLayout.isRefreshing())
+                .compose(bindToLifecycle())
                 .compose(RxScroller.scrollTransformer(layoutManager,
                         adapter, items))
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer newState) {
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            loadData();
-                        }
+                .subscribe(newState -> {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        loadData();
                     }
                 });
 
         DailyItemViewProvider dailyItemViewProvider = adapter.getProviderByClass(ItemList.class);
-        dailyItemViewProvider.setOnMovieClickListener(new OnMovieClickListener() {
-            @Override
-            public void onMovieClick(final ItemList item, final View movieAlbum) {
-                IntentManager.flyToMovieDetail(MainActivity.this,
-                        item, movieAlbum);
-            }
-        });
+        dailyItemViewProvider.setOnMovieClickListener((item, movieAlbum) ->
+                IntentManager.flyToMovieDetail(MainActivity.this, item, movieAlbum));
     }
 
     private void loadData() {
@@ -141,39 +117,20 @@ public class MainActivity extends ToolbarActivity {
         if (clear) result = dailyApi.getDaily();
         else result = dailyApi.getDaily(Long.decode(dateTime));
 
-        result.compose(this.<Daily>bindToLifecycle())
-                .filter(new Func1<Daily, Boolean>() {
-                    @Override
-                    public Boolean call(Daily daily) {
-                        return daily != null;
-                    }
-                })
-                .doOnNext(new Action1<Daily>() {
-                    @Override
-                    public void call(Daily daily) {
-                        if (clear) items.clear();
-                    }
+        result.compose(bindToLifecycle())
+                .filter(daily -> daily != null)
+                .doOnNext(daily -> {
+                    if (clear) items.clear();
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnCompleted(new Action0() {
-                    @Override
-                    public void call() {
-                        refreshLayout.setRefreshing(false);
-                    }
-                })
-                .subscribe(new Action1<Daily>() {
-                    @Override
-                    public void call(Daily daily) {
-                        refreshLayout.setRefreshing(false);
-                        addData(daily);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        refreshLayout.setRefreshing(false);
-                        Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                .doOnCompleted(() -> refreshLayout.setRefreshing(false))
+                .subscribe(daily -> {
+                    refreshLayout.setRefreshing(false);
+                    addData(daily);
+                }, throwable -> {
+                    refreshLayout.setRefreshing(false);
+                    Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -181,9 +138,7 @@ public class MainActivity extends ToolbarActivity {
         for (Daily.IssueList issueList : daily.issueList) {
             String date = issueList.itemList.get(0).data.text;
             items.add(new Category(date == null ? "Today" : date));
-            for (ItemList itemList : issueList.itemList) {
-                items.add(itemList);
-            }
+            items.addAll(issueList.itemList);
         }
         String nextPageUrl = daily.nextPageUrl;
         dateTime = nextPageUrl.substring(nextPageUrl.indexOf("=") + 1,
@@ -192,15 +147,11 @@ public class MainActivity extends ToolbarActivity {
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        drawer.closeDrawers();
-                        findInteresting(menuItem);
-                        return true;
-                    }
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+                    menuItem.setChecked(true);
+                    drawer.closeDrawers();
+                    findInteresting(menuItem);
+                    return true;
                 });
     }
 

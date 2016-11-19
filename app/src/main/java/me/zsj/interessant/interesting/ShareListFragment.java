@@ -14,11 +14,9 @@ import java.util.List;
 import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.MainActivity;
 import me.zsj.interessant.common.OnMovieClickListener;
-import me.zsj.interessant.model.Interesting;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
-import rx.functions.Action1;
 
 /**
  * Created by zsj on 2016/10/11.
@@ -45,16 +43,13 @@ public class ShareListFragment extends BaseFragment implements OnMovieClickListe
         loadData(categoryId, SHARE);
 
         RxRecyclerView.scrollStateChanges(list)
-                .compose(this.<Integer>bindToLifecycle())
+                .compose(bindToLifecycle())
                 .compose(RxScroller.scrollTransformer(layoutManager,
                         adapter, shareList))
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer newState) {
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            start += 10;
-                            loadData(categoryId, SHARE);
-                        }
+                .subscribe(newState -> {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        start += 10;
+                        loadData(categoryId, SHARE);
                     }
                 });
 
@@ -63,19 +58,11 @@ public class ShareListFragment extends BaseFragment implements OnMovieClickListe
 
     private void loadData(int categoryId, String strategy) {
         interestingApi.getInteresting(start, categoryId, strategy)
-                .compose(this.<Interesting>bindToLifecycle())
+                .compose(bindToLifecycle())
                 .compose(interestingTransformer)
-                .doOnNext(new Action1<List<ItemList>>() {
-                    @Override
-                    public void call(List<ItemList> itemLists) {
-                        shareList.addAll(itemLists);
-                    }
-                })
-                .subscribe(new Action1<List<ItemList>>() {
-                    @Override
-                    public void call(List<ItemList> itemLists) {
-                        adapter.notifyDataSetChanged();
-                    }
+                .doOnNext(itemLists -> shareList.addAll(itemLists))
+                .subscribe(itemLists -> {
+                    adapter.notifyDataSetChanged();
                 }, ErrorAction.errorAction(context));
 
     }
