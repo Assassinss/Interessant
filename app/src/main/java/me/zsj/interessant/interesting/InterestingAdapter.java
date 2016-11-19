@@ -1,5 +1,6 @@
 package me.zsj.interessant.interesting;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,9 @@ import com.jakewharton.rxbinding.view.RxView;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.R;
 import me.zsj.interessant.common.Holder;
-import me.zsj.interessant.common.OnMovieClickListener;
 import me.zsj.interessant.model.ItemList;
 
 /**
@@ -25,15 +26,11 @@ public class InterestingAdapter extends RecyclerView.Adapter<Holder> {
 
     private static final int TOUCH_TIME = 1000;
 
+    private Activity context;
     private List<ItemList> itemList;
 
-    private OnMovieClickListener onMovieClickListener;
-
-    public void setOnMovieClickListener(OnMovieClickListener onMovieClickListener) {
-        this.onMovieClickListener = onMovieClickListener;
-    }
-
-    public InterestingAdapter(List<ItemList> itemLists) {
+    public InterestingAdapter(Activity context, List<ItemList> itemLists) {
+        this.context = context;
         this.itemList = itemLists;
     }
 
@@ -55,17 +52,20 @@ public class InterestingAdapter extends RecyclerView.Adapter<Holder> {
                 .into(holder.movieAlbum);
         holder.movieDesc.setText(item.data.title);
 
-        if (onMovieClickListener != null) {
-            RxView.clicks(holder.movieContent).throttleFirst(TOUCH_TIME, TimeUnit.MILLISECONDS)
-                    .subscribe(aVoid -> {
-                        onMovieClickListener.onMovieClick(item, holder.movieAlbum);
-                    });
-        }
+        RxView.clicks(holder.movieContent).throttleFirst(TOUCH_TIME, TimeUnit.MILLISECONDS)
+                .subscribe(aVoid -> {
+                    fly(holder.movieAlbum, item);
+                });
     }
 
     @Override
     public int getItemCount() {
         return itemList.size();
+    }
+
+    //To ........ what?
+    private void fly(View view, ItemList item) {
+        IntentManager.flyToMovieDetail(context, item, view);
     }
 
 }

@@ -27,8 +27,6 @@ import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.interesting.InterestingActivity;
 import me.zsj.interessant.model.Category;
 import me.zsj.interessant.model.Daily;
-import me.zsj.interessant.model.ItemList;
-import me.zsj.interessant.provider.DailyItemViewProvider;
 import me.zsj.interessant.rx.RxScroller;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -87,7 +85,7 @@ public class MainActivity extends ToolbarActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         adapter = new MultiTypeAdapter(items);
 
-        Register.registerItem(adapter);
+        Register.registerItem(adapter, this);
 
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
@@ -102,10 +100,6 @@ public class MainActivity extends ToolbarActivity {
                         loadData();
                     }
                 });
-
-        DailyItemViewProvider dailyItemViewProvider = adapter.getProviderByClass(ItemList.class);
-        dailyItemViewProvider.setOnMovieClickListener((item, movieAlbum) ->
-                IntentManager.flyToMovieDetail(MainActivity.this, item, movieAlbum));
     }
 
     private void loadData() {

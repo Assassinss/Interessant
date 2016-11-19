@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
@@ -16,7 +15,6 @@ import java.util.List;
 
 import me.zsj.interessant.api.SearchApi;
 import me.zsj.interessant.base.ToolbarActivity;
-import me.zsj.interessant.common.OnMovieClickListener;
 import me.zsj.interessant.interesting.InterestingAdapter;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
@@ -28,7 +26,7 @@ import rx.schedulers.Schedulers;
  * Created by zsj on 2016/10/13.
  */
 
-public class ResultActivity extends ToolbarActivity implements OnMovieClickListener {
+public class ResultActivity extends ToolbarActivity {
 
     private int start;
     private List<ItemList> itemLists = new ArrayList<>();
@@ -54,7 +52,7 @@ public class ResultActivity extends ToolbarActivity implements OnMovieClickListe
 
         searchApi = InteressantFactory.getRetrofit().createApi(SearchApi.class);
 
-        adapter = new InterestingAdapter(itemLists);
+        adapter = new InterestingAdapter(this, itemLists);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -71,8 +69,6 @@ public class ResultActivity extends ToolbarActivity implements OnMovieClickListe
                         fetchResult(keyword);
                     }
                 });
-
-        adapter.setOnMovieClickListener(this);
     }
 
     private void fetchResult(final String keyword) {
@@ -90,11 +86,6 @@ public class ResultActivity extends ToolbarActivity implements OnMovieClickListe
                 .subscribe(itemLists1 -> {
                     adapter.notifyDataSetChanged();
                 }, ErrorAction.errorAction(this));
-    }
-
-    @Override
-    public void onMovieClick(ItemList item, View transitionView) {
-        IntentManager.flyToMovieDetail(this, item, transitionView);
     }
 
     @Override

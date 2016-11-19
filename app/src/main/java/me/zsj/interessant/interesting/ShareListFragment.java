@@ -4,16 +4,13 @@ package me.zsj.interessant.interesting;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.MainActivity;
-import me.zsj.interessant.common.OnMovieClickListener;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
@@ -22,7 +19,7 @@ import me.zsj.interessant.rx.RxScroller;
  * Created by zsj on 2016/10/11.
  */
 
-public class ShareListFragment extends BaseFragment implements OnMovieClickListener {
+public class ShareListFragment extends ItemFragment {
 
     private static final String SHARE = "shareCount";
 
@@ -36,7 +33,7 @@ public class ShareListFragment extends BaseFragment implements OnMovieClickListe
 
         final int categoryId = getArguments().getInt(MainActivity.CATEGORY_ID);
 
-        adapter = new InterestingAdapter(shareList);
+        adapter = new InterestingAdapter(context, shareList);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
 
@@ -53,7 +50,6 @@ public class ShareListFragment extends BaseFragment implements OnMovieClickListe
                     }
                 });
 
-        adapter.setOnMovieClickListener(this);
     }
 
     private void loadData(int categoryId, String strategy) {
@@ -67,9 +63,5 @@ public class ShareListFragment extends BaseFragment implements OnMovieClickListe
 
     }
 
-    @Override
-    public void onMovieClick(ItemList item, View movieAlbum) {
-        IntentManager.flyToMovieDetail(context, item, movieAlbum);
-    }
 }
 

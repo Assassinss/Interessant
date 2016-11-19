@@ -1,5 +1,6 @@
 package me.zsj.interessant.provider;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,10 @@ import com.jakewharton.rxbinding.view.RxView;
 import java.util.concurrent.TimeUnit;
 
 import me.drakeet.multitype.ItemViewProvider;
+import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.R;
 import me.zsj.interessant.common.Holder;
-import me.zsj.interessant.common.OnMovieClickListener;
 import me.zsj.interessant.model.ItemList;
-import rx.functions.Action1;
 
 /**
  * Created by zsj on 2016/10/2.
@@ -26,13 +26,12 @@ public class DailyItemViewProvider extends
         ItemViewProvider<ItemList, Holder>  {
 
     private static final String VIDEO_TAG = "video";
-    private static final String TEXTHEADER_TAG = "textHeader";
     private static final int TOUCH_TIME = 1000;
 
-    private OnMovieClickListener onMovieClickListener;
+    private Activity context;
 
-    public void setOnMovieClickListener(OnMovieClickListener onMovieClickListener) {
-        this.onMovieClickListener = onMovieClickListener;
+    public DailyItemViewProvider(Activity context) {
+        this.context = context;
     }
 
     @NonNull @Override
@@ -60,15 +59,14 @@ public class DailyItemViewProvider extends
             holder.movieDesc.setVisibility(View.GONE);
         }
 
-        if (onMovieClickListener != null) {
-            RxView.clicks(holder.movieContent).throttleFirst(TOUCH_TIME, TimeUnit.MILLISECONDS)
-                    .subscribe(new Action1<Void>() {
-                        @Override
-                        public void call(Void aVoid) {
-                            onMovieClickListener.onMovieClick(item, holder.movieAlbum);
-                        }
-                    });
-        }
+        RxView.clicks(holder.movieContent).throttleFirst(TOUCH_TIME, TimeUnit.MILLISECONDS)
+                .subscribe(aVoid -> {
+                    fly(holder.movieAlbum, item);
+                });
+    }
+
+    private void fly(View view, ItemList item) {
+        IntentManager.flyToMovieDetail(context, item, view);
     }
 
 }

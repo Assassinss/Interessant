@@ -4,16 +4,13 @@ package me.zsj.interessant.interesting;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.MainActivity;
-import me.zsj.interessant.common.OnMovieClickListener;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
@@ -22,7 +19,7 @@ import me.zsj.interessant.rx.RxScroller;
  * Created by zsj on 2016/10/11.
  */
 
-public class TimeListFragment extends BaseFragment implements OnMovieClickListener {
+public class TimeListFragment extends ItemFragment {
 
     private static final String DATE = "date";
 
@@ -36,7 +33,7 @@ public class TimeListFragment extends BaseFragment implements OnMovieClickListen
 
         final int categoryId = getArguments().getInt(MainActivity.CATEGORY_ID);
 
-        adapter = new InterestingAdapter(timeList);
+        adapter = new InterestingAdapter(context, timeList);
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
 
@@ -53,7 +50,6 @@ public class TimeListFragment extends BaseFragment implements OnMovieClickListen
                     }
                 });
 
-        adapter.setOnMovieClickListener(this);
     }
 
     private void loadData(int categoryId, String strategy) {
@@ -64,11 +60,6 @@ public class TimeListFragment extends BaseFragment implements OnMovieClickListen
                 .subscribe(itemLists -> {
                     adapter.notifyDataSetChanged();
                 }, ErrorAction.errorAction(context));
-    }
-
-    @Override
-    public void onMovieClick(ItemList item, View movieAlbum) {
-        IntentManager.flyToMovieDetail(context, item, movieAlbum);
     }
 
 }

@@ -27,7 +27,7 @@ import rx.schedulers.Schedulers;
  * Created by zsj on 2016/10/11.
  */
 
-public class BaseFragment extends RxFragment {
+public class ItemFragment extends RxFragment {
 
     RecyclerView list;
     LinearLayoutManager layoutManager;
