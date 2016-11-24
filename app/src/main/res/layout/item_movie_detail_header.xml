@@ -41,4 +41,35 @@
         android:textSize="16sp"
         tools:text="心仪对象主动和自己搭上话时令人小鹿乱撞，然而若是和片中主人翁一样陷入恐慌，脑中可能就会上演一场真人版「脑筋急转弯」... From Future Boyfriends" />
 
+    <LinearLayout
+        android:id="@+id/author_content"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:textStyle="bold"
+            tools:text="Hahahaha"/>
+
+        <ImageView
+            android:id="@+id/author"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription"/>
+
+    </LinearLayout>
+
 </LinearLayout>

@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
+import io.vov.vitamio.widget.CenterLayout;
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.utils.AnimUtils;
@@ -42,6 +43,7 @@ public class PlayActivity extends ToolbarActivity
     private FrameLayout mediaController;
     private ImageButton pause;
     private ProgressBar progressBar;
+    private CenterLayout centerLayout;
 
     private MediaPlayer mediaPlayer;
 
@@ -66,6 +68,7 @@ public class PlayActivity extends ToolbarActivity
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         if (!LibsChecker.checkVitamioLibs(this)) return;
 
+        centerLayout = (CenterLayout) findViewById(R.id.center_layout);
         mediaController = (FrameLayout) findViewById(R.id.media_controller);
         pause = (ImageButton) findViewById(R.id.pause);
         pause.setOnClickListener(this);
@@ -203,21 +206,38 @@ public class PlayActivity extends ToolbarActivity
     @Override
     public void onClick(View v) {
         if (mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-            pause.setSelected(true);
+            pause();
         } else {
-            mediaPlayer.start();
-            handler.post(progressCallback);
-            pause.setSelected(false);
+            start();
         }
+    }
+
+    private void start() {
+        mediaPlayer.start();
+        handler.post(progressCallback);
+        pause.setSelected(false);
+    }
+
+    private void pause() {
+        mediaPlayer.pause();
+        pause.setSelected(true);
     }
 
     @Override
     public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
         isVideoSizeKnown = true;
+        mVideoHeight = (int) (mVideoWidth / mp.getVideoAspectRatio());
         if (isVideoReadyToBePlayed && isVideoSizeKnown) {
+            calculateVideoWidthAndHeight();
             startVideoPlayback();
         }
+    }
+
+    private void calculateVideoWidthAndHeight() {
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) centerLayout.getLayoutParams();
+        lp.width = mVideoWidth;
+        lp.height = mVideoHeight;
+        centerLayout.setLayoutParams(lp);
     }
 
     private void startVideoPlayback() {

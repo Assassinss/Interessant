@@ -7,14 +7,16 @@
     android:background="@android:color/black">
 
     <io.vov.vitamio.widget.CenterLayout
+        android:id="@+id/center_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
         <SurfaceView
             android:id="@+id/surface_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
     </io.vov.vitamio.widget.CenterLayout>
 

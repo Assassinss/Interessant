@@ -3,6 +3,8 @@ package me.zsj.interessant.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by zsj on 2016/10/11.
  */
@@ -22,7 +24,9 @@ public class Data implements Parcelable {
     public String playUrl;
     public String category;
     public long duration;
-
+    public Header header;
+    public List<ItemList> itemList;
+    public Author author;
 
     protected Data(Parcel in) {
         dataType = in.readString();
@@ -37,6 +41,8 @@ public class Data implements Parcelable {
         playUrl = in.readString();
         category = in.readString();
         duration = in.readLong();
+        itemList = in.createTypedArrayList(ItemList.CREATOR);
+        author = in.readParcelable(Author.class.getClassLoader());
     }
 
     public static final Creator<Data> CREATOR = new Creator<Data>() {
@@ -70,5 +76,7 @@ public class Data implements Parcelable {
         dest.writeString(playUrl);
         dest.writeString(category);
         dest.writeLong(duration);
+        dest.writeTypedList(itemList);
+        dest.writeParcelable(author, flags);
     }
 }

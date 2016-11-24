@@ -6,7 +6,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * Created by zsj on 2016/10/1.
+ * @author zsj
  */
 
 public interface DailyApi {

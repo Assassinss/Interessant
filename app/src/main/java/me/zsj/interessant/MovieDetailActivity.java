@@ -10,12 +10,14 @@ import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
@@ -26,6 +28,7 @@ import me.zsj.interessant.api.ReplayApi;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.model.Replies;
 import me.zsj.interessant.model.ReplyList;
+import me.zsj.interessant.utils.CircleTransform;
 import me.zsj.interessant.utils.TimeUtils;
 import me.zsj.interessant.widget.FabToggle;
 import me.zsj.interessant.widget.InsetDividerDecoration;
@@ -36,7 +39,7 @@ import rx.schedulers.Schedulers;
 
 
 /**
- * Created by zsj on 2016/10/5.
+ * @author zsj
  */
 
 public class MovieDetailActivity extends RxAppCompatActivity implements View.OnClickListener {
@@ -69,14 +72,28 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
         movieDescription = LayoutInflater.from(this)
                 .inflate(R.layout.item_movie_detail_header, replies, false);
         final TextView title = (TextView) movieDescription.findViewById(R.id.movie_title);
-        TextView type = (TextView) movieDescription.findViewById(R.id.movie_type);
-        TextView description = (TextView) movieDescription.findViewById(R.id.movie_desc);
+        final TextView type = (TextView) movieDescription.findViewById(R.id.movie_type);
+        final TextView description = (TextView) movieDescription.findViewById(R.id.movie_desc);
+        final ImageView author = (ImageView) movieDescription.findViewById(R.id.author);
+        author.setOnClickListener(this);
+        final TextView name = (TextView) movieDescription.findViewById(R.id.name);
+        final LinearLayout authorContent = (LinearLayout) movieDescription.findViewById(R.id.author_content);
 
         title.setText(item.data.title);
         type.setText(item.data.category + " | " + TimeUtils.secToTime((int) item.data.duration));
         description.setText(item.data.description);
 
+        if (item.data.author != null) {
+            authorContent.setVisibility(View.VISIBLE);
+            name.setText(item.data.author.name);
+            Glide.with(this)
+                    .load(item.data.author.icon)
+                    .transform(new CircleTransform(this))
+                    .into(author);
+        }
+
         play = (FabToggle) findViewById(R.id.fab_play);
+        play.setOnClickListener(this);
 
         backdrop.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -91,12 +108,6 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
         Picasso.with(this)
                 .load(item.data.cover.detail)
                 .into(backdrop);
-
-        play.setOnClickListener(v -> {
-            Intent intent = new Intent(MovieDetailActivity.this, PlayActivity.class);
-            intent.putExtra("item", item);
-            startActivity(intent);
-        });
 
         replayApi = InteressantFactory.getRetrofit().createApi(ReplayApi.class);
 
@@ -181,16 +192,19 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finishAfterTransition();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onClick(View v) {
-        finishAfterTransition();
+        switch (v.getId()) {
+            case R.id.back:
+                finishAfterTransition();
+                break;
+            case R.id.fab_play:
+                Intent intent = new Intent(MovieDetailActivity.this, PlayActivity.class);
+                intent.putExtra("item", item);
+                startActivity(intent);
+                break;
+            case R.id.author:
+                break;
+        }
     }
 
 }

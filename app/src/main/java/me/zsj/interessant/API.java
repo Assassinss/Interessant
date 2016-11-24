@@ -1,7 +1,7 @@
 package me.zsj.interessant;
 
 /**
- * Created by zsj on 2016/10/1.
+ * @author zsj
  */
 
 public class API {
@@ -24,6 +24,14 @@ public class API {
 
     public static final String TABS = "http://baobab.kaiyanapp.com/api/v3/tabs/pgcs?udid=dc47bc64bc04470cb3537addda22998825c217d5";
 
-    public static final String TABS_ITEM = "http://baobab.kaiyanapp.com/api/v3/pgc/videos?pgcId=56&strategy=date&udid=dc47bc64bc04470cb3537addda22998825c217d5";
+    public static final String TABS_ITEM = "http://baobab.kaiyanapp.com/api/v3/pgc/videos?pgcId=56&strategy=date";
+
+    /**
+     * strategy : monthly, weekly, historical
+     */
+    public static final String HOTS = "http://baobab.kaiyanapp.com/api/v3/ranklist?num=10&strategy=monthly";
+
+    public static final String MOVIE_RELATED = "http://baobab.kaiyanapp.com/api/v3/video/10056/detail/related";
+
 
 }
