@@ -31,7 +31,7 @@ public class HeaderViewProvider extends ItemViewProvider<HeaderItem, HeaderViewP
     @NonNull @Override
     protected HeaderHolder onCreateViewHolder(
             @NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.item_related_title, parent, false);
+        View view = inflater.inflate(R.layout.item_related_header, parent, false);
         return new HeaderHolder(view);
     }
 

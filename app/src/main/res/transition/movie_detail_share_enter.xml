@@ -7,6 +7,7 @@
     <changeBounds android:interpolator="@android:interpolator/fast_out_slow_in">
         <targets>
             <target android:targetId="@id/backdrop" />
+            <target android:targetId="@id/background" />
         </targets>
     </changeBounds>
 

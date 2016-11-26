@@ -36,4 +36,6 @@ public class API {
     //http://baobab.kaiyanapp.com/api/v3/tag/videos?tagId=24&strategy=shareCount
 
     //http://baobab.kaiyanapp.com/api/v3/pgc/videos?pgcId=2&strategy=date
+
+    //http://baobab.kaiyanapp.com/api/v3/categories/detail?id=18
 }

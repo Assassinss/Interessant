@@ -82,25 +82,4 @@ public class Data implements Parcelable {
         dest.writeParcelable(author, flags);
     }
 
-    @Override
-    public String toString() {
-        return "Data{" +
-                "dataType='" + dataType + '\'' +
-                ", id=" + id +
-                ", title='" + title + '\'' +
-                ", text='" + text + '\'' +
-                ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
-                ", actionUrl='" + actionUrl + '\'' +
-                ", adTrack=" + adTrack +
-                ", shade=" + shade +
-                ", cover=" + cover +
-                ", playUrl='" + playUrl + '\'' +
-                ", category='" + category + '\'' +
-                ", duration=" + duration +
-                ", header=" + header +
-                ", itemList=" + itemList +
-                ", author=" + author +
-                '}';
-    }
 }

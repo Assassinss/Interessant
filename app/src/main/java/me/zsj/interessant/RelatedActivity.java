@@ -27,10 +27,8 @@ import rx.schedulers.Schedulers;
 public class RelatedActivity extends RxAppCompatActivity {
 
     public static final String ID = "id";
-    public static final String RELATED_VIDEO = "related";
 
     private MultiTypeAdapter adapter;
-    private RecyclerView list;
     private Items items = new Items();
     private RelatedApi relatedApi;
 
@@ -44,9 +42,9 @@ public class RelatedActivity extends RxAppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(view -> finish());
+        toolbar.setNavigationOnClickListener(view -> finishAfterTransition());
 
-        list = (RecyclerView) findViewById(R.id.related_list);
+        RecyclerView list = (RecyclerView) findViewById(R.id.related_list);
 
         adapter = new MultiTypeAdapter(items);
         list.setAdapter(adapter);

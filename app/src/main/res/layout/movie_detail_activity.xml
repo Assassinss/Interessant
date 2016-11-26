@@ -8,6 +8,13 @@
     android:orientation="vertical"
     android:transitionGroup="false">
 
+    <View
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_light"
+        android:transitionName="@string/transition_shot_background"/>
+
     <me.zsj.interessant.widget.ParallaxScrimageView
         android:id="@+id/backdrop"
         android:layout_width="match_parent"
@@ -31,6 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
+        android:elevation="1dp"
         app:layoutManager="LinearLayoutManager"/>
 
     <me.zsj.interessant.widget.FabToggle

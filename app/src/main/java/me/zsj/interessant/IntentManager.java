@@ -3,6 +3,7 @@ package me.zsj.interessant;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.util.Pair;
 import android.view.View;
 
 import com.squareup.picasso.Callback;
@@ -27,7 +28,10 @@ public class IntentManager {
                         Intent intent = new Intent(context, MovieDetailActivity.class);
                         intent.putExtra(PROVIDER_ITEM, item);
                         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-                                context, view, context.getString(R.string.transition_shot));
+                                context,
+                                Pair.create(view, context.getString(R.string.transition_shot)),
+                                Pair.create(view, context.getString(R.string.transition_shot_background))
+                        );
                         context.startActivity(intent, options.toBundle());
                     }
 

@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -72,13 +72,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
 
     static class CardHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout content;
+        FrameLayout content;
         RatioImageView imageView;
         TextView desc;
 
         public CardHolder(View itemView) {
             super(itemView);
-            content = (LinearLayout) itemView.findViewById(R.id.content);
+            content = (FrameLayout) itemView.findViewById(R.id.content);
             imageView = (RatioImageView) itemView.findViewById(R.id.movie_album);
             desc = (TextView) itemView.findViewById(R.id.related_title);
         }
