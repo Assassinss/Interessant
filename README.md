@@ -11,6 +11,11 @@ A simple, unofficial android client of Eyepetizer(开眼视频).
 <img src="screenshot/Screenshot_20161029-150830.png" width="384" height="216">
 <img src="screenshot/Screenshot_20161029-150941.png" width="384" height="216">
 
+###TODO:
+ * Replace vitamio with ijkplayer
+ * Add author UI and api
+ * Add ranking list
+
 ###Libraries
 ```
 compile 'com.android.support:appcompat-v7:24.2.0'
