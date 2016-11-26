@@ -23,7 +23,12 @@ import me.zsj.interessant.base.ToolbarActivity;
 
 public class InterestingActivity extends ToolbarActivity {
 
+    public static final String RELATED_VIDEO = "related";
+    public static final String RELATED_HEADER_VIDEO = "related_header";
+
     private static int categoryId;
+    private static boolean related;
+    private static boolean relatedHeader;
 
 
     @Override
@@ -36,9 +41,15 @@ public class InterestingActivity extends ToolbarActivity {
         super.onCreate(savedInstanceState);
 
         categoryId = getIntent().getExtras().getInt(MainActivity.CATEGORY_ID);
+        related = getIntent().getBooleanExtra(RELATED_VIDEO, false);
+        relatedHeader = getIntent().getBooleanExtra(RELATED_HEADER_VIDEO, false);
         String title = getIntent().getStringExtra(MainActivity.TITLE);
 
-        ab.setTitle(title.substring(1));
+        if (title == null) ab.setTitle("Interesting");
+        else {
+            if (relatedHeader) ab.setTitle(title);
+            else ab.setTitle(title.substring(1));
+        }
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -74,6 +85,8 @@ public class InterestingActivity extends ToolbarActivity {
             Fragment fragment = fragments.get(position);
             Bundle bundle = new Bundle();
             bundle.putInt(MainActivity.CATEGORY_ID, categoryId);
+            bundle.putBoolean(RELATED_VIDEO, related);
+            bundle.putBoolean(RELATED_HEADER_VIDEO, relatedHeader);
             fragment.setArguments(bundle);
             return fragment;
         }

@@ -68,6 +68,7 @@
             android:layout_height="40dp"
             android:layout_margin="16dp"
             android:scaleType="centerCrop"
+            android:background="@drawable/bg_ripple"
             tools:ignore="ContentDescription"/>
 
     </LinearLayout>

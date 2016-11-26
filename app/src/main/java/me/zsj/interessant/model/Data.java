@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import java.util.List;
 
+import me.zsj.interessant.provider.daily.ItemList;
+
 /**
  * Created by zsj on 2016/10/11.
  */
@@ -78,5 +80,27 @@ public class Data implements Parcelable {
         dest.writeLong(duration);
         dest.writeTypedList(itemList);
         dest.writeParcelable(author, flags);
+    }
+
+    @Override
+    public String toString() {
+        return "Data{" +
+                "dataType='" + dataType + '\'' +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", actionUrl='" + actionUrl + '\'' +
+                ", adTrack=" + adTrack +
+                ", shade=" + shade +
+                ", cover=" + cover +
+                ", playUrl='" + playUrl + '\'' +
+                ", category='" + category + '\'' +
+                ", duration=" + duration +
+                ", header=" + header +
+                ", itemList=" + itemList +
+                ", author=" + author +
+                '}';
     }
 }

@@ -16,4 +16,14 @@ public interface InterestingApi {
             @Query("start") int start, @Query("categoryId") int categoryId,
             @Query("strategy") String strategy);
 
+    @GET("v3/tag/videos")
+    Observable<Interesting> related(
+            @Query("start") int start, @Query("tagId") int id,
+            @Query("strategy") String strategy);
+
+    @GET("v3/pcg/videos")
+    Observable<Interesting> relatedHeader(
+            @Query("start") int start, @Query("pcgId") int id,
+            @Query("strategy") String strategy);
+
 }

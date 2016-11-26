@@ -17,11 +17,13 @@ public class Holder extends RecyclerView.ViewHolder {
     public RatioImageView movieAlbum;
     public TextView movieDesc;
     public FrameLayout movieContent;
+    public TextView tag;
 
     public Holder(View itemView) {
         super(itemView);
         movieContent = (FrameLayout) itemView.findViewById(R.id.movie_content);
         movieAlbum = (RatioImageView) itemView.findViewById(R.id.movie_album);
         movieDesc = (TextView) itemView.findViewById(R.id.movie_desc);
+        tag = (TextView) itemView.findViewById(R.id.author_tag);
     }
 }

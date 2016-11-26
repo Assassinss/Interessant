@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/movie_desc"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="16dp"
@@ -32,6 +32,16 @@
             android:textSize="16sp"
             android:visibility="visible"
             tools:text="Interessant" />
+
+        <TextView
+            android:id="@+id/author_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:padding="2dp"
+            android:background="@color/tag_color"
+            tools:text="HAHA"/>
 
     </FrameLayout>
 

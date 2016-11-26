@@ -16,7 +16,7 @@ import java.util.List;
 import me.zsj.interessant.api.SearchApi;
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.interesting.InterestingAdapter;
-import me.zsj.interessant.model.ItemList;
+import me.zsj.interessant.provider.daily.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
 import rx.android.schedulers.AndroidSchedulers;

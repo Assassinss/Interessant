@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.zsj.interessant.api.ReplayApi;
-import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.model.Replies;
 import me.zsj.interessant.model.ReplyList;
+import me.zsj.interessant.provider.daily.ItemList;
 import me.zsj.interessant.utils.CircleTransform;
 import me.zsj.interessant.utils.TimeUtils;
 import me.zsj.interessant.widget.FabToggle;
@@ -36,6 +36,8 @@ import me.zsj.interessant.widget.ParallaxScrimageView;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static me.zsj.interessant.MainActivity.PROVIDER_ITEM;
 
 
 /**
@@ -67,7 +69,7 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
         final ImageButton back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(this);
 
-        item = getIntent().getParcelableExtra(MainActivity.PROVIDER_ITEM);
+        item = getIntent().getParcelableExtra(PROVIDER_ITEM);
 
         movieDescription = LayoutInflater.from(this)
                 .inflate(R.layout.item_movie_detail_header, replies, false);
@@ -198,11 +200,15 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
                 finishAfterTransition();
                 break;
             case R.id.fab_play:
-                Intent intent = new Intent(MovieDetailActivity.this, PlayActivity.class);
+                Intent intent = new Intent(this, PlayActivity.class);
                 intent.putExtra("item", item);
                 startActivity(intent);
                 break;
             case R.id.author:
+                Intent relatedIntent = new Intent(this, RelatedActivity.class);
+                relatedIntent.putExtra(RelatedActivity.ID, item.data.id);
+                relatedIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(relatedIntent);
                 break;
         }
     }

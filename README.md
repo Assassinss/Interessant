@@ -2,11 +2,12 @@
 A simple, unofficial android client of Eyepetizer(开眼视频).
 
 ###Screenshot
-<img src="screenshot/Screenshot_20161119-153015.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161119-153031.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161119-153040.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161119-153100.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161029-150408.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161126-143303.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161126-143311.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161126-143318.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161126-143710.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161126-143729.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161126-143735.png" width="216" height="384">
 <img src="screenshot/Screenshot_20161029-150830.png" width="384" height="216">
 <img src="screenshot/Screenshot_20161029-150941.png" width="384" height="216">
 

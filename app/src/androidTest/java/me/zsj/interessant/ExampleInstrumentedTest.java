@@ -13,7 +13,7 @@ import java.util.List;
 import me.zsj.interessant.api.DailyApi;
 import me.zsj.interessant.api.ReplayApi;
 import me.zsj.interessant.api.SearchApi;
-import me.zsj.interessant.model.ItemList;
+import me.zsj.interessant.provider.daily.ItemList;
 import me.zsj.interessant.model.Replies;
 import me.zsj.interessant.model.ReplyList;
 import me.zsj.interessant.model.SearchResult;

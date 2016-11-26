@@ -1,4 +1,4 @@
-package me.zsj.interessant.provider;
+package me.zsj.interessant.provider.daily;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -16,7 +16,6 @@ import me.drakeet.multitype.ItemViewProvider;
 import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.R;
 import me.zsj.interessant.common.Holder;
-import me.zsj.interessant.model.ItemList;
 
 /**
  * Created by zsj on 2016/10/2.
@@ -54,6 +53,14 @@ public class DailyItemViewProvider extends
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(holder.movieAlbum);
             holder.movieDesc.setText(item.data.title);
+
+            if (item.data.author != null) {
+                holder.tag.setVisibility(View.VISIBLE);
+                holder.tag.setText(item.data.author.name);
+            } else {
+                holder.tag.setVisibility(View.GONE);
+            }
+
         } else {
             holder.movieAlbum.setVisibility(View.GONE);
             holder.movieDesc.setVisibility(View.GONE);

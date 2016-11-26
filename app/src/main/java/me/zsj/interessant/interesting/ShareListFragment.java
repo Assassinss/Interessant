@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.zsj.interessant.MainActivity;
-import me.zsj.interessant.model.ItemList;
+import me.zsj.interessant.model.Interesting;
+import me.zsj.interessant.provider.daily.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
+import rx.Observable;
 
 /**
  * Created by zsj on 2016/10/11.
@@ -27,11 +29,16 @@ public class ShareListFragment extends ItemFragment {
 
     private List<ItemList> shareList = new ArrayList<>();
 
+    private boolean related;
+    private boolean relatedHeader;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         final int categoryId = getArguments().getInt(MainActivity.CATEGORY_ID);
+        related = getArguments().getBoolean(InterestingActivity.RELATED_VIDEO);
+        relatedHeader = getArguments().getBoolean(InterestingActivity.RELATED_HEADER_VIDEO);
 
         adapter = new InterestingAdapter(context, shareList);
         list.setLayoutManager(layoutManager);
@@ -53,8 +60,16 @@ public class ShareListFragment extends ItemFragment {
     }
 
     private void loadData(int categoryId, String strategy) {
-        interestingApi.getInteresting(start, categoryId, strategy)
-                .compose(bindToLifecycle())
+        Observable<Interesting> result;
+        if (related) {
+            result = interestingApi.related(start, categoryId, strategy);
+        } else if (relatedHeader) {
+            result = interestingApi.related(start, categoryId, strategy);
+        } else {
+            result = interestingApi.getInteresting(start, categoryId, strategy);
+        }
+
+        result.compose(bindToLifecycle())
                 .compose(interestingTransformer)
                 .doOnNext(itemLists -> shareList.addAll(itemLists))
                 .subscribe(itemLists -> {

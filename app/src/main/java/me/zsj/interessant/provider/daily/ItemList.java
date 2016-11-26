@@ -1,9 +1,10 @@
-package me.zsj.interessant.model;
+package me.zsj.interessant.provider.daily;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import me.drakeet.multitype.Item;
+import me.zsj.interessant.model.Data;
 
 /**
  * Created by zsj on 2016/10/11.

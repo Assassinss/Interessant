@@ -13,5 +13,7 @@
     <color name="divider">#1f000000</color> <!-- 12% black -->
     <color name="color_control">#77000000</color>
     <color name="light_grey">#fff5f5f5</color>
+    <color name="line_color">#EFEFEF</color>
+    <color name="tag_color">#33ffffff</color>
 
 </resources>

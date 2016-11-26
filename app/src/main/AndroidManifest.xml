@@ -19,6 +19,14 @@
             </intent-filter>
         </activity>
 
+
+        <activity
+            android:name="io.vov.vitamio.activity.InitActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
         <activity
             android:name=".MovieDetailActivity"
             android:theme="@style/AppTheme.Movie"
@@ -43,12 +51,7 @@
             android:name=".ResultActivity"
             android:label="@string/result_title"/>
 
-        <activity
-            android:name="io.vov.vitamio.activity.InitActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".RelatedActivity" />
 
     </application>
 

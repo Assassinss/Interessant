@@ -1,0 +1,86 @@
+package me.zsj.interessant.provider.related;
+
+import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import me.drakeet.multitype.ItemViewProvider;
+import me.zsj.interessant.R;
+import me.zsj.interessant.interesting.InterestingActivity;
+import me.zsj.interessant.model.Header;
+import me.zsj.interessant.utils.CircleTransform;
+
+import static me.zsj.interessant.MainActivity.CATEGORY_ID;
+import static me.zsj.interessant.MainActivity.TITLE;
+
+/**
+ * @author zsj
+ */
+
+public class HeaderViewProvider extends ItemViewProvider<HeaderItem, HeaderViewProvider.HeaderHolder> {
+
+    @NonNull @Override
+    protected HeaderHolder onCreateViewHolder(
+            @NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+        View view = inflater.inflate(R.layout.item_related_title, parent, false);
+        return new HeaderHolder(view);
+    }
+
+    @Override
+    protected void onBindViewHolder(@NonNull HeaderHolder holder, @NonNull HeaderItem headerItem) {
+        Header header = headerItem.header;
+
+        Context context = holder.avatar.getContext();
+        Glide.with(context)
+                .load(header.icon)
+                .transform(new CircleTransform(context))
+                .into(holder.avatar);
+
+        holder.relatedTitle.setText(header.title);
+
+        String desc;
+        if (header.description.length() >= 18) {
+            desc = header.description.substring(0, 17) + "...";
+        } else {
+            desc = header.description;
+        }
+
+        holder.relatedDesc.setText(desc);
+
+        holder.content.setOnClickListener(v ->
+                toInteresting(holder.content.getContext(), header));
+    }
+
+    private void toInteresting(Context context, Header header) {
+        Intent intent = new Intent(context, InterestingActivity.class);
+        intent.putExtra(CATEGORY_ID, header.id);
+        intent.putExtra(TITLE, header.title);
+        intent.putExtra(InterestingActivity.RELATED_HEADER_VIDEO, true);
+        context.startActivity(intent);
+    }
+
+    static class HeaderHolder extends RecyclerView.ViewHolder {
+
+        RelativeLayout content;
+        ImageView avatar;
+        TextView relatedTitle;
+        TextView relatedDesc;
+
+        public HeaderHolder(View itemView) {
+            super(itemView);
+            content = (RelativeLayout) itemView.findViewById(R.id.header_content);
+            avatar = (ImageView) itemView.findViewById(R.id.movie_avatar);
+            relatedTitle = (TextView) itemView.findViewById(R.id.related_title);
+            relatedDesc = (TextView) itemView.findViewById(R.id.related_desc);
+        }
+    }
+}

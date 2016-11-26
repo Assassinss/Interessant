@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.R;
 import me.zsj.interessant.common.Holder;
-import me.zsj.interessant.model.ItemList;
+import me.zsj.interessant.provider.daily.ItemList;
 
 /**
  * Created by zsj on 2016/10/11.
@@ -51,6 +51,13 @@ public class InterestingAdapter extends RecyclerView.Adapter<Holder> {
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(holder.movieAlbum);
         holder.movieDesc.setText(item.data.title);
+
+        if (item.data.author != null) {
+            holder.tag.setVisibility(View.VISIBLE);
+            holder.tag.setText(item.data.author.name);
+        } else {
+            holder.tag.setVisibility(View.GONE);
+        }
 
         RxView.clicks(holder.movieContent).throttleFirst(TOUCH_TIME, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {

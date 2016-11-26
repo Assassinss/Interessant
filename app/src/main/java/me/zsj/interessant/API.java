@@ -33,5 +33,7 @@ public class API {
 
     public static final String MOVIE_RELATED = "http://baobab.kaiyanapp.com/api/v3/video/10056/detail/related";
 
+    //http://baobab.kaiyanapp.com/api/v3/tag/videos?tagId=24&strategy=shareCount
 
+    //http://baobab.kaiyanapp.com/api/v3/pgc/videos?pgcId=2&strategy=date
 }

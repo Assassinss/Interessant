@@ -8,7 +8,7 @@ import android.view.View;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import me.zsj.interessant.model.ItemList;
+import me.zsj.interessant.provider.daily.ItemList;
 
 import static me.zsj.interessant.MainActivity.PROVIDER_ITEM;
 

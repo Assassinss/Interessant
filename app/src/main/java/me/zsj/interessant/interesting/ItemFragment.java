@@ -18,7 +18,7 @@ import me.zsj.interessant.InteressantFactory;
 import me.zsj.interessant.R;
 import me.zsj.interessant.api.InterestingApi;
 import me.zsj.interessant.model.Interesting;
-import me.zsj.interessant.model.ItemList;
+import me.zsj.interessant.provider.daily.ItemList;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
