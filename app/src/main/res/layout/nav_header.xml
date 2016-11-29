@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
     android:layout_height="192dp"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -10,12 +11,13 @@
     <ImageView
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:src="@drawable/web_hi_res_512"/>
+        android:src="@drawable/ic_videocam_black_48px"
+        tools:ignore="ContentDescription"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
+        android:text="Find interesting video"
         android:textColor="?attr/colorPrimary"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>

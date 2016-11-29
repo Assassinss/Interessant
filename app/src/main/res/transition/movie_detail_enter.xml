@@ -46,13 +46,4 @@
         </targets>
     </fade>
 
-    <fade
-        android:duration="350"
-        android:interpolator="@android:interpolator/linear">
-        <targets>
-            <target android:targetId="@android:id/statusBarBackground" />
-            <target android:targetId="@android:id/navigationBarBackground" />
-        </targets>
-    </fade>
-
 </transitionSet>

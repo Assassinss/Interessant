@@ -12,11 +12,11 @@ import java.util.List;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.api.RelatedApi;
-import me.zsj.interessant.provider.daily.ItemList;
+import me.zsj.interessant.model.Header;
+import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.provider.related.CardItem;
 import me.zsj.interessant.provider.related.HeaderItem;
 import me.zsj.interessant.provider.related.RelatedHeaderItem;
-import me.zsj.interessant.rx.ErrorAction;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -65,19 +65,21 @@ public class RelatedActivity extends RxAppCompatActivity {
                 .map(related -> related.itemList)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::addData, throwable -> ErrorAction.errorAction(this));
+                .subscribe(this::addData);
     }
 
     private void addData(List<ItemList> itemLists) {
         for (ItemList item : itemLists) {
-            if (item.data.header.description != null) {
-                items.add(new HeaderItem(item.data.header));
-            } else {
-                items.add(new RelatedHeaderItem(item.data.header));
+            Header header = item.data.header;
+            if (header != null) {
+                if (header.description != null) {
+                    items.add(new HeaderItem(item.data.header));
+                } else {
+                    items.add(new RelatedHeaderItem(item.data.header));
+                }
+                items.add(new CardItem(item));
             }
-            items.add(new CardItem(item));
         }
         adapter.notifyDataSetChanged();
     }
-
 }

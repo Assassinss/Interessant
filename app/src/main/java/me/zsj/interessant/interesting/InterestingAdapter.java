@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.R;
 import me.zsj.interessant.common.Holder;
-import me.zsj.interessant.provider.daily.ItemList;
+import me.zsj.interessant.model.ItemList;
 
 /**
  * Created by zsj on 2016/10/11.

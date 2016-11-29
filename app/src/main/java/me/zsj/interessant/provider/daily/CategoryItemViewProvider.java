@@ -21,13 +21,13 @@ public class CategoryItemViewProvider extends ItemViewProvider<Category, Categor
 
     @NonNull @Override
     protected DateHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.item_date, parent, false);
+        View view = inflater.inflate(R.layout.item_category_title, parent, false);
         return new DateHolder(view);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull DateHolder holder, @NonNull Category category) {
-        holder.category.setText(category.date);
+        holder.category.setText(category.categoryTitle);
     }
 
     class DateHolder extends RecyclerView.ViewHolder {

@@ -12,7 +12,7 @@ import java.util.List;
 
 import me.drakeet.multitype.ItemViewProvider;
 import me.zsj.interessant.R;
-import me.zsj.interessant.provider.daily.ItemList;
+import me.zsj.interessant.model.ItemList;
 
 /**
  * @author zsj

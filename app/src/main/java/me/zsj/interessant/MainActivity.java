@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout;
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
@@ -24,9 +23,9 @@ import me.drakeet.multitype.Item;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.api.DailyApi;
 import me.zsj.interessant.base.ToolbarActivity;
-import me.zsj.interessant.interesting.InterestingActivity;
 import me.zsj.interessant.model.Category;
 import me.zsj.interessant.model.Daily;
+import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -118,14 +117,8 @@ public class MainActivity extends ToolbarActivity {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnCompleted(() -> refreshLayout.setRefreshing(false))
-                .subscribe(daily -> {
-                    refreshLayout.setRefreshing(false);
-                    addData(daily);
-                }, throwable -> {
-                    refreshLayout.setRefreshing(false);
-                    Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                .doAfterTerminate(() -> refreshLayout.setRefreshing(false))
+                .subscribe(this::addData, ErrorAction.errorAction(this));
     }
 
     private void addData(Daily daily) {
@@ -228,7 +221,7 @@ public class MainActivity extends ToolbarActivity {
             default:
                 return;
         }
-        Intent intent = new Intent(this, InterestingActivity.class);
+        Intent intent = new Intent(this, FindInterestingActivity.class);
         intent.putExtra(CATEGORY_ID, id);
         intent.putExtra(TITLE, title);
         startActivity(intent);

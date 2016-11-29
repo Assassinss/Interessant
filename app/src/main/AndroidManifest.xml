@@ -33,11 +33,6 @@
             android:label=""/>
 
         <activity
-            android:name=".PlayerActivity"
-            android:screenOrientation="landscape"
-            android:label=""/>
-
-        <activity
             android:name=".PlayActivity"
             android:screenOrientation="landscape"
             android:label=""/>
@@ -52,6 +47,8 @@
             android:label="@string/result_title"/>
 
         <activity android:name=".RelatedActivity" />
+
+        <activity android:name=".FindInterestingActivity" />
 
     </application>
 

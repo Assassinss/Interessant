@@ -3,7 +3,7 @@ package me.zsj.interessant.provider.related;
 import android.support.annotation.NonNull;
 
 import me.drakeet.multitype.Item;
-import me.zsj.interessant.provider.daily.ItemList;
+import me.zsj.interessant.model.ItemList;
 
 /**
  * @author zsj

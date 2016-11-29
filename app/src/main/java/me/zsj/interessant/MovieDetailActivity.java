@@ -27,7 +27,7 @@ import java.util.List;
 import me.zsj.interessant.api.ReplayApi;
 import me.zsj.interessant.model.Replies;
 import me.zsj.interessant.model.ReplyList;
-import me.zsj.interessant.provider.daily.ItemList;
+import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.utils.CircleTransform;
 import me.zsj.interessant.utils.TimeUtils;
 import me.zsj.interessant.widget.FabToggle;
@@ -45,8 +45,6 @@ import static me.zsj.interessant.MainActivity.PROVIDER_ITEM;
  */
 
 public class MovieDetailActivity extends RxAppCompatActivity implements View.OnClickListener {
-
-    public static final String PLAY_URL = "playUrl";
 
     private ReplayApi replayApi;
     private List<ReplyList> datas = new ArrayList<>();
@@ -207,7 +205,6 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
             case R.id.author:
                 Intent relatedIntent = new Intent(this, RelatedActivity.class);
                 relatedIntent.putExtra(RelatedActivity.ID, item.data.id);
-                relatedIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(relatedIntent);
                 break;
         }

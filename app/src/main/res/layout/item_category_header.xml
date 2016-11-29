@@ -16,12 +16,11 @@
         android:textColor="@android:color/black"
         tools:text="运动相关的视频"/>
 
-    <ImageButton
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center"
         android:layout_margin="16dp"
-        android:background="?selectableItemBackgroundBorderless"
         android:src="@drawable/ic_keyboard_arrow_right_black_24px"
         tools:ignore="ContentDescription"/>
 

@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.R;
-import me.zsj.interessant.provider.daily.ItemList;
+import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.widget.RatioImageView;
 
 /**

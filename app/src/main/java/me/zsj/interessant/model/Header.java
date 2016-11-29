@@ -12,5 +12,6 @@ public class Header {
     public String subTitle;
     public String description;
     public String actionUrl;
+    public Data data;
 
 }

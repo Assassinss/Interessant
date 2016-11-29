@@ -12,7 +12,7 @@ import java.util.List;
 
 import me.zsj.interessant.MainActivity;
 import me.zsj.interessant.model.Interesting;
-import me.zsj.interessant.provider.daily.ItemList;
+import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
 import rx.Observable;
@@ -64,7 +64,7 @@ public class ShareListFragment extends ItemFragment {
         if (related) {
             result = interestingApi.related(start, categoryId, strategy);
         } else if (relatedHeader) {
-            result = interestingApi.related(start, categoryId, strategy);
+            result = interestingApi.relatedHeader(start, categoryId, strategy);
         } else {
             result = interestingApi.getInteresting(start, categoryId, strategy);
         }

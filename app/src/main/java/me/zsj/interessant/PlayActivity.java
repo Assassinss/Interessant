@@ -22,7 +22,7 @@ import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.widget.CenterLayout;
 import me.zsj.interessant.base.ToolbarActivity;
-import me.zsj.interessant.provider.daily.ItemList;
+import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.utils.AnimUtils;
 import me.zsj.interessant.utils.ScreenUtils;
 import me.zsj.interessant.utils.TimeUtils;

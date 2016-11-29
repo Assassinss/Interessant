@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-import me.zsj.interessant.provider.daily.ItemList;
-
 /**
  * Created by zsj on 2016/10/11.
  */
@@ -20,7 +18,6 @@ public class Data implements Parcelable {
     public String description;
     public String image;
     public String actionUrl;
-    public Object adTrack;
     public boolean shade;
     public Cover cover;
     public String playUrl;

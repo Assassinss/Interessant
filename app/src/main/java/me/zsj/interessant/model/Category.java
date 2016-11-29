@@ -10,9 +10,9 @@ import me.drakeet.multitype.Item;
 
 public class Category implements Item {
 
-    public String date;
+    public String categoryTitle;
 
-    public Category(@NonNull String date) {
-        this.date = date;
+    public Category(@NonNull String categoryTitle) {
+        this.categoryTitle = categoryTitle;
     }
 }
