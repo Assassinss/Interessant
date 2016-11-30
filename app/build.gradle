@@ -56,5 +56,6 @@ dependencies {
     compile 'me.drakeet.multitype:multitype:2.2.1'
 
     compile 'com.zhy:flowlayout-lib:1.0.3'
-    compile project(':vitamio')
+    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.7.5'
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.7.5'
 }

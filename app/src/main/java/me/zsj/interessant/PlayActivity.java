@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -18,23 +17,22 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
-import io.vov.vitamio.LibsChecker;
-import io.vov.vitamio.MediaPlayer;
-import io.vov.vitamio.widget.CenterLayout;
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.utils.AnimUtils;
 import me.zsj.interessant.utils.ScreenUtils;
 import me.zsj.interessant.utils.TimeUtils;
+import tv.danmaku.ijk.media.player.IMediaPlayer;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
- * Created by zsj on 2016/10/27.
+ * @author zsj
  */
 
 public class PlayActivity extends ToolbarActivity
-        implements SurfaceHolder.Callback, MediaPlayer.OnBufferingUpdateListener,
-        MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener,
-        MediaPlayer.OnVideoSizeChangedListener, View.OnClickListener, MediaPlayer.OnInfoListener {
+        implements SurfaceHolder.Callback, IMediaPlayer.OnBufferingUpdateListener,
+        IMediaPlayer.OnCompletionListener, IMediaPlayer.OnPreparedListener,
+        IMediaPlayer.OnInfoListener, IMediaPlayer.OnVideoSizeChangedListener, View.OnClickListener {
 
     private SurfaceHolder surfaceHolder;
     private SeekBar seekBar;
@@ -43,15 +41,16 @@ public class PlayActivity extends ToolbarActivity
     private FrameLayout mediaController;
     private ImageButton pause;
     private ProgressBar progressBar;
-    private CenterLayout centerLayout;
+    private FrameLayout centerLayout;
 
-    private MediaPlayer mediaPlayer;
+    private IjkMediaPlayer mediaPlayer;
 
     private Handler handler = new Handler();
 
     private ItemList item;
     private int mVideoWidth;
     private int mVideoHeight;
+    private int maxProgress;
     private boolean isVideoSizeKnown = false;
     private boolean isVideoReadyToBePlayed = false;
     private boolean showSystemUi;
@@ -65,10 +64,7 @@ public class PlayActivity extends ToolbarActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        if (!LibsChecker.checkVitamioLibs(this)) return;
-
-        centerLayout = (CenterLayout) findViewById(R.id.center_layout);
+        centerLayout = (FrameLayout) findViewById(R.id.center_layout);
         mediaController = (FrameLayout) findViewById(R.id.media_controller);
         pause = (ImageButton) findViewById(R.id.pause);
         pause.setOnClickListener(this);
@@ -83,6 +79,7 @@ public class PlayActivity extends ToolbarActivity
 
         item = getIntent().getParcelableExtra("item");
         String playUrl = item.data.playUrl;
+        maxProgress = (int) item.data.duration;
 
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
@@ -93,9 +90,8 @@ public class PlayActivity extends ToolbarActivity
 
     private void playMovie(String path) {
         try {
-            mediaPlayer = new MediaPlayer(this);
+            mediaPlayer = new IjkMediaPlayer();
             mediaPlayer.setDataSource(path);
-            mediaPlayer.setDisplay(surfaceHolder);
             mediaPlayer.prepareAsync();
             mediaPlayer.setOnBufferingUpdateListener(this);
             mediaPlayer.setOnCompletionListener(this);
@@ -103,6 +99,7 @@ public class PlayActivity extends ToolbarActivity
             mediaPlayer.setOnInfoListener(this);
             mediaPlayer.setOnVideoSizeChangedListener(this);
             setVolumeControlStream(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setScreenOnWhilePlaying(true);
             startVideoPlayback();
         } catch (IOException e) {
             e.printStackTrace();
@@ -149,18 +146,26 @@ public class PlayActivity extends ToolbarActivity
         handler.post(progressCallback);
     }
 
+    private boolean surfaceCreated;
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        seekBar.setMax((int) item.data.duration);
-        seekBar.setProgress(0);
-        endTime.setText(TimeUtils.secToTime((int) item.data.duration));
-        mVideoWidth = ScreenUtils.getWidth(this);
-        mVideoHeight = ScreenUtils.getHeight(this);
-        progressBar.setVisibility(View.VISIBLE);
+        if (!surfaceCreated) {
+            seekBar.setMax(maxProgress);
+            seekBar.setProgress(0);
+            endTime.setText(TimeUtils.secToTime((int) item.data.duration));
+            mVideoWidth = ScreenUtils.getWidth(this);
+            mVideoHeight = ScreenUtils.getHeight(this);
+            progressBar.setVisibility(View.VISIBLE);
+            surfaceCreated = true;
+        }
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        calculateVideoWidthAndHeight();
+        startVideoPlayback();
+    }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
@@ -168,21 +173,26 @@ public class PlayActivity extends ToolbarActivity
     }
 
     @Override
-    public void onBufferingUpdate(MediaPlayer mp, int percent) {
-
+    public void onBufferingUpdate(IMediaPlayer imp, int percent) {
+        if (percent >= 95) percent = 100;
+        seekBar.setSecondaryProgress(percent);
     }
 
     @Override
-    public boolean onInfo(MediaPlayer mp, int what, int extra) {
+    public boolean onInfo(IMediaPlayer iMediaPlayer, int what, int extra) {
         switch (what) {
-            case MediaPlayer.MEDIA_INFO_BUFFERING_START:
+            case IjkMediaPlayer.MEDIA_INFO_BUFFERING_START:
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
                     progressBar.setVisibility(View.VISIBLE);
                 }
                 break;
-            case MediaPlayer.MEDIA_INFO_BUFFERING_END:
+            case IjkMediaPlayer.MEDIA_INFO_BUFFERING_END:
                 mediaPlayer.start();
+                progressBar.setVisibility(View.GONE);
+                break;
+            case IjkMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
+            case IjkMediaPlayer.MEDIA_INFO_AUDIO_RENDERING_START:
                 progressBar.setVisibility(View.GONE);
                 break;
         }
@@ -190,13 +200,13 @@ public class PlayActivity extends ToolbarActivity
     }
 
     @Override
-    public void onCompletion(MediaPlayer mp) {
+    public void onCompletion(IMediaPlayer imp) {
         handler.removeCallbacks(progressCallback);
         pause.setSelected(true);
     }
 
     @Override
-    public void onPrepared(MediaPlayer mp) {
+    public void onPrepared(IMediaPlayer iMediaPlayer) {
         isVideoReadyToBePlayed = true;
         if (isVideoReadyToBePlayed && isVideoSizeKnown) {
             startVideoPlayback();
@@ -224,9 +234,11 @@ public class PlayActivity extends ToolbarActivity
     }
 
     @Override
-    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+    public void onVideoSizeChanged(IMediaPlayer iMediaPlayer,
+                                   int width, int height, int sar_num, int sar_den) {
+        float ratio = (float) width / (float) height;
+        mVideoHeight = (int) (mVideoWidth / ratio);
         isVideoSizeKnown = true;
-        mVideoHeight = (int) (mVideoWidth / mp.getVideoAspectRatio());
         if (isVideoReadyToBePlayed && isVideoSizeKnown) {
             calculateVideoWidthAndHeight();
             startVideoPlayback();
@@ -242,6 +254,7 @@ public class PlayActivity extends ToolbarActivity
 
     private void startVideoPlayback() {
         handler.post(progressCallback);
+        mediaPlayer.setDisplay(surfaceHolder);
         surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
         mediaPlayer.start();
     }
@@ -288,6 +301,22 @@ public class PlayActivity extends ToolbarActivity
             mVideoWidth = 0;
             mVideoHeight = 0;
             mediaPlayer = null;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!mediaPlayer.isPlaying()) {
+            start();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayer.isPlaying()) {
+            pause();
         }
     }
 
