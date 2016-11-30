@@ -42,7 +42,7 @@ compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.7.5'
 ```
 ###Thanks
 * [Plaid](https://github.com/nickbutcher/plaid)
-* [VitamioBundle](https://github.com/yixia/VitamioBundle)
+* [ijkplayer](https://github.com/Bilibili/ijkplayer)
 
 ###声明
 Api 数据都是来自开眼视频，数据接口均属于非正常渠道获取，请勿用于商业用途，原作公司拥有所有权利。
