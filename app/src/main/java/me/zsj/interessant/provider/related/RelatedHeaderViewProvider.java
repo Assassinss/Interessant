@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import me.drakeet.multitype.ItemViewProvider;
 import me.zsj.interessant.R;
+import me.zsj.interessant.VideoListActivity;
 import me.zsj.interessant.interesting.InterestingActivity;
 import me.zsj.interessant.model.Header;
+import me.zsj.interessant.utils.IDUtils;
 
 import static me.zsj.interessant.MainActivity.CATEGORY_ID;
 
@@ -40,14 +42,21 @@ public class RelatedHeaderViewProvider extends
         holder.categoryTitle.setText(header.title);
 
         holder.content.setOnClickListener(view ->
-                toInteresting(holder.content.getContext(), header.id));
+                toInteresting(holder.content.getContext(), header.id, relatedHeaderItem.related));
     }
 
-    private void toInteresting(Context context, int id) {
-        Intent intent = new Intent(context, InterestingActivity.class);
-        intent.putExtra(CATEGORY_ID, id);
-        intent.putExtra(InterestingActivity.RELATED_VIDEO, true);
-        context.startActivity(intent);
+    private void toInteresting(Context context, int id, boolean related) {
+        if (IDUtils.isDetermined(id) && !related) {
+            Intent videoIntent = new Intent(context, VideoListActivity.class);
+            videoIntent.putExtra("id", id);
+            videoIntent.putExtra("newest", true);
+            context.startActivity(videoIntent);
+        } else {
+            Intent interestingIntent = new Intent(context, InterestingActivity.class);
+            interestingIntent.putExtra(CATEGORY_ID, id);
+            interestingIntent.putExtra(InterestingActivity.RELATED_VIDEO, true);
+            context.startActivity(interestingIntent);
+        }
     }
 
     static class RelatedHeaderHolder extends RecyclerView.ViewHolder {

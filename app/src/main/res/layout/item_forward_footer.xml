@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:showDividers="end"
+    android:divider="@drawable/divider_line"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/footer_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24px"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_bg"
+        tools:text="查看更多最受欢饮的内容"/>
+
+</LinearLayout>

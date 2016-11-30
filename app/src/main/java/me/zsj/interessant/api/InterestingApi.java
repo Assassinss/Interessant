@@ -30,4 +30,8 @@ public interface InterestingApi {
     @GET("v3/categories/detail")
     Observable<Find> findVideo(@Query("id") int id);
 
+    @GET("v3/categories/videoList")
+    Observable<Interesting> videoList(@Query("id") int id, @Query("start") int start,
+                                      @Query("strategy") String strategy);
+
 }

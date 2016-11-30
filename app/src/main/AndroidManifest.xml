@@ -19,7 +19,6 @@
             </intent-filter>
         </activity>
 
-
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
@@ -49,6 +48,8 @@
         <activity android:name=".RelatedActivity" />
 
         <activity android:name=".FindInterestingActivity" />
+
+        <activity android:name=".VideoListActivity" />
 
     </application>
 

@@ -13,6 +13,8 @@ import me.zsj.interessant.provider.related.HeaderItem;
 import me.zsj.interessant.provider.related.HeaderViewProvider;
 import me.zsj.interessant.provider.related.RelatedHeaderItem;
 import me.zsj.interessant.provider.related.RelatedHeaderViewProvider;
+import me.zsj.interessant.provider.video.FooterForwardItem;
+import me.zsj.interessant.provider.video.FooterForwardViewProvider;
 import me.zsj.interessant.provider.video.VideoViewProvider;
 
 /**
@@ -31,6 +33,7 @@ public class Register {
     }
 
     public static void registerFindItem(MultiTypeAdapter adapter, Activity context) {
+        adapter.register(FooterForwardItem.class, new FooterForwardViewProvider());
         adapter.register(Category.class, new CategoryItemViewProvider());
         adapter.register(ItemList.class, new VideoViewProvider(context));
         registerCommonItem(adapter, context);

@@ -7,5 +7,6 @@ package me.zsj.interessant.model;
 public class Footer {
 
     public String type;
+    public Data data;
 
 }

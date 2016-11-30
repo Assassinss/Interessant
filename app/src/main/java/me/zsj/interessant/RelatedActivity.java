@@ -75,7 +75,7 @@ public class RelatedActivity extends RxAppCompatActivity {
                 if (header.description != null) {
                     items.add(new HeaderItem(item.data.header));
                 } else {
-                    items.add(new RelatedHeaderItem(item.data.header));
+                    items.add(new RelatedHeaderItem(item.data.header, true));
                 }
                 items.add(new CardItem(item));
             }

@@ -13,12 +13,14 @@ import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.api.InterestingApi;
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.model.Category;
+import me.zsj.interessant.model.CategoryInfo;
 import me.zsj.interessant.model.Data;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.model.SectionList;
 import me.zsj.interessant.provider.related.CardItem;
 import me.zsj.interessant.provider.related.HeaderItem;
 import me.zsj.interessant.provider.related.RelatedHeaderItem;
+import me.zsj.interessant.provider.video.FooterForwardItem;
 import me.zsj.interessant.rx.ErrorAction;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -33,12 +35,12 @@ public class FindInterestingActivity extends ToolbarActivity {
     private static final String VIDEO_LIST_SECTION = "videoListSection";
     private static final String AUTHOR_SECTION = "authorSection";
 
-    private RecyclerView list;
     private MultiTypeAdapter adapter;
 
     private Items items = new Items();
     private InterestingApi interestingApi;
 
+    private CategoryInfo categoryInfo;
     private int id;
 
     @Override
@@ -57,7 +59,7 @@ public class FindInterestingActivity extends ToolbarActivity {
 
         interestingApi = InteressantFactory.getRetrofit().createApi(InterestingApi.class);
 
-        list = (RecyclerView) findViewById(R.id.list);
+        RecyclerView list = (RecyclerView) findViewById(R.id.list);
 
         adapter = new MultiTypeAdapter(items);
         list.setAdapter(adapter);
@@ -72,6 +74,7 @@ public class FindInterestingActivity extends ToolbarActivity {
                 .compose(bindToLifecycle())
                 .filter(find -> find != null)
                 .filter(find -> find.sectionList != null)
+                .doOnNext(find -> this.categoryInfo = find.categoryInfo)
                 .map(find -> find.sectionList)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -82,11 +85,12 @@ public class FindInterestingActivity extends ToolbarActivity {
         for (SectionList sectionList : sectionLists) {
             if (sectionList.type.equals(HORIZONTAL_SCROLL_CARD_SECTION)) {
                 Data data = sectionList.itemList.get(0).data;
-                items.add(new RelatedHeaderItem(data.header));
+                items.add(new RelatedHeaderItem(data.header, false));
                 items.add(new CardItem(sectionList.itemList.get(0)));
             } else if (sectionList.type.equals(VIDEO_LIST_SECTION)) {
                 items.add(new Category(sectionList.header.data.text));
                 addVideo(sectionList.itemList);
+                items.add(new FooterForwardItem(categoryInfo.id, sectionList.footer.data.text));
             } else if (sectionList.type.equals(AUTHOR_SECTION)) {
                 addAuthorItem(sectionList.itemList);
             }

@@ -5,22 +5,25 @@
     android:id="@+id/category_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="10dp"
     android:foreground="?selectableItemBackgroundBorderless">
 
     <TextView
         android:id="@+id/category_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:layout_gravity="center_vertical"
         android:textColor="@android:color/black"
+        android:textStyle="bold"
         tools:text="运动相关的视频"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center"
-        android:layout_margin="16dp"
         android:src="@drawable/ic_keyboard_arrow_right_black_24px"
         tools:ignore="ContentDescription"/>
 

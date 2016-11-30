@@ -14,10 +14,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import me.drakeet.multitype.ItemViewProvider;
+import me.zsj.interessant.FindInterestingActivity;
 import me.zsj.interessant.R;
 import me.zsj.interessant.interesting.InterestingActivity;
 import me.zsj.interessant.model.Header;
 import me.zsj.interessant.utils.CircleTransform;
+import me.zsj.interessant.utils.IDUtils;
 
 import static me.zsj.interessant.MainActivity.CATEGORY_ID;
 import static me.zsj.interessant.MainActivity.TITLE;
@@ -61,11 +63,18 @@ public class HeaderViewProvider extends ItemViewProvider<HeaderItem, HeaderViewP
     }
 
     private void toInteresting(Context context, Header header) {
-        Intent intent = new Intent(context, InterestingActivity.class);
-        intent.putExtra(CATEGORY_ID, header.id);
-        intent.putExtra(TITLE, header.title);
-        intent.putExtra(InterestingActivity.RELATED_HEADER_VIDEO, true);
-        context.startActivity(intent);
+        if (IDUtils.isDetermined(header.id)) {
+            Intent findIntent = new Intent(context, FindInterestingActivity.class);
+            findIntent.putExtra(CATEGORY_ID, header.id);
+            findIntent.putExtra(TITLE, header.title);
+            context.startActivity(findIntent);
+        } else {
+            Intent interestingIntent = new Intent(context, InterestingActivity.class);
+            interestingIntent.putExtra(CATEGORY_ID, header.id);
+            interestingIntent.putExtra(TITLE, header.title);
+            interestingIntent.putExtra(InterestingActivity.RELATED_HEADER_VIDEO, true);
+            context.startActivity(interestingIntent);
+        }
     }
 
     static class HeaderHolder extends RecyclerView.ViewHolder {

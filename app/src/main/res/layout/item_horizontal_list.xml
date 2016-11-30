@@ -5,6 +5,6 @@
     android:id="@+id/card_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="16dp"
-    android:paddingEnd="12dp"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp"
     android:clipToPadding="false"/>
