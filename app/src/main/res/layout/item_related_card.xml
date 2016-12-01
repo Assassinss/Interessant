@@ -36,6 +36,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="4dp"
         android:maxLines="1"
-        tools:text="极限运动。。。。。。。。。。"/>
+        android:ellipsize="end"
+        tools:text="极限运动。。。。。。。。。。啦啦啦啦啦啦啦啦啦啦"/>
 
 </LinearLayout>

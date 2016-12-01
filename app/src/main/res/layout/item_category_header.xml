@@ -18,6 +18,8 @@
         android:layout_gravity="center_vertical"
         android:textColor="@android:color/black"
         android:textStyle="bold"
+        android:ellipsize="end"
+        android:maxLines="1"
         tools:text="运动相关的视频"/>
 
     <ImageView

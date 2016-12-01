@@ -12,6 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.jakewharton.rxbinding.view.RxView;
+
+import java.util.concurrent.TimeUnit;
 
 import me.drakeet.multitype.ItemViewProvider;
 import me.zsj.interessant.FindInterestingActivity;
@@ -49,17 +52,11 @@ public class HeaderViewProvider extends ItemViewProvider<HeaderItem, HeaderViewP
 
         holder.relatedTitle.setText(header.title);
 
-        String desc;
-        if (header.description.length() >= 18) {
-            desc = header.description.substring(0, 17) + "...";
-        } else {
-            desc = header.description;
-        }
+        holder.relatedDesc.setText(header.description);
 
-        holder.relatedDesc.setText(desc);
-
-        holder.content.setOnClickListener(v ->
-                toInteresting(holder.content.getContext(), header));
+        RxView.clicks(holder.content)
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(aVoid -> toInteresting(holder.content.getContext(), header));
     }
 
     private void toInteresting(Context context, Header header) {

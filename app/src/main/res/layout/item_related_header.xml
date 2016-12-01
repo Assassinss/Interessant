@@ -46,6 +46,8 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="32dp"
             android:textSize="12sp"
+            android:ellipsize="end"
+            android:maxLines="1"
             tools:text="哈哈哈哈哈哈哈哈哈"/>
 
     </LinearLayout>

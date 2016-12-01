@@ -17,6 +17,7 @@ import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.provider.related.CardItem;
 import me.zsj.interessant.provider.related.HeaderItem;
 import me.zsj.interessant.provider.related.RelatedHeaderItem;
+import me.zsj.interessant.rx.ErrorAction;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -65,7 +66,7 @@ public class RelatedActivity extends RxAppCompatActivity {
                 .map(related -> related.itemList)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::addData);
+                .subscribe(this::addData, ErrorAction.errorAction(this));
     }
 
     private void addData(List<ItemList> itemLists) {
