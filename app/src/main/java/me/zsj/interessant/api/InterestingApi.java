@@ -7,7 +7,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * Created by zsj on 2016/10/10.
+ * @author zsj
  */
 
 public interface InterestingApi {

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import me.zsj.interessant.R;
 
 /**
- * Created by zsj on 2016/10/25.
+ * @author zsj
  */
 
 public class RatioImageView extends ImageView {

@@ -7,7 +7,7 @@ import android.widget.ImageButton;
 import me.zsj.interessant.R;
 
 /**
- * Created by zsj on 2016/10/15.
+ * @author zsj
  */
 
 public class FabToggle extends ImageButton {

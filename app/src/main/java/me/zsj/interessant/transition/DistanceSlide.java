@@ -14,7 +14,7 @@ import me.zsj.interessant.R;
 import static android.animation.ObjectAnimator.ofFloat;
 
 /**
- * Created by zsj on 2016/11/7.
+ * @author zsj
  */
 
 public class DistanceSlide extends Visibility {

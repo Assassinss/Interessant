@@ -26,7 +26,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by zsj on 2016/10/12.
+ * @author zsj
  */
 
 public class SearchActivity extends ToolbarActivity implements View.OnClickListener {

@@ -9,7 +9,7 @@ import me.zsj.interessant.R;
 import me.zsj.interessant.widget.RatioImageView;
 
 /**
- * Created by zsj on 2016/10/11.
+ * @author zsj
  */
 
 public class Holder extends RecyclerView.ViewHolder {

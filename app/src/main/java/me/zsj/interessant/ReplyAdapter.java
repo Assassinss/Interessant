@@ -16,7 +16,7 @@ import me.zsj.interessant.model.ReplyList;
 import me.zsj.interessant.utils.CircleTransform;
 
 /**
- * Created by zsj on 2016/10/14.
+ * @author zsj
  */
 
 public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

@@ -3,7 +3,7 @@ package me.zsj.interessant.model;
 import java.util.List;
 
 /**
- * Created by zsj on 2016/10/1.
+ * @author zsj
  */
 
 public class Daily {

@@ -24,7 +24,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by zsj on 2016/10/11.
+ * @author zsj
  */
 
 public class ItemFragment extends RxFragment {

@@ -13,7 +13,7 @@ import me.zsj.interessant.R;
 import me.zsj.interessant.SearchActivity;
 
 /**
- * Created by zsj on 2016/10/12.
+ * @author zsj
  */
 
 public abstract class ToolbarActivity extends RxAppCompatActivity {

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.List;
 
 /**
- * Created by zsj on 2016/10/11.
+ * @author zsj
  */
 
 public class Data implements Parcelable {

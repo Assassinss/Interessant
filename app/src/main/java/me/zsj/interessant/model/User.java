@@ -1,7 +1,7 @@
 package me.zsj.interessant.model;
 
 /**
- * Created by zsj on 2016/10/14.
+ * @author zsj
  */
 
 public class User {

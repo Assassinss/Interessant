@@ -19,7 +19,7 @@ import me.zsj.interessant.common.Holder;
 import me.zsj.interessant.model.ItemList;
 
 /**
- * Created by zsj on 2016/10/11.
+ * @author zsj
  */
 
 public class InterestingAdapter extends RecyclerView.Adapter<Holder> {

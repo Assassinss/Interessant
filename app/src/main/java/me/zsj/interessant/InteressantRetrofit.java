@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
- * Created by zsj on 2016/10/1.
+ * @author zsj
  */
 
 public class InteressantRetrofit {

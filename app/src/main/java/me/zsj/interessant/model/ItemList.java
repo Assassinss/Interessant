@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import me.drakeet.multitype.Item;
 
 /**
- * Created by zsj on 2016/10/11.
+ * @author zsj
  */
 
 public class ItemList implements Item, Parcelable {

@@ -10,10 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.R;
@@ -55,10 +53,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
                 .into(holder.imageView);
         holder.desc.setText(item.data.title);
 
-        RxView.clicks(holder.content).throttleFirst(1000, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> {
-                    fly(holder.imageView, item);
-                });
+        holder.content.setOnClickListener(v -> fly(holder.imageView, item));
     }
 
     private void fly(View view, ItemList item) {

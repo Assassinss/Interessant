@@ -1,9 +1,13 @@
 package me.zsj.interessant.model;
 
+import java.util.List;
+
 /**
- * Created by zsj on 2016/10/11.
+ * @author zsj
  */
 
-public class Interesting extends BaseModel{
+public class Interesting {
+
+    public List<ItemList> itemList;
 
 }

@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.jakewharton.rxbinding.view.RxView;
-
-import java.util.concurrent.TimeUnit;
 
 import me.drakeet.multitype.ItemViewProvider;
 import me.zsj.interessant.IntentManager;
@@ -19,14 +16,13 @@ import me.zsj.interessant.common.Holder;
 import me.zsj.interessant.model.ItemList;
 
 /**
- * Created by zsj on 2016/10/2.
+ * @author zsj
  */
 
 public class DailyItemViewProvider extends
         ItemViewProvider<ItemList, Holder>  {
 
     private static final String VIDEO_TAG = "video";
-    private static final int TOUCH_TIME = 1000;
 
     private Activity context;
 
@@ -67,10 +63,7 @@ public class DailyItemViewProvider extends
             holder.movieDesc.setVisibility(View.GONE);
         }
 
-        RxView.clicks(holder.movieContent).throttleFirst(TOUCH_TIME, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> {
-                    fly(holder.movieAlbum, item);
-                });
+        holder.movieContent.setOnClickListener(v -> fly(holder.movieAlbum, item));
     }
 
     private void fly(View view, ItemList item) {

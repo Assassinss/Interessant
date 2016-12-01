@@ -18,7 +18,7 @@ import me.zsj.interessant.R;
 import me.zsj.interessant.base.ToolbarActivity;
 
 /**
- * Created by zsj on 2016/10/10.
+ * @author zsj
  */
 
 public class InterestingActivity extends ToolbarActivity {

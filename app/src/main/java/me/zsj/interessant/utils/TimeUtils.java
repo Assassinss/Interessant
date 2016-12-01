@@ -1,7 +1,7 @@
 package me.zsj.interessant.utils;
 
 /**
- * Created by zsj on 2016/10/17.
+ * @author zsj
  */
 
 public class TimeUtils {

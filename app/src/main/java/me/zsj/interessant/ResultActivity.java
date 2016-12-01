@@ -23,7 +23,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by zsj on 2016/10/13.
+ * @author zsj
  */
 
 public class ResultActivity extends ToolbarActivity {

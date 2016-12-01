@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by zsj on 2016/10/11.
+ * @author zsj
  */
 
 public class Cover implements Parcelable {

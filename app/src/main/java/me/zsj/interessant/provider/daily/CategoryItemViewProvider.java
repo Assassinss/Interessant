@@ -14,7 +14,7 @@ import me.zsj.interessant.model.Category;
 import static me.zsj.interessant.R.id.date;
 
 /**
- * Created by zsj on 2016/10/2.
+ * @author zsj
  */
 
 public class CategoryItemViewProvider extends ItemViewProvider<Category, CategoryItemViewProvider.DateHolder> {

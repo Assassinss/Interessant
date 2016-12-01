@@ -14,7 +14,7 @@ import me.zsj.interessant.model.ItemList;
 import static me.zsj.interessant.MainActivity.PROVIDER_ITEM;
 
 /**
- * Created by zsj on 2016/10/11.
+ * @author zsj
  */
 
 public class IntentManager {

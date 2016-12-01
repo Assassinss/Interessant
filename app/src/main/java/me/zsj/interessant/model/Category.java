@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import me.drakeet.multitype.Item;
 
 /**
- * Created by zsj on 2016/10/2.
+ * @author zsj
  */
 
 public class Category implements Item {

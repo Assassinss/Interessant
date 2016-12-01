@@ -12,9 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.jakewharton.rxbinding.view.RxView;
-
-import java.util.concurrent.TimeUnit;
 
 import me.drakeet.multitype.ItemViewProvider;
 import me.zsj.interessant.FindInterestingActivity;
@@ -54,9 +51,7 @@ public class HeaderViewProvider extends ItemViewProvider<HeaderItem, HeaderViewP
 
         holder.relatedDesc.setText(header.description);
 
-        RxView.clicks(holder.content)
-                .throttleFirst(1000, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> toInteresting(holder.content.getContext(), header));
+        holder.content.setOnClickListener(v -> toInteresting(context, header));
     }
 
     private void toInteresting(Context context, Header header) {
