@@ -14,6 +14,7 @@ import me.zsj.interessant.widget.RatioImageView;
 
 public class Holder extends RecyclerView.ViewHolder {
 
+    public View itemView;
     public RatioImageView movieAlbum;
     public TextView movieDesc;
     public FrameLayout movieContent;
@@ -21,6 +22,7 @@ public class Holder extends RecyclerView.ViewHolder {
 
     public Holder(View itemView) {
         super(itemView);
+        this.itemView = itemView;
         movieContent = (FrameLayout) itemView.findViewById(R.id.movie_content);
         movieAlbum = (RatioImageView) itemView.findViewById(R.id.movie_album);
         movieDesc = (TextView) itemView.findViewById(R.id.movie_desc);

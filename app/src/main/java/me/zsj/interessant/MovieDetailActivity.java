@@ -165,9 +165,8 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
                 .doOnNext(replyLists -> datas.addAll(replyLists))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(replyLists -> {
-                    adapter.notifyDataSetChanged();
-                }, throwable -> {});
+                .subscribe(replyLists ->
+                        adapter.notifyDataSetChanged(), Throwable::printStackTrace);
     }
 
     private void getLastId(List<ReplyList> replies) {

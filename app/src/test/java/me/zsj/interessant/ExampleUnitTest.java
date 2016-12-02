@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import me.zsj.interessant.api.DailyApi;
 import me.zsj.interessant.api.InterestingApi;
+import me.zsj.interessant.utils.IDUtils;
 import rx.schedulers.Schedulers;
 
 import static org.junit.Assert.assertEquals;
@@ -39,5 +40,10 @@ public class ExampleUnitTest {
                 .subscribeOn(Schedulers.io())
                 .map(find -> find.sectionList)
                 .subscribe(Assert::assertNotNull);
+    }
+
+    @Test public void isDeterminedId() throws Exception {
+        assertEquals(false, IDUtils.isDetermined(3));
+        assertEquals(true, IDUtils.isDetermined(4));
     }
 }

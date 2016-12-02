@@ -273,24 +273,23 @@ public class PlayActivity extends ToolbarActivity
         toolbar.setAlpha(0);
         AnimUtils.animOut(mediaController);
         getWindow().getDecorView().setSystemUiVisibility(FLAG_HIDE_SYSTEM_UI);
+        showSystemUi = false;
     }
 
     private void showSystemUI() {
         toolbar.setAlpha(1f);
         AnimUtils.animIn(mediaController);
         getWindow().getDecorView().setSystemUiVisibility(FLAG_SHOW_SYSTEM_UI);
+        showSystemUi = true;
+
+        mediaController.postDelayed(this::hideSystemUI, 3000);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (showSystemUi) {
-                hideSystemUI();
-                showSystemUi = false;
-            } else {
-                showSystemUI();
-                showSystemUi = true;
-            }
+            if (showSystemUi) hideSystemUI();
+            else showSystemUI();
         }
         return super.onTouchEvent(event);
     }

@@ -17,6 +17,7 @@ import me.zsj.interessant.interesting.InterestingAdapter;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
+import me.zsj.interessant.utils.SlideInDownAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -57,9 +58,9 @@ public class VideoListActivity extends ToolbarActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         list.setLayoutManager(layoutManager);
+        list.setItemAnimator(new SlideInDownAnimator());
 
         list.setAdapter(adapter);
-
 
         RxRecyclerView.scrollStateChanges(list)
                 .compose(bindToLifecycle())
@@ -90,13 +91,11 @@ public class VideoListActivity extends ToolbarActivity {
                 .filter(interesting -> interesting != null)
                 .filter(interesting -> interesting.itemList != null)
                 .map(interesting -> interesting.itemList)
-                .doOnNext(itemLists -> {
-                    if (clean) items.clear();
-                })
+                .doOnNext(itemLists -> { if (clean) items.clear(); })
                 .doOnNext(itemLists -> items.addAll(itemLists))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(items -> adapter.notifyDataSetChanged(),
+                .subscribe(itemLists -> adapter.notifyItemRangeInserted(start, items.size()),
                         ErrorAction.errorAction(this));
     }
 
