@@ -42,8 +42,7 @@ public class DailyItemViewProvider extends
                                     @NonNull final ItemList item) {
 
         if (item.type.contains(VIDEO_TAG)) {
-            holder.movieAlbum.setVisibility(View.VISIBLE);
-            holder.movieDesc.setVisibility(View.VISIBLE);
+            holder.movieContent.setVisibility(View.VISIBLE);
             holder.movieAlbum.setOriginalSize(16, 9);
             Glide.with(holder.movieAlbum.getContext())
                     .load(item.data.cover.detail)
@@ -57,10 +56,8 @@ public class DailyItemViewProvider extends
             } else {
                 holder.tag.setVisibility(View.GONE);
             }
-
         } else {
-            holder.movieAlbum.setVisibility(View.GONE);
-            holder.movieDesc.setVisibility(View.GONE);
+            holder.movieContent.setVisibility(View.GONE);
         }
 
         holder.movieContent.setOnClickListener(v -> fly(holder.movieAlbum, item));
