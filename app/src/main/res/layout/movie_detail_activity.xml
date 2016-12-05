@@ -18,7 +18,7 @@
     <me.zsj.interessant.widget.ParallaxScrimageView
         android:id="@+id/backdrop"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="@dimen/backdrop_height"
         android:elevation="4dp"
         android:minHeight="@dimen/fab_min_offset"
         android:scaleType="centerCrop"
@@ -30,6 +30,7 @@
         android:layout_height="56dp"
         android:background="?selectableItemBackgroundBorderless"
         android:elevation="6dp"
+        android:layout_marginTop="@dimen/statubar_height"
         android:src="@drawable/ic_arrow_back_white_24px"
         tools:ignore="ContentDescription"/>
 

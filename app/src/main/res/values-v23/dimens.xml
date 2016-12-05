@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="backdrop_height">324dp</dimen>
+    <dimen name="statusbar_height">24dp</dimen>
+
+</resources>
