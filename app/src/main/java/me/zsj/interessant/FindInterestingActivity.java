@@ -106,7 +106,7 @@ public class FindInterestingActivity extends ToolbarActivity {
 
     private void addAuthorItem(List<ItemList> itemLists) {
         for (ItemList item : itemLists) {
-            items.add(new HeaderItem(item.data.header));
+            items.add(new HeaderItem(item.data.header, true));
             items.add(new CardItem(item));
         }
     }

@@ -44,6 +44,8 @@
 
         <activity android:name=".VideoListActivity" />
 
+        <activity android:name=".VideoAuthorActivity" />
+
     </application>
 
 </manifest>

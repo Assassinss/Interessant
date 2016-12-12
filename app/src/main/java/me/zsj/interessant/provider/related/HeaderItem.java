@@ -3,6 +3,7 @@ package me.zsj.interessant.provider.related;
 import android.support.annotation.NonNull;
 
 import me.drakeet.multitype.Item;
+import me.zsj.interessant.model.Data;
 import me.zsj.interessant.model.Header;
 
 /**
@@ -12,9 +13,18 @@ import me.zsj.interessant.model.Header;
 public class HeaderItem implements Item {
 
     public Header header;
+    public Data data;
+    public boolean isShowArrowIcon;
 
-    public HeaderItem(@NonNull Header header) {
+    public HeaderItem(@NonNull Header header, boolean isShowArrowIcon) {
         this.header = header;
+        this.isShowArrowIcon = isShowArrowIcon;
+    }
+
+    public HeaderItem(@NonNull Data data, Header header, boolean isShowArrowIcon) {
+        this.data = data;
+        this.header = header;
+        this.isShowArrowIcon = isShowArrowIcon;
     }
 
 }

@@ -39,6 +39,12 @@ public class Register {
         registerCommonItem(adapter, context);
     }
 
+    public static void registerAuthorItem(MultiTypeAdapter adapter, Activity context) {
+        adapter.register(Category.class, new CategoryItemViewProvider());
+        adapter.register(ItemList.class, new VideoViewProvider(context));
+        registerCommonItem(adapter, context);
+    }
+
     private static void registerCommonItem(MultiTypeAdapter adapter, Activity context) {
         adapter.register(HeaderItem.class, new HeaderViewProvider());
         adapter.register(CardItem.class, new CardViewProvider(context));

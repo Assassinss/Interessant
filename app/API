@@ -30,3 +30,5 @@ hots : http://baobab.kaiyanapp.com/api/v3/ranklist?num=10&strategy=monthly
 //http://baobab.kaiyanapp.com/api/v3/categories/detail?id=18
 
 //最受欢迎  http://baobab.kaiyanapp.com/api/v3/categories/videoList?id=2&strategy=mostPopular
+
+//全部作者 http://baobab.kaiyanapp.com/api/v4/pgcs/all

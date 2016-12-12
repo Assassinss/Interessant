@@ -143,8 +143,8 @@ public class MainActivity extends ToolbarActivity {
     }
 
     private void findInteresting(MenuItem item) {
-        int id;
-        String title;
+        int id = 0;
+        String title = null;
         switch (item.getItemId()) {
             case R.id.nav_cute_pet:
                 id = 26;
@@ -218,6 +218,10 @@ public class MainActivity extends ToolbarActivity {
                 id = 20;
                 title = getResources().getString(R.string.music);
                 break;
+            case R.id.nav_author:
+                Intent intent = new Intent(this, VideoAuthorActivity.class);
+                startActivity(intent);
+                return;
             default:
                 return;
         }

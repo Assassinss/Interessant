@@ -26,6 +26,8 @@ public class Data implements Parcelable {
     public Header header;
     public List<ItemList> itemList;
     public Author author;
+    public String icon;
+
 
     protected Data(Parcel in) {
         dataType = in.readString();
@@ -42,23 +44,7 @@ public class Data implements Parcelable {
         duration = in.readLong();
         itemList = in.createTypedArrayList(ItemList.CREATOR);
         author = in.readParcelable(Author.class.getClassLoader());
-    }
-
-    public static final Creator<Data> CREATOR = new Creator<Data>() {
-        @Override
-        public Data createFromParcel(Parcel in) {
-            return new Data(in);
-        }
-
-        @Override
-        public Data[] newArray(int size) {
-            return new Data[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
+        icon = in.readString();
     }
 
     @Override
@@ -77,6 +63,23 @@ public class Data implements Parcelable {
         dest.writeLong(duration);
         dest.writeTypedList(itemList);
         dest.writeParcelable(author, flags);
+        dest.writeString(icon);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Data> CREATOR = new Creator<Data>() {
+        @Override
+        public Data createFromParcel(Parcel in) {
+            return new Data(in);
+        }
+
+        @Override
+        public Data[] newArray(int size) {
+            return new Data[size];
+        }
+    };
 }

@@ -74,7 +74,7 @@ public class RelatedActivity extends RxAppCompatActivity {
             Header header = item.data.header;
             if (header != null) {
                 if (header.description != null) {
-                    items.add(new HeaderItem(item.data.header));
+                    items.add(new HeaderItem(item.data.header, true));
                 } else {
                     items.add(new RelatedHeaderItem(item.data.header, true));
                 }

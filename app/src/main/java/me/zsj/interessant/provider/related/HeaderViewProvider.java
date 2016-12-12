@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide;
 import me.drakeet.multitype.ItemViewProvider;
 import me.zsj.interessant.R;
 import me.zsj.interessant.interesting.InterestingActivity;
-import me.zsj.interessant.model.Header;
 import me.zsj.interessant.utils.CircleTransform;
 
 import static me.zsj.interessant.MainActivity.CATEGORY_ID;
@@ -28,8 +27,7 @@ import static me.zsj.interessant.MainActivity.TITLE;
 
 public class HeaderViewProvider extends ItemViewProvider<HeaderItem, HeaderViewProvider.HeaderHolder> {
 
-    @NonNull
-    @Override
+    @NonNull @Override
     protected HeaderHolder onCreateViewHolder(
             @NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_related_header, parent, false);
@@ -38,25 +36,42 @@ public class HeaderViewProvider extends ItemViewProvider<HeaderItem, HeaderViewP
 
     @Override
     protected void onBindViewHolder(@NonNull HeaderHolder holder, @NonNull HeaderItem headerItem) {
-        Header header = headerItem.header;
+        String icon;
+        String title;
+        String description;
+        int id;
+        if (headerItem.header == null) {
+            id = headerItem.data.id;
+            icon = headerItem.data.icon;
+            title = headerItem.data.title;
+            description = headerItem.data.description;
+        } else {
+            id = headerItem.header.id;
+            icon = headerItem.header.icon;
+            title = headerItem.header.title;
+            description = headerItem.header.description;
+        }
 
         Context context = holder.avatar.getContext();
         Glide.with(context)
-                .load(header.icon)
+                .load(icon)
                 .transform(new CircleTransform(context))
                 .into(holder.avatar);
 
-        holder.relatedTitle.setText(header.title);
+        holder.relatedTitle.setText(title);
 
-        holder.relatedDesc.setText(header.description);
+        holder.relatedDesc.setText(description);
 
-        holder.content.setOnClickListener(v -> toInteresting(context, header));
+        if (headerItem.isShowArrowIcon) holder.arrowRight.setVisibility(View.VISIBLE);
+        else holder.arrowRight.setVisibility(View.GONE);
+
+        holder.content.setOnClickListener(v -> toInteresting(context, id, title));
     }
 
-    private void toInteresting(Context context, Header header) {
+    private void toInteresting(Context context, int id, String title) {
         Intent interestingIntent = new Intent(context, InterestingActivity.class);
-        interestingIntent.putExtra(CATEGORY_ID, header.id);
-        interestingIntent.putExtra(TITLE, header.title);
+        interestingIntent.putExtra(CATEGORY_ID, id);
+        interestingIntent.putExtra(TITLE, title);
         interestingIntent.putExtra(InterestingActivity.RELATED_HEADER_VIDEO, true);
         context.startActivity(interestingIntent);
     }
@@ -67,6 +82,7 @@ public class HeaderViewProvider extends ItemViewProvider<HeaderItem, HeaderViewP
         ImageView avatar;
         TextView relatedTitle;
         TextView relatedDesc;
+        ImageView arrowRight;
 
         public HeaderHolder(View itemView) {
             super(itemView);
@@ -74,6 +90,7 @@ public class HeaderViewProvider extends ItemViewProvider<HeaderItem, HeaderViewP
             avatar = (ImageView) itemView.findViewById(R.id.movie_avatar);
             relatedTitle = (TextView) itemView.findViewById(R.id.related_title);
             relatedDesc = (TextView) itemView.findViewById(R.id.related_desc);
+            arrowRight = (ImageView) itemView.findViewById(R.id.arrow_right);
         }
     }
 }

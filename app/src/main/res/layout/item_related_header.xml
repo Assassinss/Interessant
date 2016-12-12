@@ -25,8 +25,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_toEndOf="@+id/movie_avatar"
+        android:layout_toStartOf="@+id/arrow_right"
         android:layout_centerVertical="true"
         android:orientation="vertical">
 
@@ -44,7 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="32dp"
             android:textSize="12sp"
             android:ellipsize="end"
             android:maxLines="1"
@@ -53,8 +52,10 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/arrow_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_keyboard_arrow_right_black_24px"
