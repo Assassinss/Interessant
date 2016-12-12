@@ -1,0 +1,32 @@
+daily : http://baobab.kaiyanapp.com/api/v2/feed?num=2
+
+more : http://baobab.kaiyanapp.com/api/v2/categories
+
+trending : http://baobab.kaiyanapp.com/api/v3/ranklist?num=10&strategy=%s
+
+detail : http://baobab.kaiyanapp.com/api/v3/v3/videos?categoryName=%s&strategy=%s
+
+interesting : http://baobab.kaiyanapp.com/api/v3/videos?num=10
+
+replay : http://baobab.wandoujia.com/api/v1/replies/video?id=9962
+
+queries : http://baobab.wandoujia.com/api/v3/queries/hot
+
+query : http://baobab.wandoujia.com/api/v1/search?query=Android
+
+tabs : http://baobab.kaiyanapp.com/api/v3/tabs
+
+tabs_item : http://baobab.kaiyanapp.com/api/v3/pgc/videos?pgcId=56&strategy=date
+
+/**
+ * strategy : monthly, weekly, historical
+ */
+hots : http://baobab.kaiyanapp.com/api/v3/ranklist?num=10&strategy=monthly
+
+//http://baobab.kaiyanapp.com/api/v3/tag/videos?tagId=24&strategy=shareCount
+
+//http://baobab.kaiyanapp.com/api/v3/pgc/videos?pgcId=2&strategy=date
+
+//http://baobab.kaiyanapp.com/api/v3/categories/detail?id=18
+
+//最受欢迎  http://baobab.kaiyanapp.com/api/v3/categories/videoList?id=2&strategy=mostPopular
