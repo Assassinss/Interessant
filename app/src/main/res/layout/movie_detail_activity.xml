@@ -15,32 +15,24 @@
         android:background="@color/background_light"
         android:transitionName="@string/transition_shot_background"/>
 
-    <me.zsj.interessant.widget.ParallaxScrimageView
-        android:id="@+id/backdrop"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/backdrop_height"
-        android:elevation="4dp"
-        android:minHeight="@dimen/fab_min_offset"
-        android:scaleType="centerCrop"
-        android:transitionName="@string/transition_shot"/>
-
     <ImageButton
         android:id="@+id/back"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:background="?selectableItemBackgroundBorderless"
-        android:elevation="6dp"
+        android:elevation="8dp"
         android:layout_marginTop="@dimen/statubar_height"
         android:src="@drawable/ic_arrow_back_white_24px"
         tools:ignore="ContentDescription"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_replies"
+    <me.zsj.interessant.widget.ParallaxScrimageView
+        android:id="@+id/backdrop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:elevation="1dp"
-        app:layoutManager="LinearLayoutManager"/>
+        android:layout_height="@dimen/backdrop_height"
+        android:minHeight="@dimen/fab_min_offset"
+        android:background="@color/light_grey"
+        android:scaleType="centerCrop"
+        android:transitionName="@string/transition_shot"/>
 
     <me.zsj.interessant.widget.FabToggle
         android:id="@+id/fab_play"
@@ -55,5 +47,12 @@
         android:padding="16dp"
         android:src="@drawable/ic_play_arrow_white_48px"
         android:tint="@android:color/white"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_replies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layoutManager="LinearLayoutManager"/>
 
 </FrameLayout>
