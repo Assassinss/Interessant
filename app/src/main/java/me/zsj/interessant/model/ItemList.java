@@ -3,13 +3,11 @@ package me.zsj.interessant.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import me.drakeet.multitype.Item;
-
 /**
  * @author zsj
  */
 
-public class ItemList implements Item, Parcelable {
+public class ItemList implements Parcelable {
 
     public String type;
     public Data data;

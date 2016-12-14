@@ -16,7 +16,7 @@ import me.zsj.interessant.api.AuthorApi;
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.model.Category;
 import me.zsj.interessant.model.ItemList;
-import me.zsj.interessant.provider.related.CardItem;
+import me.zsj.interessant.provider.related.Card;
 import me.zsj.interessant.provider.related.HeaderItem;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -90,7 +90,7 @@ public class VideoAuthorActivity extends ToolbarActivity {
                 items.add(new HeaderItem(item.data, null, false));
             } else if (item.type.equals(VIDEO_COLLECT_BRIEF)) {
                 items.add(new HeaderItem(item.data.header, false));
-                items.add(new CardItem(item));
+                items.add(new Card(item));
             }
         }
         adapter.notifyDataSetChanged();

@@ -2,18 +2,17 @@ package me.zsj.interessant.provider.related;
 
 import android.support.annotation.NonNull;
 
-import me.drakeet.multitype.Item;
 import me.zsj.interessant.model.ItemList;
 
 /**
  * @author zsj
  */
 
-public class CardItem implements Item {
+public class Card {
 
     public ItemList item;
 
-    public CardItem(@NonNull ItemList item) {
+    public Card(@NonNull ItemList item) {
         this.item = item;
     }
 

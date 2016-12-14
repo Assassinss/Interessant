@@ -14,9 +14,9 @@ import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.api.RelatedApi;
 import me.zsj.interessant.model.Header;
 import me.zsj.interessant.model.ItemList;
-import me.zsj.interessant.provider.related.CardItem;
+import me.zsj.interessant.provider.related.Card;
 import me.zsj.interessant.provider.related.HeaderItem;
-import me.zsj.interessant.provider.related.RelatedHeaderItem;
+import me.zsj.interessant.provider.related.RelatedHeader;
 import me.zsj.interessant.rx.ErrorAction;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -76,9 +76,9 @@ public class RelatedActivity extends RxAppCompatActivity {
                 if (header.description != null) {
                     items.add(new HeaderItem(item.data.header, true));
                 } else {
-                    items.add(new RelatedHeaderItem(item.data.header, true));
+                    items.add(new RelatedHeader(item.data.header, true));
                 }
-                items.add(new CardItem(item));
+                items.add(new Card(item));
             }
         }
         adapter.notifyDataSetChanged();

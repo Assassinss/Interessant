@@ -25,7 +25,8 @@ import static me.zsj.interessant.MainActivity.TITLE;
  * @author zsj
  */
 
-public class HeaderViewProvider extends ItemViewProvider<HeaderItem, HeaderViewProvider.HeaderHolder> {
+public class HeaderViewProvider extends
+        ItemViewProvider<HeaderItem, HeaderViewProvider.HeaderHolder> {
 
     @NonNull @Override
     protected HeaderHolder onCreateViewHolder(

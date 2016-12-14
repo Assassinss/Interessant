@@ -7,13 +7,13 @@ import me.zsj.interessant.model.Category;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.provider.daily.CategoryItemViewProvider;
 import me.zsj.interessant.provider.daily.DailyItemViewProvider;
-import me.zsj.interessant.provider.related.CardItem;
+import me.zsj.interessant.provider.related.Card;
 import me.zsj.interessant.provider.related.CardViewProvider;
 import me.zsj.interessant.provider.related.HeaderItem;
 import me.zsj.interessant.provider.related.HeaderViewProvider;
-import me.zsj.interessant.provider.related.RelatedHeaderItem;
+import me.zsj.interessant.provider.related.RelatedHeader;
 import me.zsj.interessant.provider.related.RelatedHeaderViewProvider;
-import me.zsj.interessant.provider.video.FooterForwardItem;
+import me.zsj.interessant.provider.video.FooterForward;
 import me.zsj.interessant.provider.video.FooterForwardViewProvider;
 import me.zsj.interessant.provider.video.VideoViewProvider;
 
@@ -33,7 +33,7 @@ public class Register {
     }
 
     public static void registerFindItem(MultiTypeAdapter adapter, Activity context) {
-        adapter.register(FooterForwardItem.class, new FooterForwardViewProvider());
+        adapter.register(FooterForward.class, new FooterForwardViewProvider());
         adapter.register(Category.class, new CategoryItemViewProvider());
         adapter.register(ItemList.class, new VideoViewProvider(context));
         registerCommonItem(adapter, context);
@@ -47,8 +47,8 @@ public class Register {
 
     private static void registerCommonItem(MultiTypeAdapter adapter, Activity context) {
         adapter.register(HeaderItem.class, new HeaderViewProvider());
-        adapter.register(CardItem.class, new CardViewProvider(context));
-        adapter.register(RelatedHeaderItem.class, new RelatedHeaderViewProvider());
+        adapter.register(Card.class, new CardViewProvider(context));
+        adapter.register(RelatedHeader.class, new RelatedHeaderViewProvider());
     }
 
 }

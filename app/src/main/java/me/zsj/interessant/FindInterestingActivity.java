@@ -17,10 +17,10 @@ import me.zsj.interessant.model.CategoryInfo;
 import me.zsj.interessant.model.Data;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.model.SectionList;
-import me.zsj.interessant.provider.related.CardItem;
+import me.zsj.interessant.provider.related.Card;
 import me.zsj.interessant.provider.related.HeaderItem;
-import me.zsj.interessant.provider.related.RelatedHeaderItem;
-import me.zsj.interessant.provider.video.FooterForwardItem;
+import me.zsj.interessant.provider.related.RelatedHeader;
+import me.zsj.interessant.provider.video.FooterForward;
 import me.zsj.interessant.rx.ErrorAction;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -85,12 +85,12 @@ public class FindInterestingActivity extends ToolbarActivity {
         for (SectionList sectionList : sectionLists) {
             if (sectionList.type.equals(HORIZONTAL_SCROLL_CARD_SECTION)) {
                 Data data = sectionList.itemList.get(0).data;
-                items.add(new RelatedHeaderItem(data.header, false));
-                items.add(new CardItem(sectionList.itemList.get(0)));
+                items.add(new RelatedHeader(data.header, false));
+                items.add(new Card(sectionList.itemList.get(0)));
             } else if (sectionList.type.equals(VIDEO_LIST_SECTION)) {
                 items.add(new Category(sectionList.header.data.text));
                 addVideo(sectionList.itemList);
-                items.add(new FooterForwardItem(categoryInfo.id, sectionList.footer.data.text));
+                items.add(new FooterForward(categoryInfo.id, sectionList.footer.data.text));
             } else if (sectionList.type.equals(AUTHOR_SECTION)) {
                 addAuthorItem(sectionList.itemList);
             }
@@ -107,7 +107,7 @@ public class FindInterestingActivity extends ToolbarActivity {
     private void addAuthorItem(List<ItemList> itemLists) {
         for (ItemList item : itemLists) {
             items.add(new HeaderItem(item.data.header, true));
-            items.add(new CardItem(item));
+            items.add(new Card(item));
         }
     }
 

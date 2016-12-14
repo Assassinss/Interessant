@@ -16,10 +16,7 @@ import android.view.MenuItem;
 import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout;
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import me.drakeet.multitype.Item;
+import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.api.DailyApi;
 import me.zsj.interessant.base.ToolbarActivity;
@@ -44,7 +41,7 @@ public class MainActivity extends ToolbarActivity {
     private DrawerLayout drawer;
 
     private DailyApi dailyApi;
-    private List<Item> items = new ArrayList<>();
+    private Items items = new Items();
     private String dateTime = "";
 
 
@@ -143,8 +140,8 @@ public class MainActivity extends ToolbarActivity {
     }
 
     private void findInteresting(MenuItem item) {
-        int id = 0;
-        String title = null;
+        int id;
+        String title;
         switch (item.getItemId()) {
             case R.id.nav_cute_pet:
                 id = 26;

@@ -18,7 +18,7 @@ import me.zsj.interessant.VideoListActivity;
  */
 
 public class FooterForwardViewProvider extends
-        ItemViewProvider<FooterForwardItem, FooterForwardViewProvider.Holder> {
+        ItemViewProvider<FooterForward, FooterForwardViewProvider.Holder> {
 
     @NonNull @Override
     protected Holder onCreateViewHolder(
@@ -29,11 +29,11 @@ public class FooterForwardViewProvider extends
 
     @Override
     protected void onBindViewHolder(
-            @NonNull Holder holder, @NonNull FooterForwardItem footerForwardItem) {
+            @NonNull Holder holder, @NonNull FooterForward footerForward) {
 
-        holder.footerText.setText(footerForwardItem.text);
+        holder.footerText.setText(footerForward.text);
         holder.footerText.setOnClickListener(v ->
-                toVideoList(holder.footerText.getContext(), footerForwardItem.id));
+                toVideoList(holder.footerText.getContext(), footerForward.id));
     }
 
     private void toVideoList(Context context, int id) {

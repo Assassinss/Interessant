@@ -2,7 +2,6 @@ package me.zsj.interessant.provider.related;
 
 import android.support.annotation.NonNull;
 
-import me.drakeet.multitype.Item;
 import me.zsj.interessant.model.Data;
 import me.zsj.interessant.model.Header;
 
@@ -10,7 +9,7 @@ import me.zsj.interessant.model.Header;
  * @author zsj
  */
 
-public class HeaderItem implements Item {
+public class HeaderItem {
 
     public Header header;
     public Data data;

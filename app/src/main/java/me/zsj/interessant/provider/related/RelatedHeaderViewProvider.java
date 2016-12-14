@@ -24,7 +24,7 @@ import static me.zsj.interessant.MainActivity.CATEGORY_ID;
  */
 
 public class RelatedHeaderViewProvider extends
-        ItemViewProvider<RelatedHeaderItem, RelatedHeaderViewProvider.RelatedHeaderHolder> {
+        ItemViewProvider<RelatedHeader, RelatedHeaderViewProvider.RelatedHeaderHolder> {
 
 
     @NonNull @Override
@@ -36,13 +36,13 @@ public class RelatedHeaderViewProvider extends
 
     @Override
     protected void onBindViewHolder(@NonNull RelatedHeaderHolder holder,
-                                    @NonNull RelatedHeaderItem relatedHeaderItem) {
-        Header header = relatedHeaderItem.header;
+                                    @NonNull RelatedHeader relatedHeader) {
+        Header header = relatedHeader.header;
 
         holder.categoryTitle.setText(header.title);
 
         holder.content.setOnClickListener(view ->
-                toInteresting(holder.content.getContext(), header.id, relatedHeaderItem.related));
+                toInteresting(holder.content.getContext(), header.id, relatedHeader.related));
     }
 
     private void toInteresting(Context context, int id, boolean related) {

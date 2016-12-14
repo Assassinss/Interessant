@@ -18,7 +18,7 @@ import me.zsj.interessant.model.ItemList;
  * @author zsj
  */
 
-public class CardViewProvider extends ItemViewProvider<CardItem, CardViewProvider.CardHolder> {
+public class CardViewProvider extends ItemViewProvider<Card, CardViewProvider.CardHolder> {
 
     private Activity context;
 
@@ -34,8 +34,8 @@ public class CardViewProvider extends ItemViewProvider<CardItem, CardViewProvide
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull CardHolder holder, @NonNull CardItem cardItem) {
-        holder.setCards(cardItem.item.data.itemList);
+    protected void onBindViewHolder(@NonNull CardHolder holder, @NonNull Card card) {
+        holder.setCards(card.item.data.itemList);
     }
 
     class CardHolder extends RecyclerView.ViewHolder {
