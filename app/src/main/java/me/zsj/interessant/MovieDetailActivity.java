@@ -161,9 +161,9 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
     private void loadReplies(boolean clean) {
         Observable<Replies> result;
         if (clean) result = replayApi.fetchReplies(item.data.id);
-         else result = replayApi.fetchReplies(item.data.id, lastId);
+        else result = replayApi.fetchReplies(item.data.id, lastId);
 
-        result.compose(this.<Replies>bindToLifecycle())
+        result.compose(bindToLifecycle())
                 .map(replies -> {
                     getLastId(replies.replyList);
                     return replies.replyList;

@@ -56,14 +56,15 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:layout_gravity="center_vertical"
+                android:textSize="12sp"
                 tools:text="00:00"/>
 
             <SeekBar
                 android:id="@+id/seekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                android:layout_marginEnd="48dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:background="@null"
                 android:maxHeight="3dp"
                 android:minHeight="3dp"
@@ -79,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
                 android:textColor="@android:color/white"
+                android:textSize="12sp"
                 tools:text="6:00"/>
 
         </me.zsj.interessant.widget.InsetsFrameLayout>
