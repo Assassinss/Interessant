@@ -10,10 +10,13 @@ import android.util.AttributeSet;
 import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 
+import me.zsj.interessant.R;
 import me.zsj.interessant.utils.ColorUtils;
 
 
 public class ParallaxScrimageView extends ImageView {
+
+    private static final int[] statePinned = {R.attr.pinned};
 
     private Paint scrimPaint;
     private int imageOffset;
@@ -23,6 +26,7 @@ public class ParallaxScrimageView extends ImageView {
     private float scrimAlpha = 0f;
     private float maxScrimAlpha = 1f;
     private int scrimColor = Color.TRANSPARENT;
+    private boolean pinned;
 
 
     public ParallaxScrimageView(Context context) {
@@ -56,7 +60,8 @@ public class ParallaxScrimageView extends ImageView {
                     ((float) -offset / getMinimumHeight()) * maxScrimAlpha, maxScrimAlpha));
             postInvalidateOnAnimation();
         }
-        setPinned();
+        pinned = minOffset == offset;
+        refreshState();
     }
 
     public void setScrimAlpha(@FloatRange(from = 0f, to = 1f) float alpha) {
@@ -67,9 +72,9 @@ public class ParallaxScrimageView extends ImageView {
         }
     }
 
-    private void setPinned() {
-        float elevation = (float) imageOffset / (float) getMinimumHeight();
-        setElevation(elevation * 20);
+    private void refreshState() {
+        refreshDrawableState();
+        jumpDrawablesToCurrentState();
     }
 
     @Override
@@ -92,6 +97,15 @@ public class ParallaxScrimageView extends ImageView {
             super.onDraw(canvas);
             canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), scrimPaint);
         }
+    }
+
+    @Override
+    public int[] onCreateDrawableState(int extraSpace) {
+        int[] states = super.onCreateDrawableState(extraSpace + 1);
+        if (pinned) {
+            mergeDrawableStates(states, statePinned);
+        }
+        return states;
     }
 
 }

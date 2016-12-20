@@ -32,6 +32,7 @@
         android:minHeight="@dimen/fab_min_offset"
         android:background="@color/light_grey"
         android:scaleType="centerCrop"
+        android:stateListAnimator="@animator/image_pin"
         android:transitionName="@string/transition_shot"/>
 
     <me.zsj.interessant.widget.FabToggle
