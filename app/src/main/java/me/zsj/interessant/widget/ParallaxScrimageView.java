@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.annotation.FloatRange;
 import android.util.AttributeSet;
 import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
@@ -22,10 +21,6 @@ public class ParallaxScrimageView extends ImageView {
     private int imageOffset;
     private int minOffset;
     private Rect clipBounds = new Rect();
-
-    private float scrimAlpha = 0f;
-    private float maxScrimAlpha = 1f;
-    private int scrimColor = Color.TRANSPARENT;
     private boolean pinned;
 
 
@@ -56,20 +51,10 @@ public class ParallaxScrimageView extends ImageView {
             imageOffset = (int) (offset * parallaxFactor);
             clipBounds.set(0, -offset, getWidth(), getHeight());
             setClipBounds(clipBounds);
-            setScrimAlpha(Math.min(
-                    ((float) -offset / getMinimumHeight()) * maxScrimAlpha, maxScrimAlpha));
             postInvalidateOnAnimation();
         }
         pinned = minOffset == offset;
         refreshState();
-    }
-
-    public void setScrimAlpha(@FloatRange(from = 0f, to = 1f) float alpha) {
-        if (scrimAlpha != alpha) {
-            scrimAlpha = alpha;
-            scrimPaint.setColor(ColorUtils.modifyAlpha(scrimColor, scrimAlpha));
-            postInvalidateOnAnimation();
-        }
     }
 
     private void refreshState() {

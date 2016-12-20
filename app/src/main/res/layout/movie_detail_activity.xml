@@ -44,7 +44,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/fab_play"
         android:clickable="true"
-        android:elevation="8dp"
+        android:elevation="12dp"
         android:padding="16dp"
         android:src="@drawable/ic_play_arrow_white_48px"
         android:tint="@android:color/white"/>
