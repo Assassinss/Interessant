@@ -8,8 +8,6 @@ import java.util.List;
 
 public class Replies {
 
-    public String nextPageUrl;
-
     public List<ReplyList> replyList;
 
 }
