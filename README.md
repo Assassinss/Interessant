@@ -5,14 +5,13 @@ A simple, unofficial android client of Eyepetizer(开眼视频).
 <img src="screenshot/Screenshot_20161126-143303.png" width="216" height="384">
 <img src="screenshot/Screenshot_20161205-222100.png" width="216" height="384">
 <img src="screenshot/Screenshot_20161130-205250.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161213-001255.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161222-212949.png" width="216" height="384">
 <img src="screenshot/Screenshot_20161129-233940.png" width="216" height="384">
 <img src="screenshot/Screenshot_20161126-143729.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161126-143735.png" width="216" height="384">
-<img src="screenshot/Screenshot_20161130-205129.png" width="384" height="216">
+<img src="screenshot/Screenshot_20161222-213726.png" width="216" height="384">
+<img src="screenshot/Screenshot_20161222-213802.png" width="384" height="216">
 
 ###TODO:
- * Add author UI and api
  * Add ranking list
 
 ###Libraries
