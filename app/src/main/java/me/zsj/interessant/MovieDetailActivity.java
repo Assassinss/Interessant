@@ -25,7 +25,7 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.zsj.interessant.api.ReplayApi;
+import me.zsj.interessant.api.ReplyApi;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.model.Replies;
 import me.zsj.interessant.model.ReplyList;
@@ -47,7 +47,7 @@ import static me.zsj.interessant.MainActivity.PROVIDER_ITEM;
 
 public class MovieDetailActivity extends RxAppCompatActivity implements View.OnClickListener {
 
-    private ReplayApi replayApi;
+    private ReplyApi replyApi;
     private List<ReplyList> datas = new ArrayList<>();
     private ItemList item;
 
@@ -115,7 +115,7 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
                 .load(item.data.cover.detail)
                 .into(backdrop);
 
-        replayApi = InteressantFactory.getRetrofit().createApi(ReplayApi.class);
+        replyApi = InteressantFactory.getRetrofit().createApi(ReplyApi.class);
 
         adapter = new ReplyAdapter(datas, movieDescription);
         replies.addItemDecoration(new InsetDividerDecoration(
@@ -160,8 +160,8 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
 
     private void loadReplies(boolean clean) {
         Observable<Replies> result;
-        if (clean) result = replayApi.fetchReplies(item.data.id);
-        else result = replayApi.fetchReplies(item.data.id, lastId);
+        if (clean) result = replyApi.fetchReplies(item.data.id);
+        else result = replyApi.fetchReplies(item.data.id, lastId);
 
         result.compose(bindToLifecycle())
                 .map(replies -> {

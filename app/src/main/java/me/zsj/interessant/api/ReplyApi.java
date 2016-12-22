@@ -9,7 +9,7 @@ import rx.Observable;
  * @author zsj
  */
 
-public interface ReplayApi {
+public interface ReplyApi {
 
     @GET("v1/replies/video")
     Observable<Replies> fetchReplies(@Query("id") int id);

@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import me.zsj.interessant.api.DailyApi;
-import me.zsj.interessant.api.ReplayApi;
+import me.zsj.interessant.api.ReplyApi;
 import me.zsj.interessant.api.SearchApi;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.model.Replies;
@@ -73,8 +73,8 @@ public class ExampleInstrumentedTest {
     }
 
     @Test public void testReplyList() throws Exception {
-        final ReplayApi replayApi = InteressantFactory.getRetrofit().createApi(ReplayApi.class);
-        replayApi.fetchReplies(9962)
+        final ReplyApi replyApi = InteressantFactory.getRetrofit().createApi(ReplyApi.class);
+        replyApi.fetchReplies(9962)
                 .filter(new Func1<Replies, Boolean>() {
                     @Override
                     public Boolean call(Replies replies) {

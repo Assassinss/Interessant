@@ -1,7 +1,8 @@
 package me.zsj.interessant.utils;
 
 import android.content.Context;
-import android.util.DisplayMetrics;
+import android.graphics.Point;
+import android.view.Display;
 import android.view.WindowManager;
 
 /**
@@ -14,18 +15,18 @@ public class ScreenUtils {
 
     public static int getWidth(Context context) {
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(outMetrics);
-
-        return outMetrics.widthPixels;
+        Point size = new Point();
+        Display display = manager.getDefaultDisplay();
+        display.getRealSize(size);
+        return size.x;
     }
 
     public static int getHeight(Context context) {
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(outMetrics);
-
-        return outMetrics.heightPixels;
+        Point size = new Point();
+        Display display = manager.getDefaultDisplay();
+        display.getRealSize(size);
+        return size.y;
     }
 
 }
