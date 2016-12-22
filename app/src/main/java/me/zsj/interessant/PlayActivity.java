@@ -4,9 +4,13 @@ import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.WindowManager;
 
 import java.io.IOException;
 
@@ -25,6 +29,9 @@ public class PlayActivity extends ToolbarActivity
         IMediaPlayer.OnCompletionListener, IMediaPlayer.OnPreparedListener,
         IMediaPlayer.OnInfoListener, IMediaPlayer.OnVideoSizeChangedListener {
 
+    private static final int FLAG_HIDE_SYSTEM_UI = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
     private SurfaceHolder surfaceHolder;
     private VideoController videoController;
 
@@ -41,11 +48,18 @@ public class PlayActivity extends ToolbarActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().getDecorView().setSystemUiVisibility(FLAG_HIDE_SYSTEM_UI);
+
         videoController = (VideoController) findViewById(R.id.video_controller);
         SurfaceView surfaceView = (SurfaceView) findViewById(R.id.surface_view);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         item = getIntent().getParcelableExtra("item");
         String playUrl = item.data.playUrl;
+        getSupportActionBar().setTitle(item.data.title);
 
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
@@ -57,7 +71,7 @@ public class PlayActivity extends ToolbarActivity
     private void playVideo(String path) {
         try {
             mediaPlayer = new IjkMediaPlayer();
-            videoController.attachPlayer(getWindow(), mediaPlayer, item);
+            videoController.attachPlayer(mediaPlayer, item);
             mediaPlayer.setDataSource(path);
             mediaPlayer.prepareAsync();
             mediaPlayer.setOnBufferingUpdateListener(this);

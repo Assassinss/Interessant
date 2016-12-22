@@ -1,5 +1,6 @@
 package me.zsj.interessant.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.Toolbar;
@@ -7,7 +8,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
-import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -26,7 +26,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  */
 
 public class VideoController extends FrameLayout
-        implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+        implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
     private ImageButton pause;
     private SeekBar seekBar;
@@ -34,17 +34,18 @@ public class VideoController extends FrameLayout
     private FrameLayout centerLayout;
     private TextView currentTime;
     private TextView endTime;
+    private TextView progressTime;
     private FrameLayout mediaController;
     private Toolbar toolbar;
 
     private IjkMediaPlayer mediaPlayer;
     private Context context;
-    private Window window;
 
     private ItemList item;
     private Handler handler = new Handler();
     private int mVideoWidth;
     private int mVideoHeight;
+    private int maxProgress;
     private boolean isVideoSizeKnown = false;
     private boolean isVideoReadyToBePlayed = false;
     private boolean showSystemUi;
@@ -60,6 +61,7 @@ public class VideoController extends FrameLayout
     public VideoController(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
+        setOnTouchListener(this);
     }
 
     private Runnable progressCallback = new Runnable() {
@@ -85,6 +87,7 @@ public class VideoController extends FrameLayout
         centerLayout = (FrameLayout) findViewById(R.id.center_layout);
         currentTime = (TextView) findViewById(R.id.current_time);
         endTime = (TextView) findViewById(R.id.end_time);
+        progressTime = (TextView) findViewById(R.id.progress_time);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mediaController = (FrameLayout) findViewById(R.id.media_controller);
 
@@ -92,8 +95,7 @@ public class VideoController extends FrameLayout
         seekBar.setOnSeekBarChangeListener(this);
     }
 
-    public void attachPlayer(Window window, IjkMediaPlayer mediaPlayer, ItemList item) {
-        this.window = window;
+    public void attachPlayer(IjkMediaPlayer mediaPlayer, ItemList item) {
         this.mediaPlayer = mediaPlayer;
         this.item = item;
         hideSystemUI();
@@ -114,7 +116,7 @@ public class VideoController extends FrameLayout
     }
 
     public void surfaceCreated() {
-        int maxProgress = (int) item.data.duration;
+        maxProgress = (int) item.data.duration;
         seekBar.setMax(maxProgress);
         seekBar.setProgress(0);
         endTime.setText(TimeUtils.secToTime((int) item.data.duration));
@@ -217,40 +219,60 @@ public class VideoController extends FrameLayout
         handler.post(progressCallback);
     }
 
-    private static final int FLAG_HIDE_SYSTEM_UI = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-            | View.SYSTEM_UI_FLAG_IMMERSIVE;
-
-    private static final int FLAG_SHOW_SYSTEM_UI = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-
     private void hideSystemUI() {
         toolbar.setAlpha(0);
         AnimUtils.animOut(mediaController);
-        window.getDecorView().setSystemUiVisibility(FLAG_HIDE_SYSTEM_UI);
         showSystemUi = false;
     }
 
     private void showSystemUI() {
         toolbar.setAlpha(1f);
         AnimUtils.animIn(mediaController);
-        window.getDecorView().setSystemUiVisibility(FLAG_SHOW_SYSTEM_UI);
         showSystemUi = true;
 
         mediaController.postDelayed(this::hideSystemUI, 3000);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (showSystemUi) hideSystemUI();
-            else showSystemUI();
-        }
-        return super.onTouchEvent(event);
-    }
+    private float touchX;
+    private int currentProgress;
 
+    @SuppressLint("StringFormatMatches")
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                touchX = event.getX();
+                currentProgress = seekBar.getProgress();
+                if (showSystemUi) hideSystemUI();
+                else showSystemUI();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (seekBar.getProgress() <= 0 ||
+                        seekBar.getProgress() >= maxProgress) break;
+
+                float moveX = event.getX();
+                float distance = moveX - touchX;
+                if (distance >= 100) {
+                    hideSystemUI();
+                }
+
+                int moveProgress = (int) (distance / 70);
+                long mesc = (currentProgress + moveProgress) * 1000;
+                if (Math.abs(moveProgress) > 0) {
+                    seekTo(mesc);
+                    progressTime.setVisibility(VISIBLE);
+                    progressTime.setText(
+                            getResources().getString(
+                                    R.string.progress_time_text,
+                                    TimeUtils.secToTime(currentProgress + moveProgress),
+                                    TimeUtils.secToTime(maxProgress)));
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                progressTime.setVisibility(GONE);
+                break;
+        }
+        return true;
+    }
 
 }

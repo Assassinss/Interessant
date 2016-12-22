@@ -28,6 +28,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
+    <TextView
+        android:id="@+id/progress_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        tools:text="00:10 / 04:35"/>
+
     <FrameLayout
         android:id="@+id/media_controller"
         android:layout_width="match_parent"
