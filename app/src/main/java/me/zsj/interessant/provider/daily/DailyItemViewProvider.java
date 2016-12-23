@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.jakewharton.rxbinding.view.RxView;
+
+import java.util.concurrent.TimeUnit;
 
 import me.drakeet.multitype.ItemViewProvider;
 import me.zsj.interessant.IntentManager;
@@ -60,7 +63,9 @@ public class DailyItemViewProvider extends
             holder.movieContent.setVisibility(View.GONE);
         }
 
-        holder.movieContent.setOnClickListener(v -> fly(holder.movieAlbum, item));
+        RxView.clicks(holder.movieContent)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(aVoid -> fly(holder.movieAlbum, item));
     }
 
     private void fly(View view, ItemList item) {

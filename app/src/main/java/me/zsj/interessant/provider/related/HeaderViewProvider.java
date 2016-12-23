@@ -12,6 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.jakewharton.rxbinding.view.RxView;
+
+import java.util.concurrent.TimeUnit;
 
 import me.drakeet.multitype.ItemViewProvider;
 import me.zsj.interessant.R;
@@ -66,7 +69,9 @@ public class HeaderViewProvider extends
         if (headerItem.isShowArrowIcon) holder.arrowRight.setVisibility(View.VISIBLE);
         else holder.arrowRight.setVisibility(View.GONE);
 
-        holder.content.setOnClickListener(v -> toInteresting(context, id, title));
+        RxView.clicks(holder.content)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(aVoid -> toInteresting(context, id, title));
     }
 
     private void toInteresting(Context context, int id, String title) {

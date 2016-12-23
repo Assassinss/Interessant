@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding.view.RxView;
+
+import java.util.concurrent.TimeUnit;
+
 import me.drakeet.multitype.ItemViewProvider;
 import me.zsj.interessant.R;
 import me.zsj.interessant.VideoListActivity;
@@ -32,8 +36,9 @@ public class FooterForwardViewProvider extends
             @NonNull Holder holder, @NonNull FooterForward footerForward) {
 
         holder.footerText.setText(footerForward.text);
-        holder.footerText.setOnClickListener(v ->
-                toVideoList(holder.footerText.getContext(), footerForward.id));
+        RxView.clicks(holder.footerText)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(aVoid -> toVideoList(holder.footerText.getContext(), footerForward.id));
     }
 
     private void toVideoList(Context context, int id) {

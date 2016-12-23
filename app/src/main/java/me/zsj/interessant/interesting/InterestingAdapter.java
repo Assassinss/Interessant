@@ -60,9 +60,7 @@ public class InterestingAdapter extends RecyclerView.Adapter<Holder> {
         }
 
         RxView.clicks(holder.movieContent).throttleFirst(TOUCH_TIME, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> {
-                    fly(holder.movieAlbum, item);
-                });
+                .subscribe(aVoid -> fly(holder.movieAlbum, item));
     }
 
     @Override
@@ -70,7 +68,6 @@ public class InterestingAdapter extends RecyclerView.Adapter<Holder> {
         return itemList.size();
     }
 
-    //To ........ what?
     private void fly(View view, ItemList item) {
         IntentManager.flyToMovieDetail(context, item, view);
     }

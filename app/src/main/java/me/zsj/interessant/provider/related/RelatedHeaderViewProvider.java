@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding.view.RxView;
+
+import java.util.concurrent.TimeUnit;
+
 import me.drakeet.multitype.ItemViewProvider;
 import me.zsj.interessant.R;
 import me.zsj.interessant.VideoListActivity;
@@ -41,8 +45,10 @@ public class RelatedHeaderViewProvider extends
 
         holder.categoryTitle.setText(header.title);
 
-        holder.content.setOnClickListener(view ->
-                toInteresting(holder.content.getContext(), header.id, relatedHeader.related));
+        RxView.clicks(holder.content)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(aVoid ->
+                        toInteresting(holder.content.getContext(), header.id, relatedHeader.related));
     }
 
     private void toInteresting(Context context, int id, boolean related) {
