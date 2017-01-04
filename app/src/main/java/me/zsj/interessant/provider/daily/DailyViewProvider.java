@@ -22,14 +22,14 @@ import me.zsj.interessant.model.ItemList;
  * @author zsj
  */
 
-public class DailyItemViewProvider extends
+public class DailyViewProvider extends
         ItemViewProvider<ItemList, Holder>  {
 
     private static final String VIDEO_TAG = "video";
 
     private Activity context;
 
-    public DailyItemViewProvider(Activity context) {
+    public DailyViewProvider(Activity context) {
         this.context = context;
     }
 

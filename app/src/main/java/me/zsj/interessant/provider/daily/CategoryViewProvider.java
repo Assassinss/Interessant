@@ -17,10 +17,11 @@ import static me.zsj.interessant.R.id.date;
  * @author zsj
  */
 
-public class CategoryItemViewProvider extends ItemViewProvider<Category, CategoryItemViewProvider.DateHolder> {
+public class CategoryViewProvider extends ItemViewProvider<Category, CategoryViewProvider.DateHolder> {
 
     @NonNull @Override
-    protected DateHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+    protected DateHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
+                                            @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_category_title, parent, false);
         return new DateHolder(view);
     }

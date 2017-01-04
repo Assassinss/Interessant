@@ -5,8 +5,8 @@ import android.app.Activity;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.model.Category;
 import me.zsj.interessant.model.ItemList;
-import me.zsj.interessant.provider.daily.CategoryItemViewProvider;
-import me.zsj.interessant.provider.daily.DailyItemViewProvider;
+import me.zsj.interessant.provider.daily.CategoryViewProvider;
+import me.zsj.interessant.provider.daily.DailyViewProvider;
 import me.zsj.interessant.provider.related.Card;
 import me.zsj.interessant.provider.related.CardViewProvider;
 import me.zsj.interessant.provider.related.HeaderItem;
@@ -24,8 +24,8 @@ import me.zsj.interessant.provider.video.VideoViewProvider;
 public class Register {
 
     public static void registerItem(MultiTypeAdapter adapter, Activity context) {
-        adapter.register(Category.class, new CategoryItemViewProvider());
-        adapter.register(ItemList.class, new DailyItemViewProvider(context));
+        adapter.register(Category.class, new CategoryViewProvider());
+        adapter.register(ItemList.class, new DailyViewProvider(context));
     }
 
     public static void registerRelatedItem(MultiTypeAdapter adapter, Activity context) {
@@ -34,13 +34,13 @@ public class Register {
 
     public static void registerFindItem(MultiTypeAdapter adapter, Activity context) {
         adapter.register(FooterForward.class, new FooterForwardViewProvider());
-        adapter.register(Category.class, new CategoryItemViewProvider());
+        adapter.register(Category.class, new CategoryViewProvider());
         adapter.register(ItemList.class, new VideoViewProvider(context));
         registerCommonItem(adapter, context);
     }
 
     public static void registerAuthorItem(MultiTypeAdapter adapter, Activity context) {
-        adapter.register(Category.class, new CategoryItemViewProvider());
+        adapter.register(Category.class, new CategoryViewProvider());
         adapter.register(ItemList.class, new VideoViewProvider(context));
         registerCommonItem(adapter, context);
     }
