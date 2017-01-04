@@ -9,7 +9,7 @@ import rx.Observable;
 import rx.functions.Func1;
 
 /**
- * Created by zsj on 2016/10/11.
+ * @author zsj
  */
 
 public class RxScroller {

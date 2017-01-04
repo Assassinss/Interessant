@@ -28,6 +28,7 @@ import rx.schedulers.Schedulers;
 public class VideoListActivity extends ToolbarActivity {
 
     private InterestingAdapter adapter;
+    private InterestingApi api;
 
     private List<ItemList> items = new ArrayList<>();
 
@@ -46,6 +47,8 @@ public class VideoListActivity extends ToolbarActivity {
         super.onCreate(savedInstanceState);
 
         RecyclerView list = (RecyclerView) findViewById(R.id.list);
+
+        api = InteressantFactory.getRetrofit().createApi(InterestingApi.class);
 
         id = getIntent().getExtras().getInt("id");
         trending = getIntent().getBooleanExtra("trending", false);
@@ -85,7 +88,6 @@ public class VideoListActivity extends ToolbarActivity {
         if (trending) strategy = "mostPopular";
         else if (newest) strategy = "date";
 
-        InterestingApi api = InteressantFactory.getRetrofit().createApi(InterestingApi.class);
         api.videoList(id, start, strategy)
                 .compose(bindToLifecycle())
                 .filter(interesting -> interesting != null)
@@ -95,7 +97,8 @@ public class VideoListActivity extends ToolbarActivity {
                 .doOnNext(itemLists -> items.addAll(itemLists))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(itemLists -> adapter.notifyItemRangeInserted(start, items.size()),
+                .subscribe(itemLists ->
+                        adapter.notifyItemRangeInserted(start, items.size()),
                         ErrorAction.errorAction(this));
     }
 

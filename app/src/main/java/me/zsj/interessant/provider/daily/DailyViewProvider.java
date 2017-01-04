@@ -22,8 +22,7 @@ import me.zsj.interessant.model.ItemList;
  * @author zsj
  */
 
-public class DailyViewProvider extends
-        ItemViewProvider<ItemList, Holder>  {
+public class DailyViewProvider extends ItemViewProvider<ItemList, Holder>  {
 
     private static final String VIDEO_TAG = "video";
 

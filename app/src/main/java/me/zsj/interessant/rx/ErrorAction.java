@@ -6,7 +6,7 @@ import android.widget.Toast;
 import rx.functions.Action1;
 
 /**
- * Created by zsj on 2016/10/11.
+ * @author zsj
  */
 
 public class ErrorAction {
@@ -16,7 +16,9 @@ public class ErrorAction {
     }
 
     public static Action1<Throwable> errorAction(final Context context) {
-        return throwable ->
-                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+        return throwable -> {
+            throwable.printStackTrace();
+            Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+        };
     }
 }
