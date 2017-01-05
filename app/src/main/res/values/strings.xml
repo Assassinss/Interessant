@@ -22,7 +22,7 @@
 
     <string name="time_category">按时间排序</string>
     <string name="share_category">按分享排序</string>
-    <string name="search_hint">搜索你所感兴趣的视频&#8230;&#8230;&#8230;</string>
+    <string name="search_hint">搜索你所感兴趣的视频&#8230;</string>
 
     <string name="result_title">Result</string>
     <string name="interesting_title">Interesting</string>
