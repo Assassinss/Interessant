@@ -86,6 +86,8 @@ public class MainActivity extends ToolbarActivity {
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
 
+        list.setOnTouchListener((v, event) -> refreshLayout.isRefreshing());
+
         RxRecyclerView.scrollStateChanges(list)
                 .filter(integer -> !refreshLayout.isRefreshing())
                 .compose(bindToLifecycle())
