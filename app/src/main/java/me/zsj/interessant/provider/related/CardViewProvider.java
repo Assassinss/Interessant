@@ -3,6 +3,7 @@ package me.zsj.interessant.provider.related;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class CardViewProvider extends ItemViewProvider<Card, CardViewProvider.Ca
 
         private RecyclerView cardList;
         private CardAdapter cardAdapter;
+        private LinearSnapHelper snapHelper = new LinearSnapHelper();
 
 
         public CardHolder(View itemView) {
@@ -52,6 +54,7 @@ public class CardViewProvider extends ItemViewProvider<Card, CardViewProvider.Ca
             cardList.setLayoutManager(layoutManager);
             cardAdapter = new CardAdapter(context);
             cardList.setAdapter(cardAdapter);
+            snapHelper.attachToRecyclerView(cardList);
         }
 
         private void setCards(List<ItemList> items) {
