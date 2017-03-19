@@ -37,6 +37,7 @@ public class VideoListActivity extends ToolbarActivity {
     private int id;
     private boolean trending;
     private boolean newest;
+    private boolean firstIn = true;
 
     @Override
     public int providerLayoutId() {
@@ -82,7 +83,10 @@ public class VideoListActivity extends ToolbarActivity {
     @Override
     public void onEnterAnimationComplete() {
         super.onEnterAnimationComplete();
-        list.scheduleLayoutAnimation();
+        if (firstIn) {
+            list.scheduleLayoutAnimation();
+            firstIn = false;
+        }
     }
 
     private void loadVideos() {
