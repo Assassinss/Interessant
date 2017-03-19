@@ -17,7 +17,6 @@ import me.zsj.interessant.interesting.InterestingAdapter;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
-import me.zsj.interessant.utils.SlideInDownAnimator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -26,6 +25,8 @@ import rx.schedulers.Schedulers;
  */
 
 public class VideoListActivity extends ToolbarActivity {
+
+    private RecyclerView list;
 
     private InterestingAdapter adapter;
     private InterestingApi api;
@@ -46,7 +47,7 @@ public class VideoListActivity extends ToolbarActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RecyclerView list = (RecyclerView) findViewById(R.id.list);
+        list = (RecyclerView) findViewById(R.id.list);
 
         api = InteressantFactory.getRetrofit().createApi(InterestingApi.class);
 
@@ -61,7 +62,6 @@ public class VideoListActivity extends ToolbarActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         list.setLayoutManager(layoutManager);
-        list.setItemAnimator(new SlideInDownAnimator());
 
         list.setAdapter(adapter);
 
@@ -77,6 +77,12 @@ public class VideoListActivity extends ToolbarActivity {
                 });
 
         loadVideos(true);
+    }
+
+    @Override
+    public void onEnterAnimationComplete() {
+        super.onEnterAnimationComplete();
+        list.scheduleLayoutAnimation();
     }
 
     private void loadVideos() {
