@@ -11,6 +11,10 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.danikula.videocache.CacheListener;
+import com.danikula.videocache.HttpProxyCacheServer;
+
+import java.io.File;
 import java.io.IOException;
 
 import me.zsj.interessant.base.ToolbarActivity;
@@ -26,7 +30,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 public class PlayActivity extends ToolbarActivity
         implements SurfaceHolder.Callback, IMediaPlayer.OnBufferingUpdateListener,
         IMediaPlayer.OnCompletionListener, IMediaPlayer.OnPreparedListener,
-        IMediaPlayer.OnInfoListener, IMediaPlayer.OnVideoSizeChangedListener {
+        IMediaPlayer.OnInfoListener, IMediaPlayer.OnVideoSizeChangedListener, CacheListener {
 
     private static final int FLAG_HIDE_SYSTEM_UI = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
@@ -44,6 +48,10 @@ public class PlayActivity extends ToolbarActivity
         return R.layout.play_activity;
     }
 
+    private HttpProxyCacheServer cacheServer() {
+        return App.cacheServer(this);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +66,7 @@ public class PlayActivity extends ToolbarActivity
 
         item = getIntent().getParcelableExtra("item");
         String playUrl = item.data.playUrl;
+        assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(item.data.title);
 
         surfaceHolder = surfaceView.getHolder();
@@ -71,7 +80,10 @@ public class PlayActivity extends ToolbarActivity
         try {
             mediaPlayer = new IjkMediaPlayer();
             videoController.attachPlayer(mediaPlayer, item);
-            mediaPlayer.setDataSource(path);
+            HttpProxyCacheServer cacheServer = cacheServer();
+            String proxyPath = cacheServer.getProxyUrl(path);
+            cacheServer.registerCacheListener(this, path);
+            mediaPlayer.setDataSource(proxyPath);
             mediaPlayer.prepareAsync();
             mediaPlayer.setOnBufferingUpdateListener(this);
             mediaPlayer.setOnCompletionListener(this);
@@ -84,6 +96,12 @@ public class PlayActivity extends ToolbarActivity
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onCacheAvailable(File cacheFile, String url, int percentsAvailable) {
+        percentsAvailable = percentsAvailable * (int) item.data.duration / 100;
+        videoController.onBufferUpdate(percentsAvailable);
     }
 
     private boolean surfaceCreated;
@@ -109,7 +127,9 @@ public class PlayActivity extends ToolbarActivity
 
     @Override
     public void onBufferingUpdate(IMediaPlayer imp, int percent) {
-        videoController.onBufferUpdate(percent);
+        if (cacheServer().isCached(item.data.playUrl)) {
+            videoController.onBufferUpdate((int) item.data.duration);
+        }
     }
 
     @Override
@@ -161,6 +181,7 @@ public class PlayActivity extends ToolbarActivity
     protected void onDestroy() {
         super.onDestroy();
         videoController.surfaceDestory();
+        cacheServer().unregisterCacheListener(this);
         release();
     }
 
@@ -171,4 +192,5 @@ public class PlayActivity extends ToolbarActivity
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

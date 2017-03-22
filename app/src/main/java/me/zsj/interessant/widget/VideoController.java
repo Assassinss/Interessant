@@ -152,7 +152,6 @@ public class VideoController extends FrameLayout
     }
 
     public void onBufferUpdate(int percent) {
-        if (percent >= 95) percent = 100;
         seekBar.setSecondaryProgress(percent);
     }
 
