@@ -3,13 +3,18 @@ package me.zsj.interessant;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +22,6 @@ import java.util.List;
 import me.zsj.interessant.api.SearchApi;
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.rx.ErrorAction;
-import me.zsj.interessant.utils.TagLayoutManager;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -29,10 +33,9 @@ public class SearchActivity extends ToolbarActivity implements View.OnClickListe
 
     public static final String KEYWORD = "keyword";
 
-    private RecyclerView list;
+    private TagFlowLayout tagLayout;
     private EditText searchEdit;
 
-    private TagAdapter adapter;
     private List<String> tags = new ArrayList<>();
 
 
@@ -45,20 +48,15 @@ public class SearchActivity extends ToolbarActivity implements View.OnClickListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        list = (RecyclerView) findViewById(R.id.recycler_view);
+        tagLayout = (TagFlowLayout) findViewById(R.id.tag_layout);
         searchEdit = (EditText) findViewById(R.id.search_edit);
         ImageButton clearButton = (ImageButton) findViewById(R.id.clear_btn);
         clearButton.setOnClickListener(this);
-
-        adapter = new TagAdapter(tags);
-        list.setLayoutManager(new TagLayoutManager());
-        list.setAdapter(adapter);
 
         loadTrendingTag();
 
         keyListener();
 
-        adapter.setOnItemClickListener(position -> startResultActivity(tags.get(position)));
     }
 
     private void loadTrendingTag() {
@@ -72,8 +70,25 @@ public class SearchActivity extends ToolbarActivity implements View.OnClickListe
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> {
-                    adapter.notifyDataSetChanged();
+                    bindData();
                 }, ErrorAction.errorAction(this));
+    }
+
+    private void bindData() {
+        tagLayout.setAdapter(new TagAdapter<String>(tags) {
+            @Override
+            public View getView(FlowLayout parent, int position, String tagName) {
+                TextView tag = (TextView) LayoutInflater.from(SearchActivity.this)
+                        .inflate(R.layout.item_tag, parent, false);
+                tag.setText(tagName);
+                return tag;
+            }
+        });
+
+        tagLayout.setOnTagClickListener((view, position, parent) -> {
+            startResultActivity(tags.get(position));
+            return true;
+        });
     }
 
     private void keyListener() {

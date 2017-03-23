@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout;
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
+import com.trello.rxlifecycle.android.ActivityEvent;
 
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -109,7 +110,7 @@ public class MainActivity extends ToolbarActivity {
         if (clear) result = dailyApi.getDaily();
         else result = dailyApi.getDaily(Long.decode(dateTime));
 
-        result.compose(bindToLifecycle())
+        result.compose(bindUntilEvent(ActivityEvent.DESTROY))
                 .filter(daily -> daily != null)
                 .doOnNext(daily -> {
                     if (clear) items.clear();

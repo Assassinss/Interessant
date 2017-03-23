@@ -44,10 +44,12 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/tag_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content"
+        app:max_select="1"
+        app:auto_select_effect="false"
+        android:padding="16dp"/>
 
 </LinearLayout>
