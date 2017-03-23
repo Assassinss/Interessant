@@ -19,6 +19,8 @@ import java.io.IOException;
 
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.model.ItemList;
+import me.zsj.interessant.utils.NetUtils;
+import me.zsj.interessant.utils.PreferenceManager;
 import me.zsj.interessant.widget.VideoController;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -80,10 +82,15 @@ public class PlayActivity extends ToolbarActivity
         try {
             mediaPlayer = new IjkMediaPlayer();
             videoController.attachPlayer(mediaPlayer, item);
-            HttpProxyCacheServer cacheServer = cacheServer();
-            String proxyPath = cacheServer.getProxyUrl(path);
-            cacheServer.registerCacheListener(this, path);
-            mediaPlayer.setDataSource(proxyPath);
+            boolean cacheWithWifi = PreferenceManager.getBooleanValue(this, SettingsFragment.CACHE_KEY, true);
+            if (cacheWithWifi && NetUtils.isWifiConnected(this)) {
+                HttpProxyCacheServer cacheServer = cacheServer();
+                String proxyPath = cacheServer.getProxyUrl(path);
+                cacheServer.registerCacheListener(this, path);
+                mediaPlayer.setDataSource(proxyPath);
+            } else {
+                mediaPlayer.setDataSource(path);
+            }
             mediaPlayer.prepareAsync();
             mediaPlayer.setOnBufferingUpdateListener(this);
             mediaPlayer.setOnCompletionListener(this);

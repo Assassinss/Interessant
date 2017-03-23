@@ -20,7 +20,6 @@
     <style name="LightToolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
     </style>
 
     <style name="AppTheme.Movie">

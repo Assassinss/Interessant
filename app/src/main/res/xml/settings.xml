@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:layout="@layout/cache_category">
+
+        <SwitchPreference
+            android:key="cache_with_wifi"
+            android:title="@string/cache_with_wifi" />
+
+        <Preference
+            android:key="clear_video_cache"
+            android:title="@string/clear_video_cache" />
+
+        <Preference
+            android:key="clear_photo_cache"
+            android:title="@string/clear_photo_cache" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

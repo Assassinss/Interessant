@@ -81,10 +81,11 @@
             android:title="@string/music"/>
     </group>
 
-    <item android:title="App ">
+    <item android:title="App">
         <menu>
             <item
-                android:title="@string/app_name"/>
+                android:id="@+id/settings"
+                android:title="@string/settings"/>
         </menu>
     </item>
 

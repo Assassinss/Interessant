@@ -218,8 +218,10 @@ public class MainActivity extends ToolbarActivity {
                 title = getResources().getString(R.string.music);
                 break;
             case R.id.nav_author:
-                Intent intent = new Intent(this, VideoAuthorActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(this, VideoAuthorActivity.class));
+                return;
+            case R.id.settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 return;
             default:
                 return;
@@ -253,6 +255,8 @@ public class MainActivity extends ToolbarActivity {
             return true;
         } else if (item.getItemId() == R.id.search_action) {
             toSearch(this);
+        } else if (item.getItemId() == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
