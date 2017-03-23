@@ -25,6 +25,7 @@ import me.zsj.interessant.model.ItemList;
 public class InterestingAdapter extends RecyclerView.Adapter<Holder> {
 
     private static final int TOUCH_TIME = 1000;
+    public static final String VIDEO_TYPE = "video";
 
     private Activity context;
     private List<ItemList> itemList;
@@ -45,22 +46,27 @@ public class InterestingAdapter extends RecyclerView.Adapter<Holder> {
     public void onBindViewHolder(final Holder holder, int position) {
         final ItemList item = itemList.get(position);
 
-        holder.movieAlbum.setOriginalSize(16, 9);
-        Glide.with(holder.movieAlbum.getContext())
-                .load(item.data.cover.detail)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(holder.movieAlbum);
-        holder.movieDesc.setText(item.data.title);
-
-        if (item.data.author != null) {
-            holder.tag.setVisibility(View.VISIBLE);
-            holder.tag.setText(item.data.author.name);
+        if (!item.type.equals(VIDEO_TYPE)) {
+            holder.movieContent.setVisibility(View.GONE);
         } else {
-            holder.tag.setVisibility(View.GONE);
-        }
 
-        RxView.clicks(holder.movieContent).throttleFirst(TOUCH_TIME, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> fly(holder.movieAlbum, item));
+            holder.movieAlbum.setOriginalSize(16, 9);
+            Glide.with(holder.movieAlbum.getContext())
+                    .load(item.data.cover.detail)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(holder.movieAlbum);
+            holder.movieDesc.setText(item.data.title);
+
+            if (item.data.author != null) {
+                holder.tag.setVisibility(View.VISIBLE);
+                holder.tag.setText(item.data.author.name);
+            } else {
+                holder.tag.setVisibility(View.GONE);
+            }
+
+            RxView.clicks(holder.movieContent).throttleFirst(TOUCH_TIME, TimeUnit.MILLISECONDS)
+                    .subscribe(aVoid -> fly(holder.movieAlbum, item));
+        }
     }
 
     @Override

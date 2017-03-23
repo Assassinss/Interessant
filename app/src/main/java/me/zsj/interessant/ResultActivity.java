@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
 
@@ -33,7 +32,6 @@ public class ResultActivity extends ToolbarActivity {
     private SearchApi searchApi;
 
     private InterestingAdapter adapter;
-    private TextView resultText;
 
 
     @Override
@@ -46,9 +44,11 @@ public class ResultActivity extends ToolbarActivity {
         super.onCreate(savedInstanceState);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        resultText = (TextView) findViewById(R.id.result_text);
 
         final String keyword = getIntent().getStringExtra(SearchActivity.KEYWORD);
+
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setTitle(keyword);
 
         searchApi = InteressantFactory.getRetrofit().createApi(SearchApi.class);
 
@@ -75,11 +75,7 @@ public class ResultActivity extends ToolbarActivity {
         searchApi.query(keyword, start)
                 .compose(bindToLifecycle())
                 .filter(searchResult -> searchResult != null)
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(searchResult -> {
-                    resultText.setText(keyword + "的结果有" + searchResult.total + "个");
-                    return searchResult.itemList;
-                })
+                .map(searchResult -> searchResult.itemList)
                 .doOnNext(itemList -> itemLists.addAll(itemList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
