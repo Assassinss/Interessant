@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 
 import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout;
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
@@ -56,9 +59,27 @@ public class MainActivity extends ToolbarActivity {
         super.onCreate(savedInstanceState);
         list = (RecyclerView) findViewById(R.id.list);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        ab.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                Window window = getWindow();
+
+                // change the color to any color with transparency
+                window.setStatusBarColor(ContextCompat.getColor(
+                        MainActivity.this, android.R.color.transparent));
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                getWindow().setStatusBarColor(ContextCompat.getColor(
+                        MainActivity.this, R.color.colorPrimaryDark));
+            }
+        });
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         setupDrawerContent(navigationView);
@@ -68,7 +89,7 @@ public class MainActivity extends ToolbarActivity {
 
         RxSwipeRefreshLayout.refreshes(refreshLayout)
                 .compose(bindToLifecycle())
-                .subscribe(aVoid ->loadData(true));
+                .subscribe(aVoid -> loadData(true));
 
     }
 
@@ -99,6 +120,20 @@ public class MainActivity extends ToolbarActivity {
                         loadData();
                     }
                 });
+
+        list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    getWindow().setStatusBarColor(ContextCompat.getColor(
+                            MainActivity.this, android.R.color.transparent));
+                } else {
+                    getWindow().setStatusBarColor(ContextCompat.getColor(
+                            MainActivity.this, R.color.colorPrimaryDark));
+                }
+            }
+        });
     }
 
     private void loadData() {
@@ -135,11 +170,11 @@ public class MainActivity extends ToolbarActivity {
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(menuItem -> {
-                    menuItem.setChecked(true);
-                    drawer.closeDrawers();
-                    findInteresting(menuItem);
-                    return true;
-                });
+            menuItem.setChecked(false);
+            drawer.closeDrawers();
+            findInteresting(menuItem);
+            return true;
+        });
     }
 
     private void findInteresting(MenuItem item) {

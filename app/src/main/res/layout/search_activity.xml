@@ -13,8 +13,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:elevation="4dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+        style="@style/LightToolbar" >
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -31,15 +30,16 @@
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:maxLines="1"
-                android:textColorHint="@android:color/white"/>
+                android:textColorHint="@android:color/black"/>
 
             <ImageButton
                 android:id="@+id/clear_btn"
-                android:layout_width="56dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:layout_gravity="end|center_vertical"
-                android:src="@drawable/ic_clear_white_24px"/>
+                android:src="@drawable/ic_clear_black_24px"/>
         </FrameLayout>
 
     </android.support.v7.widget.Toolbar>

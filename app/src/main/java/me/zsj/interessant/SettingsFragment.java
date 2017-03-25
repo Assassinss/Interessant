@@ -17,7 +17,8 @@ import me.zsj.interessant.utils.PreferenceManager;
  * @author zsj
  */
 
-public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragment implements
+        Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
     public static final String CACHE_KEY = "cache_with_wifi";
 

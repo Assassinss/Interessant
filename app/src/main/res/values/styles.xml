@@ -9,17 +9,23 @@
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
+        <item name="android:toolbarStyle">@style/LightToolbar</item>
     </style>
 
     <style name="AppTheme.LightStatusBar" parent="AppTheme"/>
 
     <style name="ToolbarTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:colorControlNormal">@android:color/black</item>
     </style>
 
     <style name="LightToolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="theme">@style/LightToolbarThemeOverlay</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="titleTextColor">@android:color/black</item>
+    </style>
+    
+    <style name="LightToolbarThemeOverlay" parent="Widget.AppCompat.ActionBar">
+        <item name="android:colorControlNormal">@android:color/black</item>
     </style>
 
     <style name="AppTheme.Movie">

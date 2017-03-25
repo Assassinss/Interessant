@@ -12,10 +12,10 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:layout_scrollFlags="scroll|enterAlways|snap"
-        app:navigationIcon="@drawable/ic_clear_white_24px"
+        app:navigationIcon="@drawable/ic_clear_black_24px"
         app:title="Related"
         android:elevation="4dp"
-        style="@style/LightToolbar"/>
+        style="@style/LightToolbarThemeOverlay"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/related_list"

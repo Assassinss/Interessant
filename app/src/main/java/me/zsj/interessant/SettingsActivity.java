@@ -20,9 +20,6 @@ public class SettingsActivity extends ToolbarActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        assert getSupportActionBar() != null;
-        getSupportActionBar().setTitle(getString(R.string.settings));
-
         toolbar.setNavigationOnClickListener(v -> finish());
 
         getFragmentManager().beginTransaction()

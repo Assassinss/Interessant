@@ -3,7 +3,7 @@
 
     <style name="AppTheme.LightStatusBar" parent="AppTheme">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark_v21</item>
     </style>
 
 </resources>
