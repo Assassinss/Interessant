@@ -42,13 +42,13 @@ public class ExampleInstrumentedTest {
 
     @Test public void dailyApi() throws Exception {
 
-        DailyApi dailyApi = InteressantFactory.getRetrofit().createApi(DailyApi.class);
+        DailyApi dailyApi = RetrofitFactory.getRetrofit().createApi(DailyApi.class);
 
         //assertNotNull(dailyApi);
     }
 
     @Test public void testResult() throws Exception {
-        SearchApi searchApi = InteressantFactory.getRetrofit().createApi(SearchApi.class);
+        SearchApi searchApi = RetrofitFactory.getRetrofit().createApi(SearchApi.class);
 
         searchApi.query("清新", 0)
                 .filter(new Func1<SearchResult, Boolean>() {
@@ -73,7 +73,7 @@ public class ExampleInstrumentedTest {
     }
 
     @Test public void testReplyList() throws Exception {
-        final ReplyApi replyApi = InteressantFactory.getRetrofit().createApi(ReplyApi.class);
+        final ReplyApi replyApi = RetrofitFactory.getRetrofit().createApi(ReplyApi.class);
         replyApi.fetchReplies(9962)
                 .filter(new Func1<Replies, Boolean>() {
                     @Override

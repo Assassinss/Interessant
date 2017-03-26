@@ -19,11 +19,11 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.zsj.interessant.api.SearchApi;
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.rx.ErrorAction;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * @author zsj
@@ -60,18 +60,17 @@ public class SearchActivity extends ToolbarActivity implements View.OnClickListe
     }
 
     private void loadTrendingTag() {
-        SearchApi trendingApi = InteressantFactory.getRetrofit()
+        SearchApi trendingApi = RetrofitFactory.getRetrofit()
                 .createApi(SearchApi.class);
 
         trendingApi.getTrendingTag()
-                .compose(bindToLifecycle())
                 .filter(data -> data != null)
                 .doOnNext(data -> tags.addAll(data))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> {
                     bindData();
-                }, ErrorAction.errorAction(this));
+                }, ErrorAction.error(this));
     }
 
     private void bindData() {

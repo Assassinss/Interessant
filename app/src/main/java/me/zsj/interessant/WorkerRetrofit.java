@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @author zsj
  */
 
-public class InteressantRetrofit {
+public class WorkerRetrofit {
 
     private static final String BASE_URL = "http://baobab.kaiyanapp.com/api/";
 
@@ -23,7 +23,7 @@ public class InteressantRetrofit {
 
     private Retrofit retrofit;
 
-    public InteressantRetrofit() {
+    public WorkerRetrofit() {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(15, TimeUnit.SECONDS);
@@ -33,7 +33,7 @@ public class InteressantRetrofit {
                 .baseUrl(BASE_URL)
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 

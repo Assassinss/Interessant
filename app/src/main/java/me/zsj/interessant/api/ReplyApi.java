@@ -1,9 +1,9 @@
 package me.zsj.interessant.api;
 
+import io.reactivex.Flowable;
 import me.zsj.interessant.model.Replies;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * @author zsj
@@ -12,9 +12,9 @@ import rx.Observable;
 public interface ReplyApi {
 
     @GET("v1/replies/video")
-    Observable<Replies> fetchReplies(@Query("id") int id);
+    Flowable<Replies> fetchReplies(@Query("id") int id);
 
     @GET("v1/replies/video?num=10")
-    Observable<Replies> fetchReplies(@Query("id") int id, @Query("lastId") int lastId);
+    Flowable<Replies> fetchReplies(@Query("id") int id, @Query("lastId") int lastId);
 
 }

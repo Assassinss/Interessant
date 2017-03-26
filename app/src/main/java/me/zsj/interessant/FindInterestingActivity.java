@@ -8,6 +8,9 @@ import android.view.MenuItem;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.api.InterestingApi;
@@ -22,8 +25,6 @@ import me.zsj.interessant.provider.related.HeaderItem;
 import me.zsj.interessant.provider.related.RelatedHeader;
 import me.zsj.interessant.provider.video.FooterForward;
 import me.zsj.interessant.rx.ErrorAction;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * @author zsj
@@ -57,7 +58,7 @@ public class FindInterestingActivity extends ToolbarActivity {
 
         id = getIntent().getExtras().getInt(MainActivity.CATEGORY_ID);
 
-        interestingApi = InteressantFactory.getRetrofit().createApi(InterestingApi.class);
+        interestingApi = RetrofitFactory.getRetrofit().createApi(InterestingApi.class);
 
         RecyclerView list = (RecyclerView) findViewById(R.id.list);
 
@@ -71,31 +72,28 @@ public class FindInterestingActivity extends ToolbarActivity {
 
     private void findVideos() {
         interestingApi.findVideo(id)
-                .compose(bindToLifecycle())
                 .filter(find -> find != null)
                 .filter(find -> find.sectionList != null)
                 .doOnNext(find -> this.categoryInfo = find.categoryInfo)
-                .map(find -> find.sectionList)
+                .flatMap(find -> Flowable.fromIterable(find.sectionList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::addData, ErrorAction.errorAction(this));
+                .doAfterTerminate(() -> adapter.notifyDataSetChanged())
+                .subscribe(this::addData, ErrorAction.error(this));
     }
 
-    private void addData(List<SectionList> sectionLists) {
-        for (SectionList sectionList : sectionLists) {
-            if (sectionList.type.equals(HORIZONTAL_SCROLL_CARD_SECTION)) {
-                Data data = sectionList.itemList.get(0).data;
-                items.add(new RelatedHeader(data.header, false));
-                items.add(new Card(sectionList.itemList.get(0)));
-            } else if (sectionList.type.equals(VIDEO_LIST_SECTION)) {
-                items.add(new Category(sectionList.header.data.text));
-                addVideo(sectionList.itemList);
-                items.add(new FooterForward(categoryInfo.id, sectionList.footer.data.text));
-            } else if (sectionList.type.equals(AUTHOR_SECTION)) {
-                addAuthorItem(sectionList.itemList);
-            }
+    private void addData(SectionList sectionList) {
+        if (sectionList.type.equals(HORIZONTAL_SCROLL_CARD_SECTION)) {
+            Data data = sectionList.itemList.get(0).data;
+            items.add(new RelatedHeader(data.header, false));
+            items.add(new Card(sectionList.itemList.get(0)));
+        } else if (sectionList.type.equals(VIDEO_LIST_SECTION)) {
+            items.add(new Category(sectionList.header.data.text));
+            addVideo(sectionList.itemList);
+            items.add(new FooterForward(categoryInfo.id, sectionList.footer.data.text));
+        } else if (sectionList.type.equals(AUTHOR_SECTION)) {
+            addAuthorItem(sectionList.itemList);
         }
-        adapter.notifyDataSetChanged();
     }
 
     private void addVideo(List<ItemList> itemLists) {

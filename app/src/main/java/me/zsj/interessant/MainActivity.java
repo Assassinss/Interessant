@@ -18,8 +18,10 @@ import android.view.Window;
 
 import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout;
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
-import com.trello.rxlifecycle.android.ActivityEvent;
 
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.api.DailyApi;
@@ -28,9 +30,6 @@ import me.zsj.interessant.model.Category;
 import me.zsj.interessant.model.Daily;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MainActivity extends ToolbarActivity {
 
@@ -84,7 +83,7 @@ public class MainActivity extends ToolbarActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         setupDrawerContent(navigationView);
 
-        dailyApi = InteressantFactory.getRetrofit().createApi(DailyApi.class);
+        dailyApi = RetrofitFactory.getRetrofit().createApi(DailyApi.class);
         setupRecyclerView();
 
         RxSwipeRefreshLayout.refreshes(refreshLayout)
@@ -141,31 +140,33 @@ public class MainActivity extends ToolbarActivity {
     }
 
     private void loadData(final boolean clear) {
-        Observable<Daily> result;
+        Flowable<Daily> result;
         if (clear) result = dailyApi.getDaily();
         else result = dailyApi.getDaily(Long.decode(dateTime));
 
-        result.compose(bindUntilEvent(ActivityEvent.DESTROY))
-                .filter(daily -> daily != null)
+        result.filter(daily -> daily != null)
                 .doOnNext(daily -> {
                     if (clear) items.clear();
                 })
+                .doOnNext(daily -> {
+                    String nextPageUrl = daily.nextPageUrl;
+                    dateTime = nextPageUrl.substring(nextPageUrl.indexOf("=") + 1,
+                            nextPageUrl.indexOf("&"));
+                })
+                .flatMap(daily -> Flowable.fromIterable(daily.issueList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doAfterTerminate(() -> refreshLayout.setRefreshing(false))
-                .subscribe(this::addData, ErrorAction.errorAction(this));
+                .doAfterTerminate(() -> {
+                    refreshLayout.setRefreshing(false);
+                    adapter.notifyDataSetChanged();
+                })
+                .subscribe(this::addData, ErrorAction.error(this));
     }
 
-    private void addData(Daily daily) {
-        for (Daily.IssueList issueList : daily.issueList) {
-            String date = issueList.itemList.get(0).data.text;
-            items.add(new Category(date == null ? "Today" : date));
-            items.addAll(issueList.itemList);
-        }
-        String nextPageUrl = daily.nextPageUrl;
-        dateTime = nextPageUrl.substring(nextPageUrl.indexOf("=") + 1,
-                nextPageUrl.indexOf("&"));
-        adapter.notifyDataSetChanged();
+    private void addData(Daily.IssueList issueList) {
+        String date = issueList.itemList.get(0).data.text;
+        items.add(new Category(date == null ? "Today" : date));
+        items.addAll(issueList.itemList);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

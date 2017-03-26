@@ -14,14 +14,14 @@ import com.trello.rxlifecycle.components.support.RxFragment;
 
 import java.util.List;
 
-import me.zsj.interessant.InteressantFactory;
+import io.reactivex.FlowableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.zsj.interessant.R;
+import me.zsj.interessant.RetrofitFactory;
 import me.zsj.interessant.api.InterestingApi;
 import me.zsj.interessant.model.Interesting;
 import me.zsj.interessant.model.ItemList;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * @author zsj
@@ -54,10 +54,10 @@ public class ItemFragment extends RxFragment {
         super.onActivityCreated(savedInstanceState);
 
         layoutManager = new LinearLayoutManager(context);
-        interestingApi = InteressantFactory.getRetrofit().createApi(InterestingApi.class);
+        interestingApi = RetrofitFactory.getRetrofit().createApi(InterestingApi.class);
     }
 
-    Observable.Transformer<Interesting, List<ItemList>>
+    FlowableTransformer<Interesting, List<ItemList>>
             interestingTransformer = interestingObservable -> interestingObservable
                     .filter(interesting -> interesting != null)
                     .map(interesting -> interesting.itemList)

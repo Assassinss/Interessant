@@ -1,9 +1,9 @@
 package me.zsj.interessant.api;
 
+import io.reactivex.Flowable;
 import me.zsj.interessant.model.Related;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
 
 /**
  * @author zsj
@@ -12,6 +12,6 @@ import rx.Observable;
 public interface RelatedApi {
 
     @GET("v3/video/{id}/detail/related")
-    Observable<Related> related(@Path("id") int id);
+    Flowable<Related> related(@Path("id") int id);
 
 }

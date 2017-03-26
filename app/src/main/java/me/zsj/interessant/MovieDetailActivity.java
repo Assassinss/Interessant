@@ -25,6 +25,9 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.zsj.interessant.api.ReplyApi;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.model.Replies;
@@ -34,9 +37,6 @@ import me.zsj.interessant.utils.TimeUtils;
 import me.zsj.interessant.widget.FabToggle;
 import me.zsj.interessant.widget.InsetDividerDecoration;
 import me.zsj.interessant.widget.ParallaxScrimageView;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import static me.zsj.interessant.MainActivity.PROVIDER_ITEM;
 
@@ -115,7 +115,7 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
                 .load(item.data.cover.detail)
                 .into(backdrop);
 
-        replyApi = InteressantFactory.getRetrofit().createApi(ReplyApi.class);
+        replyApi = RetrofitFactory.getRetrofit().createApi(ReplyApi.class);
 
         adapter = new ReplyAdapter(datas, movieDescription);
         replies.addItemDecoration(new InsetDividerDecoration(
@@ -159,20 +159,20 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
     }
 
     private void loadReplies(boolean clean) {
-        Observable<Replies> result;
+        Flowable<Replies> result;
         if (clean) result = replyApi.fetchReplies(item.data.id);
         else result = replyApi.fetchReplies(item.data.id, lastId);
 
-        result.compose(bindToLifecycle())
-                .map(replies -> {
+        result.map(replies -> {
                     getLastId(replies.replyList);
                     return replies.replyList;
                 })
-                .doOnNext(replyLists -> datas.addAll(replyLists))
+                .flatMap(Flowable::fromIterable)
+                .doOnNext(replyList -> datas.add(replyList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(replyLists ->
-                        adapter.notifyDataSetChanged(), Throwable::printStackTrace);
+                .doAfterTerminate(() -> adapter.notifyDataSetChanged())
+                .subscribe(replyList -> {}, Throwable::printStackTrace);
     }
 
     private void getLastId(List<ReplyList> replies) {

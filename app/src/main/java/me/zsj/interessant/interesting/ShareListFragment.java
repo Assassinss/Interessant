@@ -10,12 +10,12 @@ import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Flowable;
 import me.zsj.interessant.MainActivity;
 import me.zsj.interessant.model.Interesting;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
-import rx.Observable;
 
 /**
  * @author zsj
@@ -60,7 +60,7 @@ public class ShareListFragment extends ItemFragment {
     }
 
     private void loadData(int categoryId, String strategy) {
-        Observable<Interesting> result;
+        Flowable<Interesting> result;
         if (related) {
             result = interestingApi.related(start, categoryId, strategy);
         } else if (relatedHeader) {
@@ -69,12 +69,11 @@ public class ShareListFragment extends ItemFragment {
             result = interestingApi.getInteresting(start, categoryId, strategy);
         }
 
-        result.compose(bindToLifecycle())
-                .compose(interestingTransformer)
+        result.compose(interestingTransformer)
                 .doOnNext(itemLists -> shareList.addAll(itemLists))
                 .subscribe(itemLists -> {
                     adapter.notifyDataSetChanged();
-                }, ErrorAction.errorAction(context));
+                }, ErrorAction.error(context));
 
     }
 

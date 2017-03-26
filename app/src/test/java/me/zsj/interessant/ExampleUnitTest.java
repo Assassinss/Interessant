@@ -23,19 +23,19 @@ public class ExampleUnitTest {
     }
 
     @Test public void dailyApi() throws Exception {
-        DailyApi dailyApi = InteressantFactory.getRetrofit().createApi(DailyApi.class);
+        DailyApi dailyApi = RetrofitFactory.getRetrofit().createApi(DailyApi.class);
 
         assertNotNull(dailyApi);
     }
 
     @Test public void interestingApi() throws Exception {
-        InterestingApi api = InteressantFactory.getRetrofit().createApi(InterestingApi.class);
+        InterestingApi api = RetrofitFactory.getRetrofit().createApi(InterestingApi.class);
 
         assertNotNull(api);
     }
 
     @Test public void findVideo() throws Exception {
-        InterestingApi api = InteressantFactory.getRetrofit().createApi(InterestingApi.class);
+        InterestingApi api = RetrofitFactory.getRetrofit().createApi(InterestingApi.class);
         api.findVideo(6)
                 .subscribeOn(Schedulers.io())
                 .map(find -> find.sectionList)

@@ -4,15 +4,15 @@ package me.zsj.interessant;
  * @author zsj
  */
 
-public class InteressantFactory {
+public class RetrofitFactory {
 
     private static final Object object = new Object();
-    private volatile static InteressantRetrofit retrofit;
+    private volatile static WorkerRetrofit retrofit;
 
-    public static InteressantRetrofit getRetrofit() {
+    public static WorkerRetrofit getRetrofit() {
         synchronized (object) {
             if (retrofit == null) {
-                retrofit = new InteressantRetrofit();
+                retrofit = new WorkerRetrofit();
             }
             return retrofit;
         }

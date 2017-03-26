@@ -8,8 +8,9 @@ import android.view.MenuItem;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
 
-import java.util.List;
-
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.api.AuthorApi;
@@ -18,8 +19,6 @@ import me.zsj.interessant.model.Category;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.provider.related.Card;
 import me.zsj.interessant.provider.related.HeaderItem;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * @author zsj
@@ -67,33 +66,30 @@ public class VideoAuthorActivity extends ToolbarActivity {
                     }
                 });
 
-        authorApi = InteressantFactory.getRetrofit().createApi(AuthorApi.class);
+        authorApi = RetrofitFactory.getRetrofit().createApi(AuthorApi.class);
 
         loadData();
     }
 
     private void loadData() {
         authorApi.authors(start)
-                .compose(bindToLifecycle())
                 .filter(videoAuthor -> videoAuthor != null)
-                .map(videoAuthor -> videoAuthor.itemList)
+                .flatMap(videoAuthor -> Flowable.fromIterable(videoAuthor.itemList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate(() -> adapter.notifyDataSetChanged())
                 .subscribe(this::addData, Throwable::printStackTrace);
     }
 
-    private void addData(List<ItemList> itemLists) {
-        for (ItemList item : itemLists) {
-            if (item.type.equals(LEFT_TEXT_HEADER)) {
-                items.add(new Category(item.data.text));
-            } else if (item.type.equals(BRIEF_CARD)) {
-                items.add(new HeaderItem(item.data, null, false));
-            } else if (item.type.equals(VIDEO_COLLECT_BRIEF)) {
-                items.add(new HeaderItem(item.data.header, false));
-                items.add(new Card(item));
-            }
+    private void addData(ItemList item) {
+        if (item.type.equals(LEFT_TEXT_HEADER)) {
+            items.add(new Category(item.data.text));
+        } else if (item.type.equals(BRIEF_CARD)) {
+            items.add(new HeaderItem(item.data, null, false));
+        } else if (item.type.equals(VIDEO_COLLECT_BRIEF)) {
+            items.add(new HeaderItem(item.data.header, false));
+            items.add(new Card(item));
         }
-        adapter.notifyDataSetChanged();
     }
 
     @Override

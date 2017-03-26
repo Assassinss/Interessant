@@ -12,14 +12,14 @@ import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.zsj.interessant.api.SearchApi;
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.interesting.InterestingAdapter;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * @author zsj
@@ -50,7 +50,7 @@ public class ResultActivity extends ToolbarActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(keyword);
 
-        searchApi = InteressantFactory.getRetrofit().createApi(SearchApi.class);
+        searchApi = RetrofitFactory.getRetrofit().createApi(SearchApi.class);
 
         adapter = new InterestingAdapter(this, itemLists);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -73,15 +73,14 @@ public class ResultActivity extends ToolbarActivity {
 
     private void fetchResult(final String keyword) {
         searchApi.query(keyword, start)
-                .compose(bindToLifecycle())
                 .filter(searchResult -> searchResult != null)
                 .map(searchResult -> searchResult.itemList)
                 .doOnNext(itemList -> itemLists.addAll(itemList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(itemLists1 -> {
+                .subscribe(itemLists -> {
                     adapter.notifyDataSetChanged();
-                }, ErrorAction.errorAction(this));
+                }, ErrorAction.error(this));
     }
 
     @Override

@@ -11,14 +11,14 @@ import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.zsj.interessant.api.InterestingApi;
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.interesting.InterestingAdapter;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.rx.ErrorAction;
 import me.zsj.interessant.rx.RxScroller;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * @author zsj
@@ -50,7 +50,7 @@ public class VideoListActivity extends ToolbarActivity {
 
         list = (RecyclerView) findViewById(R.id.list);
 
-        api = InteressantFactory.getRetrofit().createApi(InterestingApi.class);
+        api = RetrofitFactory.getRetrofit().createApi(InterestingApi.class);
 
         id = getIntent().getExtras().getInt("id");
         trending = getIntent().getBooleanExtra("trending", false);
@@ -99,7 +99,6 @@ public class VideoListActivity extends ToolbarActivity {
         else if (newest) strategy = "date";
 
         api.videoList(id, start, strategy)
-                .compose(bindToLifecycle())
                 .filter(interesting -> interesting != null)
                 .filter(interesting -> interesting.itemList != null)
                 .map(interesting -> interesting.itemList)
@@ -107,9 +106,9 @@ public class VideoListActivity extends ToolbarActivity {
                 .doOnNext(itemLists -> items.addAll(itemLists))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(itemLists ->
-                        adapter.notifyItemRangeInserted(start, items.size()),
-                        ErrorAction.errorAction(this));
+                .subscribe(itemLists -> {
+                    adapter.notifyDataSetChanged();
+                }, ErrorAction.error(this));
     }
 
     @Override

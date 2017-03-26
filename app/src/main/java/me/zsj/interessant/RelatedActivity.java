@@ -7,8 +7,9 @@ import android.support.v7.widget.Toolbar;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
-import java.util.List;
-
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.api.RelatedApi;
@@ -18,8 +19,6 @@ import me.zsj.interessant.provider.related.Card;
 import me.zsj.interessant.provider.related.HeaderItem;
 import me.zsj.interessant.provider.related.RelatedHeader;
 import me.zsj.interessant.rx.ErrorAction;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * @author zsj
@@ -53,34 +52,32 @@ public class RelatedActivity extends RxAppCompatActivity {
         Register.registerRelatedItem(adapter, this);
 
         id = getIntent().getIntExtra(ID, id);
-        relatedApi = InteressantFactory.getRetrofit().createApi(RelatedApi.class);
+        relatedApi = RetrofitFactory.getRetrofit().createApi(RelatedApi.class);
 
         loadRelated();
     }
 
     private void loadRelated() {
         relatedApi.related(id)
-                .compose(bindToLifecycle())
                 .filter(related -> related != null)
                 .filter(related -> related.itemList != null)
-                .map(related -> related.itemList)
+                .flatMap(related -> Flowable.fromIterable(related.itemList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::addData, ErrorAction.errorAction(this));
+                .doAfterTerminate(() -> adapter.notifyDataSetChanged())
+                .subscribe(this::addData, ErrorAction.error(this));
     }
 
-    private void addData(List<ItemList> itemLists) {
-        for (ItemList item : itemLists) {
-            Header header = item.data.header;
-            if (header != null) {
-                if (header.description != null) {
-                    items.add(new HeaderItem(item.data.header, true));
-                } else {
-                    items.add(new RelatedHeader(item.data.header, true));
-                }
-                items.add(new Card(item));
+    private void addData(ItemList item) {
+        Header header = item.data.header;
+        if (header != null) {
+            if (header.description != null) {
+                items.add(new HeaderItem(item.data.header, true));
+            } else {
+                items.add(new RelatedHeader(item.data.header, true));
             }
+            items.add(new Card(item));
         }
-        adapter.notifyDataSetChanged();
     }
+
 }
