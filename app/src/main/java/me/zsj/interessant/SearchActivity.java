@@ -64,6 +64,7 @@ public class SearchActivity extends ToolbarActivity implements View.OnClickListe
                 .createApi(SearchApi.class);
 
         trendingApi.getTrendingTag()
+                .compose(bindToLifecycle())
                 .filter(data -> data != null)
                 .doOnNext(data -> tags.addAll(data))
                 .subscribeOn(Schedulers.io())

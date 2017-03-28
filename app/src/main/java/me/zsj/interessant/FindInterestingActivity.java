@@ -72,6 +72,7 @@ public class FindInterestingActivity extends ToolbarActivity {
 
     private void findVideos() {
         interestingApi.findVideo(id)
+                .compose(bindToLifecycle())
                 .filter(find -> find != null)
                 .filter(find -> find.sectionList != null)
                 .doOnNext(find -> this.categoryInfo = find.categoryInfo)

@@ -16,8 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
-import com.jakewharton.rxbinding.support.v4.widget.RxSwipeRefreshLayout;
-import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
+import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -110,8 +110,8 @@ public class MainActivity extends ToolbarActivity {
         list.setOnTouchListener((v, event) -> refreshLayout.isRefreshing());
 
         RxRecyclerView.scrollStateChanges(list)
-                .filter(integer -> !refreshLayout.isRefreshing())
                 .compose(bindToLifecycle())
+                .filter(integer -> !refreshLayout.isRefreshing())
                 .compose(RxScroller.scrollTransformer(layoutManager,
                         adapter, items))
                 .subscribe(newState -> {
@@ -144,7 +144,8 @@ public class MainActivity extends ToolbarActivity {
         if (clear) result = dailyApi.getDaily();
         else result = dailyApi.getDaily(Long.decode(dateTime));
 
-        result.filter(daily -> daily != null)
+        result.compose(bindToLifecycle())
+                .filter(daily -> daily != null)
                 .doOnNext(daily -> {
                     if (clear) items.clear();
                 })

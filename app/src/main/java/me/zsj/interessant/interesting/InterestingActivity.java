@@ -45,10 +45,14 @@ public class InterestingActivity extends ToolbarActivity {
         relatedHeader = getIntent().getBooleanExtra(RELATED_HEADER_VIDEO, false);
         String title = getIntent().getStringExtra(MainActivity.TITLE);
 
-        if (title == null) ab.setTitle("Interesting");
-        else {
-            if (relatedHeader) ab.setTitle(title);
-            else ab.setTitle(title.substring(1));
+        if (title == null) {
+            ab.setTitle("Interesting");
+        } else {
+            if (relatedHeader) {
+                ab.setTitle(title);
+            } else {
+                ab.setTitle(title.substring(1));
+            }
         }
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -66,7 +70,7 @@ public class InterestingActivity extends ToolbarActivity {
         viewPager.setAdapter(adapter);
     }
 
-    static class Adapter extends FragmentPagerAdapter {
+    private static class Adapter extends FragmentPagerAdapter {
 
         List<Fragment> fragments = new ArrayList<>();
         List<String> fragmentTitles = new ArrayList<>();

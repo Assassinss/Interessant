@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
-import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
+import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,6 @@ public class ShareListFragment extends ItemFragment {
         loadData(categoryId, SHARE);
 
         RxRecyclerView.scrollStateChanges(list)
-                .compose(bindToLifecycle())
                 .compose(RxScroller.scrollTransformer(layoutManager,
                         adapter, shareList))
                 .subscribe(newState -> {
@@ -70,6 +69,7 @@ public class ShareListFragment extends ItemFragment {
         }
 
         result.compose(interestingTransformer)
+                .compose(bindToLifecycle())
                 .doOnNext(itemLists -> shareList.addAll(itemLists))
                 .subscribe(itemLists -> {
                     adapter.notifyDataSetChanged();

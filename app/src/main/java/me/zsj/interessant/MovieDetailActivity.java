@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,7 +163,8 @@ public class MovieDetailActivity extends RxAppCompatActivity implements View.OnC
         if (clean) result = replyApi.fetchReplies(item.data.id);
         else result = replyApi.fetchReplies(item.data.id, lastId);
 
-        result.map(replies -> {
+        result.compose(bindToLifecycle())
+                .map(replies -> {
                     getLastId(replies.replyList);
                     return replies.replyList;
                 })

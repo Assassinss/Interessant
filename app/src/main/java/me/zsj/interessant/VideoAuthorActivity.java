@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
-import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
+import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -73,6 +73,7 @@ public class VideoAuthorActivity extends ToolbarActivity {
 
     private void loadData() {
         authorApi.authors(start)
+                .compose(bindToLifecycle())
                 .filter(videoAuthor -> videoAuthor != null)
                 .flatMap(videoAuthor -> Flowable.fromIterable(videoAuthor.itemList))
                 .subscribeOn(Schedulers.io())

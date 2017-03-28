@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
-import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
+import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +99,7 @@ public class VideoListActivity extends ToolbarActivity {
         else if (newest) strategy = "date";
 
         api.videoList(id, start, strategy)
+                .compose(bindToLifecycle())
                 .filter(interesting -> interesting != null)
                 .filter(interesting -> interesting.itemList != null)
                 .map(interesting -> interesting.itemList)

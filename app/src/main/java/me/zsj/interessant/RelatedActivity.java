@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -59,6 +59,7 @@ public class RelatedActivity extends RxAppCompatActivity {
 
     private void loadRelated() {
         relatedApi.related(id)
+                .compose(bindToLifecycle())
                 .filter(related -> related != null)
                 .filter(related -> related.itemList != null)
                 .flatMap(related -> Flowable.fromIterable(related.itemList))

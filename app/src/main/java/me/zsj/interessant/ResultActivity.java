@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.jakewharton.rxbinding.support.v7.widget.RxRecyclerView;
+import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +73,7 @@ public class ResultActivity extends ToolbarActivity {
 
     private void fetchResult(final String keyword) {
         searchApi.query(keyword, start)
+                .compose(bindToLifecycle())
                 .filter(searchResult -> searchResult != null)
                 .map(searchResult -> searchResult.itemList)
                 .doOnNext(itemList -> itemLists.addAll(itemList))
