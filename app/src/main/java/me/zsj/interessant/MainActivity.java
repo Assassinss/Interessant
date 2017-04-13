@@ -165,7 +165,9 @@ public class MainActivity extends ToolbarActivity {
     }
 
     private void addData(Daily.IssueList issueList) {
-        String date = issueList.itemList.get(0).data.text;
+        //extract date text
+        String date = issueList.itemList.get(1).data.text;
+        //set date text header
         items.add(new Category(date == null ? "Today" : date));
         items.addAll(issueList.itemList);
     }
