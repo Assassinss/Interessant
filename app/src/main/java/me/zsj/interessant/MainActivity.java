@@ -107,8 +107,6 @@ public class MainActivity extends ToolbarActivity {
         list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
 
-        list.setOnTouchListener((v, event) -> refreshLayout.isRefreshing());
-
         RxRecyclerView.scrollStateChanges(list)
                 .compose(bindToLifecycle())
                 .filter(integer -> !refreshLayout.isRefreshing())
@@ -147,9 +145,6 @@ public class MainActivity extends ToolbarActivity {
         result.compose(bindToLifecycle())
                 .filter(daily -> daily != null)
                 .doOnNext(daily -> {
-                    if (clear) items.clear();
-                })
-                .doOnNext(daily -> {
                     String nextPageUrl = daily.nextPageUrl;
                     dateTime = nextPageUrl.substring(nextPageUrl.indexOf("=") + 1,
                             nextPageUrl.indexOf("&"));
@@ -157,6 +152,9 @@ public class MainActivity extends ToolbarActivity {
                 .flatMap(daily -> Flowable.fromIterable(daily.issueList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(daily -> {
+                    if (clear) items.clear();
+                })
                 .doAfterTerminate(() -> {
                     refreshLayout.setRefreshing(false);
                     adapter.notifyDataSetChanged();
