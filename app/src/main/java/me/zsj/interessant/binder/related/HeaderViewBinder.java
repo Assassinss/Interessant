@@ -1,4 +1,4 @@
-package me.zsj.interessant.provider.related;
+package me.zsj.interessant.binder.related;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.zsj.interessant.R;
 import me.zsj.interessant.interesting.InterestingActivity;
 import me.zsj.interessant.utils.CircleTransform;
@@ -28,8 +28,8 @@ import static me.zsj.interessant.MainActivity.TITLE;
  * @author zsj
  */
 
-public class HeaderViewProvider extends
-        ItemViewProvider<HeaderItem, HeaderViewProvider.HeaderHolder> {
+public class HeaderViewBinder extends
+        ItemViewBinder<HeaderItem, HeaderViewBinder.HeaderHolder> {
 
     @NonNull @Override
     protected HeaderHolder onCreateViewHolder(

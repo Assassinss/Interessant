@@ -1,4 +1,4 @@
-package me.zsj.interessant.provider.related;
+package me.zsj.interessant.binder.related;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.zsj.interessant.R;
 import me.zsj.interessant.VideoListActivity;
 import me.zsj.interessant.interesting.InterestingActivity;
@@ -27,8 +27,8 @@ import static me.zsj.interessant.MainActivity.CATEGORY_ID;
  * @author zsj
  */
 
-public class RelatedHeaderViewProvider extends
-        ItemViewProvider<RelatedHeader, RelatedHeaderViewProvider.RelatedHeaderHolder> {
+public class RelatedHeaderViewBinder extends
+        ItemViewBinder<RelatedHeader, RelatedHeaderViewBinder.RelatedHeaderHolder> {
 
 
     @NonNull @Override

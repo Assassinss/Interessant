@@ -17,8 +17,8 @@ import me.zsj.interessant.api.AuthorApi;
 import me.zsj.interessant.base.ToolbarActivity;
 import me.zsj.interessant.model.Category;
 import me.zsj.interessant.model.ItemList;
-import me.zsj.interessant.provider.related.Card;
-import me.zsj.interessant.provider.related.HeaderItem;
+import me.zsj.interessant.binder.related.Card;
+import me.zsj.interessant.binder.related.HeaderItem;
 
 /**
  * @author zsj

@@ -1,4 +1,4 @@
-package me.zsj.interessant.provider.video;
+package me.zsj.interessant.binder.video;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -12,7 +12,7 @@ import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.R;
 import me.zsj.interessant.common.Holder;
@@ -22,11 +22,11 @@ import me.zsj.interessant.model.ItemList;
  * @author zsj
  */
 
-public class VideoViewProvider extends ItemViewProvider<ItemList, Holder> {
+public class VideoViewBinder extends ItemViewBinder<ItemList, Holder> {
 
     private Activity context;
 
-    public VideoViewProvider(Activity context) {
+    public VideoViewBinder(Activity context) {
         this.context = context;
     }
 

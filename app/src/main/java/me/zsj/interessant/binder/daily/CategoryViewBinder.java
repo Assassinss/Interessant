@@ -1,4 +1,4 @@
-package me.zsj.interessant.provider.daily;
+package me.zsj.interessant.binder.daily;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.zsj.interessant.R;
 import me.zsj.interessant.model.Category;
 
@@ -17,7 +17,7 @@ import static me.zsj.interessant.R.id.date;
  * @author zsj
  */
 
-public class CategoryViewProvider extends ItemViewProvider<Category, CategoryViewProvider.DateHolder> {
+public class CategoryViewBinder extends ItemViewBinder<Category, CategoryViewBinder.DateHolder> {
 
     @NonNull @Override
     protected DateHolder onCreateViewHolder(@NonNull LayoutInflater inflater,

@@ -1,4 +1,4 @@
-package me.zsj.interessant.provider.video;
+package me.zsj.interessant.binder.video;
 
 /**
  * @author zsj

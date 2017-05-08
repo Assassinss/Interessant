@@ -20,10 +20,10 @@ import me.zsj.interessant.model.CategoryInfo;
 import me.zsj.interessant.model.Data;
 import me.zsj.interessant.model.ItemList;
 import me.zsj.interessant.model.SectionList;
-import me.zsj.interessant.provider.related.Card;
-import me.zsj.interessant.provider.related.HeaderItem;
-import me.zsj.interessant.provider.related.RelatedHeader;
-import me.zsj.interessant.provider.video.FooterForward;
+import me.zsj.interessant.binder.related.Card;
+import me.zsj.interessant.binder.related.HeaderItem;
+import me.zsj.interessant.binder.related.RelatedHeader;
+import me.zsj.interessant.binder.video.FooterForward;
 import me.zsj.interessant.rx.ErrorAction;
 
 /**

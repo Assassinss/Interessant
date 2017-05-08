@@ -1,4 +1,4 @@
-package me.zsj.interessant.provider.daily;
+package me.zsj.interessant.binder.daily;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -12,7 +12,7 @@ import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.zsj.interessant.IntentManager;
 import me.zsj.interessant.R;
 import me.zsj.interessant.common.Holder;
@@ -22,13 +22,13 @@ import me.zsj.interessant.model.ItemList;
  * @author zsj
  */
 
-public class DailyViewProvider extends ItemViewProvider<ItemList, Holder>  {
+public class DailyViewBinder extends ItemViewBinder<ItemList, Holder> {
 
     private static final String VIDEO_TAG = "video";
 
     private Activity context;
 
-    public DailyViewProvider(Activity context) {
+    public DailyViewBinder(Activity context) {
         this.context = context;
     }
 

@@ -1,4 +1,4 @@
-package me.zsj.interessant.provider.video;
+package me.zsj.interessant.binder.video;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.zsj.interessant.R;
 import me.zsj.interessant.VideoListActivity;
 
@@ -21,8 +21,8 @@ import me.zsj.interessant.VideoListActivity;
  * @author zsj
  */
 
-public class FooterForwardViewProvider extends
-        ItemViewProvider<FooterForward, FooterForwardViewProvider.Holder> {
+public class FooterForwardViewBinder extends
+        ItemViewBinder<FooterForward, FooterForwardViewBinder.Holder> {
 
     @NonNull @Override
     protected Holder onCreateViewHolder(

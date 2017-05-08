@@ -15,9 +15,9 @@ import me.drakeet.multitype.MultiTypeAdapter;
 import me.zsj.interessant.api.RelatedApi;
 import me.zsj.interessant.model.Header;
 import me.zsj.interessant.model.ItemList;
-import me.zsj.interessant.provider.related.Card;
-import me.zsj.interessant.provider.related.HeaderItem;
-import me.zsj.interessant.provider.related.RelatedHeader;
+import me.zsj.interessant.binder.related.Card;
+import me.zsj.interessant.binder.related.HeaderItem;
+import me.zsj.interessant.binder.related.RelatedHeader;
 import me.zsj.interessant.rx.ErrorAction;
 
 /**

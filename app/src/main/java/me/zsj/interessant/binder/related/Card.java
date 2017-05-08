@@ -1,4 +1,4 @@
-package me.zsj.interessant.provider.related;
+package me.zsj.interessant.binder.related;
 
 import android.support.annotation.NonNull;
 

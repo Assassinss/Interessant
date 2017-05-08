@@ -1,4 +1,4 @@
-package me.zsj.interessant.provider.related;
+package me.zsj.interessant.binder.related;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.zsj.interessant.R;
 import me.zsj.interessant.model.ItemList;
 
@@ -19,11 +19,11 @@ import me.zsj.interessant.model.ItemList;
  * @author zsj
  */
 
-public class CardViewProvider extends ItemViewProvider<Card, CardViewProvider.CardHolder> {
+public class CardViewBinder extends ItemViewBinder<Card, CardViewBinder.CardHolder> {
 
     private Activity context;
 
-    public CardViewProvider(@NonNull Activity context) {
+    public CardViewBinder(@NonNull Activity context) {
         this.context = context;
     }
 
