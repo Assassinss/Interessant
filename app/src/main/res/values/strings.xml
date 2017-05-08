@@ -20,6 +20,9 @@
     <string name="cartoon">#动画</string>
     <string name="music">#音乐</string>
 
+    <string name="search_short_label">搜索</string>
+    <string name="search_long_label">搜索你所感兴趣的视频</string>
+
     <string name="time_category">按时间排序</string>
     <string name="share_category">按分享排序</string>
     <string name="search_hint">搜索你所感兴趣的视频&#8230;</string>

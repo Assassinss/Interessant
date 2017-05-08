@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_search_black_24px"
+        android:shortcutId="searchVideo"
+        android:shortcutLongLabel="@string/search_long_label"
+        android:shortcutShortLabel="@string/search_short_label">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="me.zsj.interessant.SearchActivity"
+            android:targetPackage="me.zsj.interessant" />
+
+    </shortcut>
+
+</shortcuts>

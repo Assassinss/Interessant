@@ -84,9 +84,8 @@ public class PlayActivity extends ToolbarActivity
             videoController.attachPlayer(mediaPlayer, item);
             boolean cacheWithWifi = PreferenceManager.getBooleanValue(this, SettingsFragment.CACHE_KEY, true);
             if (cacheWithWifi && NetUtils.isWifiConnected(this)) {
-                HttpProxyCacheServer cacheServer = cacheServer();
-                String proxyPath = cacheServer.getProxyUrl(path);
-                cacheServer.registerCacheListener(this, path);
+                String proxyPath = cacheServer().getProxyUrl(path);
+                cacheServer().registerCacheListener(this, path);
                 mediaPlayer.setDataSource(proxyPath);
             } else {
                 mediaPlayer.setDataSource(path);
