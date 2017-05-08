@@ -1,8 +1,8 @@
 package me.zsj.interessant.rx;
 
 import android.content.Context;
-import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -18,7 +18,7 @@ public class ErrorAction {
     public static Consumer<Throwable> error(Context context) {
         return throwable -> {
             throwable.printStackTrace();
-            Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            Toasty.error(context, throwable.getMessage()).show();
         };
     }
 }

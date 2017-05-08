@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -19,6 +18,7 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.zsj.interessant.api.SearchApi;
@@ -98,8 +98,7 @@ public class SearchActivity extends ToolbarActivity implements View.OnClickListe
 
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 if (searchEdit.getText().toString().isEmpty()) {
-                    Toast.makeText(SearchActivity.this,
-                            "Keyword must not empty!", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(SearchActivity.this, "Keyword must not empty!").show();
                 } else {
                     search(searchEdit.getText().toString());
                 }

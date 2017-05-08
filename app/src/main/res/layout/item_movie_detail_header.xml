@@ -44,7 +44,7 @@
     <LinearLayout
         android:id="@+id/author_content"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_gravity="end"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -69,6 +69,7 @@
             android:layout_margin="16dp"
             android:scaleType="centerCrop"
             android:background="@drawable/bg_ripple"
+            android:stateListAnimator="@animator/tab_anim"
             tools:ignore="ContentDescription"/>
 
     </LinearLayout>

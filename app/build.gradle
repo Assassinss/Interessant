@@ -66,4 +66,5 @@ dependencies {
     compile 'com.danikula:videocache:2.6.4'
 
     compile 'com.zhy:flowlayout-lib:1.0.3'
+    compile 'com.github.GrenderG:Toasty:1.2.3'
 }

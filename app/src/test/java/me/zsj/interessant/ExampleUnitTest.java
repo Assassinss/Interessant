@@ -1,12 +1,10 @@
 package me.zsj.interessant;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import me.zsj.interessant.api.DailyApi;
 import me.zsj.interessant.api.InterestingApi;
 import me.zsj.interessant.utils.IDUtils;
-import rx.schedulers.Schedulers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -32,14 +30,6 @@ public class ExampleUnitTest {
         InterestingApi api = RetrofitFactory.getRetrofit().createApi(InterestingApi.class);
 
         assertNotNull(api);
-    }
-
-    @Test public void findVideo() throws Exception {
-        InterestingApi api = RetrofitFactory.getRetrofit().createApi(InterestingApi.class);
-        api.findVideo(6)
-                .subscribeOn(Schedulers.io())
-                .map(find -> find.sectionList)
-                .subscribe(Assert::assertNotNull);
     }
 
     @Test public void isDeterminedId() throws Exception {
