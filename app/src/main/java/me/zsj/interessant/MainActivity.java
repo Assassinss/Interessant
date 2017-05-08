@@ -144,12 +144,6 @@ public class MainActivity extends ToolbarActivity {
 
         result.compose(bindToLifecycle())
                 .filter(daily -> daily != null)
-                .doOnNext(daily -> {
-                    String nextPageUrl = daily.nextPageUrl;
-                    dateTime = nextPageUrl.substring(nextPageUrl.indexOf("=") + 1,
-                            nextPageUrl.indexOf("&"));
-                })
-                .flatMap(daily -> Flowable.fromIterable(daily.issueList))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(daily -> {
@@ -162,12 +156,16 @@ public class MainActivity extends ToolbarActivity {
                 .subscribe(this::addData, ErrorAction.error(this));
     }
 
-    private void addData(Daily.IssueList issueList) {
-        //extract date text
-        String date = issueList.itemList.get(1).data.text;
-        //set date text header
-        items.add(new Category(date == null ? "Today" : date));
-        items.addAll(issueList.itemList);
+    private void addData(Daily daily) {
+        for (Daily.IssueList issueList : daily.issueList) {
+            String date = issueList.itemList.get(1).data.text;
+            items.add(new Category(date == null ? "Today" : date));
+            items.addAll(issueList.itemList);
+        }
+        String nextPageUrl = daily.nextPageUrl;
+        dateTime = nextPageUrl.substring(nextPageUrl.indexOf("=") + 1,
+                nextPageUrl.indexOf("&"));
+        adapter.notifyDataSetChanged();
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
